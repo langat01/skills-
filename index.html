@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkillForge - Learn, Create, Succeed</title>
+    <title>Skillbased - Learn, Create, Succeed</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -178,6 +178,7 @@
             padding: 5px 15px;
             border-radius: 50px;
             font-size: 0.9rem;
+            cursor: pointer;
         }
         
         /* Features Section */
@@ -250,6 +251,7 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             transition: transform 0.3s;
+            cursor: pointer;
         }
         
         .category-card:hover {
@@ -303,6 +305,7 @@
             justify-content: center;
             color: #999;
             font-size: 0.9rem;
+            position: relative;
         }
         
         .course-content {
@@ -312,6 +315,18 @@
         .course-content h3 {
             margin-bottom: 10px;
             font-size: 1.1rem;
+        }
+        
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .rating {
+            color: var(--warning);
         }
         
         /* Tabs */
@@ -342,6 +357,55 @@
         
         .tab-content.active {
             display: block;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
         }
         
         /* Footer */
@@ -412,6 +476,20 @@
             background: var(--primary);
         }
         
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .header-content {
@@ -421,6 +499,12 @@
             
             nav ul {
                 margin: 20px 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
             }
             
             .hero h1 {
@@ -429,6 +513,10 @@
             
             .hero p {
                 font-size: 1rem;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
             }
         }
     </style>
@@ -440,7 +528,7 @@
             <div class="header-content">
                 <div class="logo">
                     <i class="fas fa-gem"></i>
-                    SkillForge
+                    Skillbased
                 </div>
                 <nav>
                     <ul>
@@ -452,8 +540,11 @@
                     </ul>
                 </nav>
                 <div class="auth-buttons">
-                    <a href="#" class="btn btn-outline">Log In</a>
-                    <a href="#" class="btn btn-primary">Sign Up</a>
+                    <a href="#" class="btn btn-outline" id="login-btn">Log In</a>
+                    <a href="#" class="btn btn-primary" id="signup-btn">Sign Up</a>
+                    <div id="user-menu" style="display: none;">
+                        <img src="" alt="User" id="user-avatar" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer;">
+                    </div>
                 </div>
             </div>
         </div>
@@ -463,17 +554,17 @@
     <section class="hero">
         <div class="container">
             <h1>Learn, Create, Succeed</h1>
-            <p>Discover top courses, learn from expert instructors, and unlock your potential with SkillForge. Flexible, affordable, and designed for your success.</p>
+            <p>Discover top courses, learn from expert instructors, and unlock your potential with Skillbased. Flexible, affordable, and designed for your success.</p>
             <div class="search-bar">
-                <input type="text" placeholder="Search for courses, topics, skills...">
-                <button>Search</button>
+                <input type="text" placeholder="Search for courses, topics, skills..." id="search-input">
+                <button id="search-btn">Search</button>
             </div>
             <div class="popular-tags">
-                <span class="tag">Web Development</span>
-                <span class="tag">Data Science</span>
-                <span class="tag">Graphic Design</span>
-                <span class="tag">Digital Marketing</span>
-                <span class="tag">Mobile Apps</span>
+                <span class="tag" data-search="web development">Web Development</span>
+                <span class="tag" data-search="data science">Data Science</span>
+                <span class="tag" data-search="graphic design">Graphic Design</span>
+                <span class="tag" data-search="digital marketing">Digital Marketing</span>
+                <span class="tag" data-search="mobile apps">Mobile Apps</span>
             </div>
         </div>
     </section>
@@ -481,7 +572,7 @@
     <!-- Why Choose SkillForge -->
     <section class="container">
         <div class="section-title">
-            <h2>Why Choose SkillForge?</h2>
+            <h2>Why Choose Skillbased?</h2>
             <p>Everything you need to succeed, all in one place.</p>
         </div>
         <div class="features">
@@ -522,37 +613,37 @@
             <h2>Select Your Favourite Category And Start Learning</h2>
         </div>
         <div class="categories">
-            <div class="category-card">
+            <div class="category-card" data-category="web">
                 <div class="category-content">
                     <h3>Web Development <span class="course-count">15 courses</span></h3>
                     <p>Master HTML, CSS, JavaScript and modern frameworks</p>
                 </div>
             </div>
-            <div class="category-card">
+            <div class="category-card" data-category="data">
                 <div class="category-content">
                     <h3>Data Science & AI <span class="course-count">8 courses</span></h3>
                     <p>Learn Python, machine learning, and data visualization</p>
                 </div>
             </div>
-            <div class="category-card">
+            <div class="category-card" data-category="cyber">
                 <div class="category-content">
                     <h3>Cyber Security <span class="course-count">6 courses</span></h3>
                     <p>Protect systems and networks from digital attacks</p>
                 </div>
             </div>
-            <div class="category-card">
+            <div class="category-card" data-category="design">
                 <div class="category-content">
                     <h3>Graphic Design <span class="course-count">7 courses</span></h3>
                     <p>Create visual content to communicate messages</p>
                 </div>
             </div>
-            <div class="category-card">
+            <div class="category-card" data-category="marketing">
                 <div class="category-content">
                     <h3>Digital Marketing <span class="course-count">5 courses</span></h3>
                     <p>Promote brands through digital channels</p>
                 </div>
             </div>
-            <div class="category-card">
+            <div class="category-card" data-category="mobile">
                 <div class="category-content">
                     <h3>Mobile Development <span class="course-count">9 courses</span></h3>
                     <p>Build apps for iOS and Android platforms</p>
@@ -574,6 +665,10 @@
                 <div class="course-content">
                     <h3>Complete Web Development Bootcamp</h3>
                     <p>Master HTML, CSS, JavaScript, React, Node.js, and More!</p>
+                    <div class="course-meta">
+                        <span class="rating">★★★★★ (4.9)</span>
+                        <span>$89.99</span>
+                    </div>
                 </div>
             </div>
             <div class="course-card">
@@ -581,6 +676,10 @@
                 <div class="course-content">
                     <h3>Python for Data Science</h3>
                     <p>Learn data analysis, visualization, and machine learning with Python</p>
+                    <div class="course-meta">
+                        <span class="rating">★★★★☆ (4.7)</span>
+                        <span>$74.99</span>
+                    </div>
                 </div>
             </div>
             <div class="course-card">
@@ -588,6 +687,10 @@
                 <div class="course-content">
                     <h3>UX/UI Design Masterclass</h3>
                     <p>Design beautiful and functional user interfaces</p>
+                    <div class="course-meta">
+                        <span class="rating">★★★★★ (4.8)</span>
+                        <span>$69.99</span>
+                    </div>
                 </div>
             </div>
             <div class="course-card">
@@ -595,6 +698,10 @@
                 <div class="course-content">
                     <h3>iOS Development with SwiftUI</h3>
                     <p>Build modern iOS apps with Apple's latest framework</p>
+                    <div class="course-meta">
+                        <span class="rating">★★★★☆ (4.6)</span>
+                        <span>$79.99</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -641,6 +748,72 @@
                     <div class="course-content">
                         <h3>Fitness Tracker App</h3>
                         <p>By: David Kim</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="tutorials">
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-thumb">Getting Started with React Hooks</div>
+                    <div class="course-content">
+                        <h3>Getting Started with React Hooks</h3>
+                        <p>By: Alex Thompson</p>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-thumb">Python Data Analysis Tutorial</div>
+                    <div class="course-content">
+                        <h3>Python Data Analysis Tutorial</h3>
+                        <p>By: Maria Rodriguez</p>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-thumb">UI Design Principles</div>
+                    <div class="course-content">
+                        <h3>UI Design Principles</h3>
+                        <p>By: James Wilson</p>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-thumb">Mobile App Deployment</div>
+                    <div class="course-content">
+                        <h3>Mobile App Deployment Guide</h3>
+                        <p>By: Sophia Lee</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="articles">
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-thumb">The Future of Web Development</div>
+                    <div class="course-content">
+                        <h3>The Future of Web Development</h3>
+                        <p>By: Robert Martinez</p>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-thumb">AI Ethics in 2025</div>
+                    <div class="course-content">
+                        <h3>AI Ethics in 2025</h3>
+                        <p>By: Emily Chen</p>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-thumb">Designing for Accessibility</div>
+                    <div class="course-content">
+                        <h3>Designing for Accessibility</h3>
+                        <p>By: David Kim</p>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-thumb">Career Switching to Tech</div>
+                    <div class="course-content">
+                        <h3>Career Switching to Tech</h3>
+                        <p>By: Jennifer Adams</p>
                     </div>
                 </div>
             </div>
@@ -698,9 +871,220 @@
         </div>
     </footer>
 
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-login">&times;</span>
+            <h2>Login to Your Account</h2>
+            <div class="form-group">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" placeholder="Your email address">
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="Your password">
+            </div>
+            <button class="btn btn-primary" style="width: 100%;" id="login-submit">Login</button>
+            <p style="text-align: center; margin-top: 20px;">
+                Don't have an account? <a href="#" id="switch-to-signup" style="color: var(--primary);">Sign up</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signup-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-signup">&times;</span>
+            <h2>Create an Account</h2>
+            <div class="form-group">
+                <label for="signup-name">Full Name</label>
+                <input type="text" id="signup-name" placeholder="Your full name">
+            </div>
+            <div class="form-group">
+                <label for="signup-email">Email</label>
+                <input type="email" id="signup-email" placeholder="Your email address">
+            </div>
+            <div class="form-group">
+                <label for="signup-password">Password</label>
+                <input type="password" id="signup-password" placeholder="Create a password">
+            </div>
+            <button class="btn btn-primary" style="width: 100%;" id="signup-submit">Create Account</button>
+            <p style="text-align: center; margin-top: 20px;">
+                Already have an account? <a href="#" id="switch-to-login" style="color: var(--primary);">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
     <script>
+        // DOM Elements
+        const loginBtn = document.getElementById('login-btn');
+        const signupBtn = document.getElementById('signup-btn');
+        const loginModal = document.getElementById('login-modal');
+        const signupModal = document.getElementById('signup-modal');
+        const closeLogin = document.getElementById('close-login');
+        const closeSignup = document.getElementById('close-signup');
+        const switchToSignup = document.getElementById('switch-to-signup');
+        const switchToLogin = document.getElementById('switch-to-login');
+        const loginSubmit = document.getElementById('login-submit');
+        const signupSubmit = document.getElementById('signup-submit');
+        const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
+        const tabs = document.querySelectorAll('.tab');
+        const notification = document.getElementById('notification');
+        const userMenu = document.getElementById('user-menu');
+        const userAvatar = document.getElementById('user-avatar');
+        const authButtons = document.querySelector('.auth-buttons');
+        
+        // Sample user data (simulating a database)
+        const users = [
+            { email: 'demo@skillforge.com', password: 'password123', name: 'Demo User' }
+        ];
+        
+        // Current user
+        let currentUser = null;
+        
+        // Check if user is logged in (from localStorage)
+        function checkLoginStatus() {
+            const userData = localStorage.getItem('currentUser');
+            if (userData) {
+                currentUser = JSON.parse(userData);
+                updateUIForLoggedInUser();
+            }
+        }
+        
+        // Update UI for logged in user
+        function updateUIForLoggedInUser() {
+            authButtons.style.display = 'none';
+            userMenu.style.display = 'block';
+            userAvatar.src = `https://ui-avatars.com/api/?name=${currentUser.name}&background=random&size=40&rounded=true&bold=true`;
+        }
+        
+        // Show notification
+        function showNotification(message, isSuccess = true) {
+            notification.textContent = message;
+            notification.style.background = isSuccess ? 'var(--success)' : 'var(--accent)';
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Event Listeners
+        loginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.style.display = 'flex';
+        });
+        
+        signupBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupModal.style.display = 'flex';
+        });
+        
+        closeLogin.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+        });
+        
+        closeSignup.addEventListener('click', () => {
+            signupModal.style.display = 'none';
+        });
+        
+        switchToSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.style.display = 'none';
+            signupModal.style.display = 'flex';
+        });
+        
+        switchToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupModal.style.display = 'none';
+            loginModal.style.display = 'flex';
+        });
+        
+        // Login functionality
+        loginSubmit.addEventListener('click', () => {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Simple validation
+            if (!email || !password) {
+                showNotification('Please fill in all fields', false);
+                return;
+            }
+            
+            // Check if user exists
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                currentUser = { name: user.name, email: user.email };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                loginModal.style.display = 'none';
+                updateUIForLoggedInUser();
+                showNotification(`Welcome back, ${user.name}!`);
+            } else {
+                showNotification('Invalid email or password', false);
+            }
+        });
+        
+        // Signup functionality
+        signupSubmit.addEventListener('click', () => {
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            
+            // Simple validation
+            if (!name || !email || !password) {
+                showNotification('Please fill in all fields', false);
+                return;
+            }
+            
+            // Check if user already exists
+            if (users.some(u => u.email === email)) {
+                showNotification('User with this email already exists', false);
+                return;
+            }
+            
+            // Add new user
+            users.push({ name, email, password });
+            currentUser = { name, email };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            signupModal.style.display = 'none';
+            updateUIForLoggedInUser();
+            showNotification(`Welcome to SkillForge, ${name}!`);
+        });
+        
+        // Search functionality
+        searchBtn.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                showNotification(`Searching for: ${query}`);
+                // In a real application, you would filter courses based on the query
+            }
+        });
+        
+        // Popular tags search
+        document.querySelectorAll('.tag').forEach(tag => {
+            tag.addEventListener('click', () => {
+                const searchTerm = tag.getAttribute('data-search');
+                searchInput.value = searchTerm;
+                searchBtn.click();
+            });
+        });
+        
+        // Category filtering
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const category = card.getAttribute('data-category');
+                showNotification(`Showing courses for: ${category}`);
+                // In a real application, you would filter courses by category
+            });
+        });
+        
         // Tab functionality
-        document.querySelectorAll('.tab').forEach(tab => {
+        tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 // Remove active class from all tabs
                 document.querySelectorAll('.tab').forEach(t => {
@@ -720,6 +1104,19 @@
                 document.getElementById(tabId).classList.add('active');
             });
         });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+            if (e.target === signupModal) {
+                signupModal.style.display = 'none';
+            }
+        });
+        
+        // Initialize the page
+        checkLoginStatus();
     </script>
 </body>
 </html>
