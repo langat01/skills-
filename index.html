@@ -293,7 +293,6 @@
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: var(--transition);
-            position: relative;
         }
 
         .course-card:hover {
@@ -892,7 +891,7 @@
         <div class="container">
             <h1>Learn, Build, and Grow Together</h1>
             <p>Join thousands of learners building practical skills through courses, projects, and community collaboration.</p>
-            <button class="btn btn-primary" id="start-learning-btn">Start Learning</button>
+            <button class="btn btn-primary">Start Learning</button>
         </div>
     </section>
 
@@ -1160,15 +1159,15 @@
                     <h4>Select Payment Method</h4>
                     
                     <div class="payment-method">
-                        <div class="payment-option active" data-method="paypal">
+                        <div class="payment-option active">
                             <i class="fab fa-cc-paypal"></i>
                             <p>PayPal</p>
                         </div>
-                        <div class="payment-option" data-method="stripe">
+                        <div class="payment-option">
                             <i class="fab fa-cc-stripe"></i>
                             <p>Stripe</p>
                         </div>
-                        <div class="payment-option" data-method="card">
+                        <div class="payment-option">
                             <i class="fas fa-credit-card"></i>
                             <p>Credit Card</p>
                         </div>
@@ -1204,11 +1203,14 @@
     <!-- Notification -->
     <div class="notification" id="notification"></div>
 
-    <!-- ========== BACKEND SIMULATION + FRONTEND JS ========== -->
+    <!-- Your backend simulation and frontend JavaScript code will go here -->
     <script>
-    (function () {
-        // ---------- Database initialization ----------
+        // ==================== BACKEND SIMULATION ====================
+        // This section simulates a backend using localStorage
+        
+        // Database initialization
         const initializeDatabase = () => {
+            // Users collection
             if (!localStorage.getItem('users')) {
                 localStorage.setItem('users', JSON.stringify([
                     { 
@@ -1227,6 +1229,7 @@
                 ]));
             }
             
+            // Courses collection
             if (!localStorage.getItem('courses')) {
                 localStorage.setItem('courses', JSON.stringify([
                     {
@@ -1277,7 +1280,7 @@
                     {
                         id: 4,
                         title: 'iOS Development with SwiftUI',
-                        description: 'Build modern iOS apps with Apple\\'s latest framework',
+                        description: 'Build modern iOS apps with Apple\'s latest framework',
                         thumbnail: '',
                         price: 79.99,
                         category: 'mobile',
@@ -1322,6 +1325,7 @@
                 ]));
             }
             
+            // Community posts collection
             if (!localStorage.getItem('communityPosts')) {
                 localStorage.setItem('communityPosts', JSON.stringify([
                     {
@@ -1411,14 +1415,16 @@
                 ]));
             }
         };
-
-        // ---------- API simulation ----------
+        
+        // API simulation functions
         const api = {
+            // User authentication
             login: (email, password) => {
                 return new Promise((resolve) => {
                     setTimeout(() => {
-                        const users = JSON.parse(localStorage.getItem('users')) || [];
+                        const users = JSON.parse(localStorage.getItem('users'));
                         const user = users.find(u => u.email === email && u.password === password);
+                        
                         if (user) {
                             const { password: _, ...userWithoutPassword } = user;
                             localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
@@ -1426,49 +1432,56 @@
                         } else {
                             resolve({ success: false, message: 'Invalid email or password' });
                         }
-                    }, 700);
+                    }, 1000); // Simulate network delay
                 });
             },
-
+            
             register: (name, email, password) => {
                 return new Promise((resolve) => {
                     setTimeout(() => {
-                        const users = JSON.parse(localStorage.getItem('users')) || [];
+                        const users = JSON.parse(localStorage.getItem('users'));
+                        
                         if (users.some(u => u.email === email)) {
                             resolve({ success: false, message: 'User with this email already exists' });
                             return;
                         }
+                        
                         const newUser = {
                             id: users.length + 1,
                             name,
                             email,
                             password,
-                            avatar: name.split(' ').map(n => n[0]).join('').toUpperCase(),
+                            avatar: name.split(' ').map(n => n[0]).join(''),
                             enrolledCourses: [],
                             progress: {},
                             createdAt: new Date().toISOString()
                         };
+                        
                         users.push(newUser);
                         localStorage.setItem('users', JSON.stringify(users));
+                        
                         const { password: _, ...userWithoutPassword } = newUser;
                         localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
+                        
                         resolve({ success: true, user: userWithoutPassword });
-                    }, 900);
+                    }, 1000); // Simulate network delay
                 });
             },
-
+            
             logout: () => {
                 localStorage.removeItem('currentUser');
                 return { success: true };
             },
-
+            
             getCurrentUser: () => {
                 const user = localStorage.getItem('currentUser');
                 return user ? JSON.parse(user) : null;
             },
-
+            
+            // Courses
             getCourses: (search = '', category = '') => {
-                let courses = JSON.parse(localStorage.getItem('courses')) || [];
+                let courses = JSON.parse(localStorage.getItem('courses'));
+                
                 if (search) {
                     const searchLower = search.toLowerCase();
                     courses = courses.filter(course => 
@@ -1478,71 +1491,114 @@
                         course.instructor.toLowerCase().includes(searchLower)
                     );
                 }
+                
                 if (category) {
                     courses = courses.filter(course => course.category === category);
                 }
+                
                 return { success: true, data: courses };
             },
-
+            
             getCourse: (id) => {
-                const courses = JSON.parse(localStorage.getItem('courses')) || [];
+                const courses = JSON.parse(localStorage.getItem('courses'));
                 const course = courses.find(c => c.id === parseInt(id));
-                if (course) return { success: true, data: course };
-                return { success: false, message: 'Course not found' };
+                
+                if (course) {
+                    return { success: true, data: course };
+                } else {
+                    return { success: false, message: 'Course not found' };
+                }
             },
-
+            
             enrollCourse: (userId, courseId) => {
                 return new Promise((resolve) => {
                     setTimeout(() => {
-                        const users = JSON.parse(localStorage.getItem('users')) || [];
-                        const courses = JSON.parse(localStorage.getItem('courses')) || [];
+                        const users = JSON.parse(localStorage.getItem('users'));
+                        const courses = JSON.parse(localStorage.getItem('courses'));
+                        
                         const userIndex = users.findIndex(u => u.id === userId);
                         const courseIndex = courses.findIndex(c => c.id === parseInt(courseId));
-                        if (userIndex === -1) return resolve({ success: false, message: 'User not found' });
-                        if (courseIndex === -1) return resolve({ success: false, message: 'Course not found' });
-                        if (users[userIndex].enrolledCourses.includes(parseInt(courseId))) return resolve({ success: false, message: 'User already enrolled' });
+                        
+                        if (userIndex === -1) {
+                            resolve({ success: false, message: 'User not found' });
+                            return;
+                        }
+                        
+                        if (courseIndex === -1) {
+                            resolve({ success: false, message: 'Course not found' });
+                            return;
+                        }
+                        
+                        if (users[userIndex].enrolledCourses.includes(parseInt(courseId))) {
+                            resolve({ success: false, message: 'User already enrolled in this course' });
+                            return;
+                        }
+                        
                         users[userIndex].enrolledCourses.push(parseInt(courseId));
-                        users[userIndex].progress[courseId] = { completed: 0, total: courses[courseIndex].lessons || 1 };
-                        courses[courseIndex].totalStudents = (courses[courseIndex].totalStudents || 0) + 1;
+                        users[userIndex].progress[courseId] = { completed: 0, total: courses[courseIndex].lessons };
+                        courses[courseIndex].totalStudents += 1;
+                        
                         localStorage.setItem('users', JSON.stringify(users));
                         localStorage.setItem('courses', JSON.stringify(courses));
+                        
+                        // Update current user if it's the same user
                         const currentUser = api.getCurrentUser();
                         if (currentUser && currentUser.id === userId) {
                             currentUser.enrolledCourses = users[userIndex].enrolledCourses;
                             currentUser.progress = users[userIndex].progress;
                             localStorage.setItem('currentUser', JSON.stringify(currentUser));
                         }
+                        
                         resolve({ success: true, message: 'Successfully enrolled in course' });
-                    }, 900);
+                    }, 1500); // Simulate payment processing
                 });
             },
-
+            
+            // Community posts
             getCommunityPosts: (type = '') => {
-                let posts = JSON.parse(localStorage.getItem('communityPosts')) || [];
-                if (type) posts = posts.filter(p => p.type === type);
+                let posts = JSON.parse(localStorage.getItem('communityPosts'));
+                
+                if (type) {
+                    posts = posts.filter(post => post.type === type);
+                }
+                
                 return { success: true, data: posts };
             },
-
-            likePost: (postId) => {
-                const posts = JSON.parse(localStorage.getItem('communityPosts')) || [];
-                const idx = posts.findIndex(p => p.id === parseInt(postId));
-                if (idx === -1) return { success: false, message: 'Post not found' };
-                posts[idx].likes = (posts[idx].likes || 0) + 1;
+            
+            likePost: (postId, userId) => {
+                const posts = JSON.parse(localStorage.getItem('communityPosts'));
+                const postIndex = posts.findIndex(p => p.id === parseInt(postId));
+                
+                if (postIndex === -1) {
+                    return { success: false, message: 'Post not found' };
+                }
+                
+                posts[postIndex].likes += 1;
                 localStorage.setItem('communityPosts', JSON.stringify(posts));
-                return { success: true, data: posts[idx] };
+                
+                return { success: true, data: posts[postIndex] };
             },
-
+            
+            // Get user's enrolled courses
             getUserCourses: (userId) => {
-                const users = JSON.parse(localStorage.getItem('users')) || [];
-                const courses = JSON.parse(localStorage.getItem('courses')) || [];
+                const users = JSON.parse(localStorage.getItem('users'));
+                const courses = JSON.parse(localStorage.getItem('courses'));
+                
                 const user = users.find(u => u.id === userId);
-                if (!user) return { success: false, message: 'User not found' };
-                const userCourses = courses.filter(c => user.enrolledCourses.includes(c.id));
+                if (!user) {
+                    return { success: false, message: 'User not found' };
+                }
+                
+                const userCourses = courses.filter(course => 
+                    user.enrolledCourses.includes(course.id)
+                );
+                
                 return { success: true, data: userCourses };
             }
         };
-
-        // ---------- DOM Elements ----------
+        
+        // ==================== FRONTEND CODE ====================
+        // DOM Elements
         const loginBtn = document.getElementById('login-btn');
         const signupBtn = document.getElementById('signup-btn');
         const loginModal = document.getElementById('login-modal');
@@ -1563,7 +1619,7 @@
         const searchBtn = document.getElementById('search-btn');
         const tabs = document.querySelectorAll('.tab');
         const notification = document.getElementById('notification');
-        const userMenuEl = document.getElementById('user-menu');
+        const userMenu = document.getElementById('user-menu');
         const userAvatar = document.getElementById('user-avatar');
         const authButtons = document.querySelector('.auth-buttons');
         const coursesContainer = document.getElementById('courses-container');
@@ -1574,406 +1630,548 @@
         const welcomeUser = document.getElementById('welcome-user');
         const continueLearningContainer = document.getElementById('continue-learning-container');
         const logoutBtn = document.getElementById('logout-btn');
-        const categoryCards = document.querySelectorAll('.category-card');
-        const tagElements = document.querySelectorAll('.tag');
         const enrollFreeBtn = document.getElementById('enroll-free-btn');
         const enrollPaidBtn = document.getElementById('enroll-paid-btn');
-        const enrollCourseTitle = document.getElementById('enroll-course-title');
         const enrollFreeSection = document.getElementById('enroll-free');
         const enrollPaidSection = document.getElementById('enroll-paid');
-        const coursePriceEl = document.getElementById('course-price');
-        const paymentOptions = document.querySelectorAll('.payment-option');
+        const paymentMethod = document.getElementById('payment-method');
         const cardPayment = document.getElementById('card-payment');
-        const startLearningBtn = document.getElementById('start-learning-btn');
+        
+        // Current user and state
         let currentUser = null;
         let currentCourseToEnroll = null;
-
-        // ---------- Helpers ----------
-        const showNotification = (message, isError = false) => {
+        
+        // Initialize the application
+        const initApp = () => {
+            initializeDatabase();
+            checkLoginStatus();
+            loadCourses();
+            loadCommunityPosts();
+            setupEventListeners();
+        };
+        
+        // Set up event listeners
+        const setupEventListeners = () => {
+            // Auth buttons
+            loginBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.style.display = 'flex';
+            });
+            
+            signupBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                signupModal.style.display = 'flex';
+            });
+            
+            // Close modals
+            closeLogin.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+            });
+            
+            closeSignup.addEventListener('click', () => {
+                signupModal.style.display = 'none';
+            });
+            
+            closeEnroll.addEventListener('click', () => {
+                enrollModal.style.display = 'none';
+            });
+            
+            // Switch between login and signup
+            switchToSignup.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.style.display = 'none';
+                signupModal.style.display = 'flex';
+            });
+            
+            switchToLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                signupModal.style.display = 'none';
+                loginModal.style.display = 'flex';
+            });
+            
+            // Login functionality
+            loginSubmit.addEventListener('click', handleLogin);
+            
+            // Signup functionality
+            signupSubmit.addEventListener('click', handleSignup);
+            
+            // Search functionality
+            searchBtn.addEventListener('click', handleSearch);
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    handleSearch();
+                }
+            });
+            
+            // Popular tags search
+            document.querySelectorAll('.tag').forEach(tag => {
+                tag.addEventListener('click', () => {
+                    const searchTerm = tag.getAttribute('data-search');
+                    searchInput.value = searchTerm;
+                    handleSearch();
+                });
+            });
+            
+            // Category filtering
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const category = card.getAttribute('data-category');
+                    const response = api.getCourses('', category);
+                    if (response.success) {
+                        renderCourses(response.data);
+                        showNotification(`Showing ${response.data.length} courses for: ${category}`);
+                    }
+                });
+            });
+            
+            // Tab functionality
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.tab').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                    
+                    // Hide all tab content
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Show the corresponding tab content
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === loginModal) {
+                    loginModal.style.display = 'none';
+                }
+                if (e.target === signupModal) {
+                    signupModal.style.display = 'none';
+                }
+                if (e.target === enrollModal) {
+                    enrollModal.style.display = 'none';
+                }
+            });
+            
+            // Logout
+            logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                handleLogout();
+            });
+            
+            // User menu dropdown
+            userAvatar.addEventListener('click', () => {
+                document.getElementById('user-dropdown').classList.toggle('active');
+            });
+            
+            // Payment method change
+            paymentMethod.addEventListener('change', () => {
+                if (paymentMethod.value === 'card') {
+                    cardPayment.style.display = 'block';
+                } else {
+                    cardPayment.style.display = 'none';
+                }
+            });
+            
+            // Enrollment
+            enrollFreeBtn.addEventListener('click', handleEnrollment);
+            enrollPaidBtn.addEventListener('click', handleEnrollment);
+        };
+        
+        // Check if user is logged in
+        const checkLoginStatus = () => {
+            currentUser = api.getCurrentUser();
+            if (currentUser) {
+                updateUIForLoggedInUser();
+            }
+        };
+        
+        // Update UI for logged in user
+        const updateUIForLoggedInUser = () => {
+            authButtons.style.display = 'none';
+            userMenu.classList.remove('hidden');
+            userAvatar.textContent = currentUser.avatar;
+            welcomeUser.textContent = currentUser.name;
+            dashboardSection.classList.remove('hidden');
+            
+            // Load user's courses for the dashboard
+            const response = api.getUserCourses(currentUser.id);
+            if (response.success) {
+                renderContinueLearning(response.data);
+            }
+        };
+        
+        // Update UI for logged out user
+        const updateUIForLoggedOutUser = () => {
+            authButtons.style.display = 'flex';
+            userMenu.classList.add('hidden');
+            dashboardSection.classList.add('hidden');
+        };
+        
+        // Show notification
+        const showNotification = (message, isSuccess = true) => {
             notification.textContent = message;
             notification.className = 'notification';
-            if (isError) notification.classList.add('error');
+            if (!isSuccess) {
+                notification.classList.add('error');
+            }
             notification.style.display = 'block';
-            setTimeout(() => { notification.style.display = 'none'; }, 2800);
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
         };
-
-        const openModal = (modalEl) => { modalEl.style.display = 'flex'; };
-        const closeModal = (modalEl) => { modalEl.style.display = 'none'; };
-
-        // ---------- Render Functions ----------
+        
+        // Handle login
+        const handleLogin = async () => {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Simple validation
+            if (!email || !password) {
+                showNotification('Please fill in all fields', false);
+                return;
+            }
+            
+            // Show loading state
+            loginText.classList.add('hidden');
+            loginLoader.classList.remove('hidden');
+            
+            try {
+                const response = await api.login(email, password);
+                
+                if (response.success) {
+                    currentUser = response.user;
+                    loginModal.style.display = 'none';
+                    updateUIForLoggedInUser();
+                    loadCourses();
+                    loadCommunityPosts();
+                    showNotification(`Welcome back, ${response.user.name}!`);
+                } else {
+                    showNotification(response.message, false);
+                }
+            } catch (error) {
+                showNotification('An error occurred during login', false);
+            } finally {
+                // Hide loading state
+                loginText.classList.remove('hidden');
+                loginLoader.classList.add('hidden');
+            }
+        };
+        
+        // Handle signup
+        const handleSignup = async () => {
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm-password').value;
+            const termsAgreed = document.getElementById('terms-agree').checked;
+            
+            // Simple validation
+            if (!name || !email || !password || !confirmPassword) {
+                showNotification('Please fill in all fields', false);
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showNotification('Passwords do not match', false);
+                return;
+            }
+            
+            if (!termsAgreed) {
+                showNotification('Please agree to the terms and conditions', false);
+                return;
+            }
+            
+            // Show loading state
+            signupText.classList.add('hidden');
+            signupLoader.classList.remove('hidden');
+            
+            try {
+                const response = await api.register(name, email, password);
+                
+                if (response.success) {
+                    currentUser = response.user;
+                    signupModal.style.display = 'none';
+                    updateUIForLoggedInUser();
+                    loadCourses();
+                    loadCommunityPosts();
+                    showNotification(`Welcome to SkillForge, ${response.user.name}!`);
+                } else {
+                    showNotification(response.message, false);
+                }
+            } catch (error) {
+                showNotification('An error occurred during registration', false);
+            } finally {
+                // Hide loading state
+                signupText.classList.remove('hidden');
+                signupLoader.classList.add('hidden');
+            }
+        };
+        
+        // Handle logout
+        const handleLogout = () => {
+            api.logout();
+            currentUser = null;
+            updateUIForLoggedOutUser();
+            showNotification('You have been logged out');
+        };
+        
+        // Handle search
+        const handleSearch = () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                const response = api.getCourses(query);
+                if (response.success) {
+                    renderCourses(response.data);
+                    showNotification(`Found ${response.data.length} courses for: ${query}`);
+                }
+            } else {
+                loadCourses();
+            }
+        };
+        
+        // Load courses from the backend
+        const loadCourses = () => {
+            const response = api.getCourses();
+            if (response.success) {
+                renderCourses(response.data);
+            }
+        };
+        
+        // Render courses to the UI
         const renderCourses = (courses) => {
             coursesContainer.innerHTML = '';
+            
             courses.forEach(course => {
-                const isEnrolled = currentUser && currentUser.enrolledCourses && currentUser.enrolledCourses.includes(course.id);
-                const progress = currentUser && currentUser.progress && currentUser.progress[course.id] ? currentUser.progress[course.id] : null;
-                const card = document.createElement('div');
-                card.className = 'course-card';
-                card.innerHTML = `
+                const isEnrolled = currentUser && currentUser.enrolledCourses.includes(course.id);
+                const progress = currentUser && currentUser.progress && currentUser.progress[course.id] 
+                    ? currentUser.progress[course.id] 
+                    : null;
+                
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                courseCard.innerHTML = `
                     ${course.price === 0 ? '<div class="course-badge">Free</div>' : ''}
-                    <div class="course-thumb"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="course-thumb">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
                     <div class="course-content">
                         <h3>${course.title}</h3>
-                        <div class="course-instructor"><i class="fas fa-user"></i> ${course.instructor}</div>
+                        <div class="course-instructor">
+                            <i class="fas fa-user"></i> ${course.instructor}
+                        </div>
                         <p>${course.description}</p>
                         <div class="course-meta">
                             <div>
-                                <div class="rating">${'★'.repeat(Math.floor(course.rating || 0))}${(course.rating||0) % 1 >= 0.5 ? '½' : ''} ${(course.rating||0).toFixed(1)}</div>
-                                <div>${course.totalStudents || 0} students</div>
+                                <div class="rating">${'★'.repeat(Math.floor(course.rating))}${course.rating % 1 >= 0.5 ? '½' : ''} ${course.rating}</div>
+                                <div>${course.totalStudents} students</div>
                             </div>
-                            <div class="price">${course.price === 0 ? 'Free' : 'USD ' + course.price.toFixed(2)}</div>
+                            <div class="price">${course.price === 0 ? 'Free' : '$' + course.price.toFixed(2)}</div>
                         </div>
-                        <div class="course-actions" style="margin-top:12px;"></div>
+                        ${progress ? `
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${(progress.completed / progress.total) * 100}%"></div>
+                            </div>
+                            <div class="course-meta">
+                                <span>${Math.round((progress.completed / progress.total) * 100)}% complete</span>
+                                <button class="btn btn-primary btn-sm">Continue</button>
+                            </div>
+                        ` : `
+                            <button class="btn btn-primary" style="width: 100%; margin-top: 10px;" 
+                                data-course-id="${course.id}" 
+                                data-course-title="${course.title}"
+                                data-course-price="${course.price}">
+                                ${isEnrolled ? 'Go to Course' : (course.price === 0 ? 'Enroll for Free' : 'Enroll Now')}
+                            </button>
+                        `}
                     </div>
                 `;
-                const actions = card.querySelector('.course-actions');
-                if (progress) {
-                    const percent = Math.round((progress.completed / progress.total) * 100);
-                    actions.innerHTML = `
-                        <div class="progress-bar"><div class="progress-fill" style="width:${percent}%"></div></div>
-                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
-                          <small>${percent}% complete</small>
-                          <button class="btn btn-primary btn-sm go-course" data-course-id="${course.id}">Continue</button>
-                        </div>`;
-                } else {
-                    const enrollBtn = document.createElement('button');
-                    enrollBtn.className = 'btn btn-primary';
-                    enrollBtn.textContent = isEnrolled ? 'Go to Course' : (course.price === 0 ? 'Enroll for Free' : 'Enroll Now');
-                    enrollBtn.setAttribute('data-course-id', course.id);
-                    enrollBtn.setAttribute('data-course-title', course.title);
-                    enrollBtn.setAttribute('data-course-price', course.price);
-                    actions.appendChild(enrollBtn);
-
+                
+                coursesContainer.appendChild(courseCard);
+                
+                // Add event listener to enroll button
+                const enrollBtn = courseCard.querySelector('button');
+                if (enrollBtn && !isEnrolled) {
                     enrollBtn.addEventListener('click', () => {
                         currentCourseToEnroll = {
                             id: enrollBtn.getAttribute('data-course-id'),
                             title: enrollBtn.getAttribute('data-course-title'),
                             price: parseFloat(enrollBtn.getAttribute('data-course-price'))
                         };
-                        enrollCourseTitle.textContent = currentCourseToEnroll.title;
+                        
+                        // Show enrollment modal
+                        document.getElementById('enroll-course-title').textContent = currentCourseToEnroll.title;
+                        
                         if (currentCourseToEnroll.price === 0) {
                             enrollFreeSection.classList.remove('hidden');
                             enrollPaidSection.classList.add('hidden');
                         } else {
                             enrollFreeSection.classList.add('hidden');
                             enrollPaidSection.classList.remove('hidden');
-                            coursePriceEl.textContent = '$' + currentCourseToEnroll.price.toFixed(2);
+                            document.getElementById('course-price').textContent = '$' + currentCourseToEnroll.price.toFixed(2);
                         }
-                        openModal(enrollModal);
+                        
+                        enrollModal.style.display = 'flex';
                     });
                 }
-
-                coursesContainer.appendChild(card);
             });
         };
-
+        
+        // Render continue learning courses
         const renderContinueLearning = (courses) => {
             continueLearningContainer.innerHTML = '';
-            if (!courses || courses.length === 0) {
-                continueLearningContainer.innerHTML = `<p>You haven't enrolled in any courses yet. <button class="btn btn-primary" id="browse-courses-btn">Browse Courses</button></p>`;
-                const btn = document.getElementById('browse-courses-btn');
-                if (btn) btn.addEventListener('click', () => { window.location.hash = '#courses'; });
+            
+            if (courses.length === 0) {
+                continueLearningContainer.innerHTML = `
+                    <div class="text-center">
+                        <p>You haven't enrolled in any courses yet.</p>
+                        <a href="#" class="btn btn-primary mt-20">Browse Courses</a>
+                    </div>
+                `;
                 return;
             }
-            courses.slice(0,3).forEach(course => {
-                const progress = (currentUser && currentUser.progress && currentUser.progress[course.id]) || { completed:0, total: (course.lessons||1) };
-                const percent = Math.round((progress.completed / progress.total) * 100);
-                const card = document.createElement('div');
-                card.className = 'course-card';
-                card.innerHTML = `
-                    <div class="course-thumb"><i class="fas fa-graduation-cap"></i></div>
+            
+            courses.slice(0, 3).forEach(course => {
+                const progress = currentUser.progress[course.id];
+                const progressPercent = Math.round((progress.completed / progress.total) * 100);
+                
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                courseCard.innerHTML = `
+                    <div class="course-thumb">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
                     <div class="course-content">
                         <h3>${course.title}</h3>
-                        <div class="progress-bar"><div class="progress-fill" style="width:${percent}%"></div></div>
-                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
-                          <small>${percent}% complete</small>
-                          <button class="btn btn-primary btn-sm">Continue</button>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${progressPercent}%"></div>
+                        </div>
+                        <div class="course-meta">
+                            <span>${progressPercent}% complete</span>
+                            <button class="btn btn-primary btn-sm">Continue</button>
                         </div>
                     </div>
                 `;
-                continueLearningContainer.appendChild(card);
+                
+                continueLearningContainer.appendChild(courseCard);
             });
         };
-
+        
+        // Load community posts
+        const loadCommunityPosts = () => {
+            // Load projects
+            const projectsResponse = api.getCommunityPosts('project');
+            if (projectsResponse.success) {
+                renderCommunityPosts(projectsResponse.data, projectsContainer);
+            }
+            
+            // Load tutorials
+            const tutorialsResponse = api.getCommunityPosts('tutorial');
+            if (tutorialsResponse.success) {
+                renderCommunityPosts(tutorialsResponse.data, tutorialsContainer);
+            }
+            
+            // Load articles
+            const articlesResponse = api.getCommunityPosts('article');
+            if (articlesResponse.success) {
+                renderCommunityPosts(articlesResponse.data, articlesContainer);
+            }
+        };
+        
+        // Render community posts
         const renderCommunityPosts = (posts, container) => {
             container.innerHTML = '';
+            
             posts.forEach(post => {
-                const card = document.createElement('div');
-                card.className = 'community-card';
-                card.innerHTML = `
+                const postCard = document.createElement('div');
+                postCard.className = 'community-card';
+                postCard.innerHTML = `
                     <div class="community-header">
                         <div class="user-avatar">${post.authorAvatar}</div>
                         <div>
                             <div><strong>${post.author}</strong></div>
-                            <div style="font-size:0.85rem;color:var(--gray-600)">${new Date(post.createdAt).toLocaleDateString()}</div>
+                            <div style="font-size: 0.8rem; color: var(--gray-500);">${new Date(post.createdAt).toLocaleDateString()}</div>
                         </div>
                     </div>
                     <div class="community-body">
                         <h3>${post.title}</h3>
                         <p>${post.content}</p>
-                        <div style="display:flex;gap:8px;flex-wrap:wrap;">${post.tags.map(t=>`<span style="background:var(--gray-100);padding:6px 12px;border-radius:20px;font-size:0.85rem">#${t}</span>`).join('')}</div>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            ${post.tags.map(tag => `<span style="background: var(--gray-200); padding: 4px 10px; border-radius: 50px; font-size: 0.8rem;">#${tag}</span>`).join('')}
+                        </div>
                     </div>
                     <div class="community-footer">
                         <div class="post-actions">
-                            <div class="post-action like-action" data-post-id="${post.id}"><i class="fas fa-heart"></i> <span>${post.likes}</span></div>
-                            <div class="post-action"><i class="fas fa-comment"></i> <span>${post.comments}</span></div>
-                            <div class="post-action"><i class="fas fa-share"></i> <span>${post.shares}</span></div>
+                            <div class="post-action" data-post-id="${post.id}">
+                                <i class="fas fa-heart"></i> <span>${post.likes}</span>
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-comment"></i> <span>${post.comments}</span>
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-share"></i> <span>${post.shares}</span>
+                            </div>
                         </div>
                     </div>
                 `;
-                container.appendChild(card);
-
-                // like button
-                const likeBtn = card.querySelector('.like-action');
+                
+                container.appendChild(postCard);
+                
+                // Add event listener to like button
+                const likeBtn = postCard.querySelector('.post-action');
                 likeBtn.addEventListener('click', () => {
-                    if (!currentUser) { showNotification('Please log in to like posts', true); return; }
-                    const resp = api.likePost(likeBtn.getAttribute('data-post-id'));
-                    if (resp.success) {
-                        likeBtn.querySelector('span').textContent = resp.data.likes;
-                        showNotification('Post liked!');
+                    if (!currentUser) {
+                        showNotification('Please log in to like posts', false);
+                        return;
+                    }
+                    
+                    const response = api.likePost(likeBtn.getAttribute('data-post-id'), currentUser.id);
+                    if (response.success) {
+                        const likesElement = likeBtn.querySelector('span');
+                        likesElement.textContent = response.data.likes;
+                        showNotification(`Liked ${post.title}!`);
                     }
                 });
             });
         };
-
-        // ---------- Event Listeners ----------
-        const setupEventListeners = () => {
-            // Auth buttons
-            loginBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(loginModal); });
-            signupBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(signupModal); });
-            startLearningBtn && startLearningBtn.addEventListener('click', () => { window.location.hash = '#courses'; });
-
-            // Close modals
-            closeLogin.addEventListener('click', () => closeModal(loginModal));
-            closeSignup.addEventListener('click', () => closeModal(signupModal));
-            closeEnroll.addEventListener('click', () => closeModal(enrollModal));
-
-            // Switch login <-> signup links
-            if (switchToSignup) switchToSignup.addEventListener('click', (e) => { e.preventDefault(); closeModal(loginModal); openModal(signupModal); });
-            if (switchToLogin) switchToLogin.addEventListener('click', (e) => { e.preventDefault(); closeModal(signupModal); openModal(loginModal); });
-
-            // Login
-            loginSubmit.addEventListener('click', handleLogin);
-            // Signup
-            signupSubmit.addEventListener('click', handleSignup);
-
-            // Logout (from dropdown)
-            logoutBtn && logoutBtn.addEventListener('click', handleLogout);
-
-            // Tabs in community
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                    const tabId = tab.getAttribute('data-tab');
-                    const el = document.getElementById(tabId);
-                    if (el) el.classList.add('active');
-                });
-            });
-
-            // Search
-            searchBtn.addEventListener('click', handleSearch);
-            searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSearch(); });
-
-            // Category click
-            categoryCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    const cat = card.getAttribute('data-category');
-                    const resp = api.getCourses('', cat);
-                    if (resp.success) {
-                        renderCourses(resp.data);
-                        showNotification(`Showing ${resp.data.length} courses for "${cat}"`);
-                    }
-                });
-            });
-
-            // Tags
-            tagElements.forEach(tagEl => {
-                tagEl.addEventListener('click', () => {
-                    const searchTerm = tagEl.getAttribute('data-search');
-                    searchInput.value = searchTerm;
-                    handleSearch();
-                });
-            });
-
-            // Payment option selection
-            paymentOptions.forEach(opt => {
-                opt.addEventListener('click', () => {
-                    paymentOptions.forEach(o => o.classList.remove('active'));
-                    opt.classList.add('active');
-                    const method = opt.getAttribute('data-method');
-                    if (method === 'card') cardPayment.style.display = 'block';
-                    else cardPayment.style.display = 'none';
-                });
-            });
-
-            // Enrollment actions
-            enrollFreeBtn && enrollFreeBtn.addEventListener('click', handleEnrollment);
-            enrollPaidBtn && enrollPaidBtn.addEventListener('click', handleEnrollment);
-
-            // click outside modal to close
-            window.addEventListener('click', (e) => {
-                if (e.target === loginModal) closeModal(loginModal);
-                if (e.target === signupModal) closeModal(signupModal);
-                if (e.target === enrollModal) closeModal(enrollModal);
-            });
-
-            // user menu toggle
-            const userMenuToggle = document.getElementById('user-avatar');
-            if (userMenuToggle) {
-                userMenuToggle.addEventListener('click', () => {
-                    const dropdown = document.getElementById('user-dropdown');
-                    if (dropdown) dropdown.classList.toggle('active');
-                });
-            }
-        };
-
-        // ---------- Auth Handlers ----------
-        const handleLogin = async () => {
-            const email = document.getElementById('login-email').value.trim();
-            const password = document.getElementById('login-password').value;
-            if (!email || !password) { showNotification('Please fill in all fields', true); return; }
-            loginText.classList.add('hidden'); loginLoader.classList.remove('hidden');
-            try {
-                const resp = await api.login(email, password);
-                if (resp.success) {
-                    currentUser = resp.user;
-                    closeModal(loginModal);
-                    updateUIForLoggedInUser();
-                    loadCoursesAndCommunity();
-                    showNotification(`Welcome back, ${resp.user.name}!`);
-                } else {
-                    showNotification(resp.message, true);
-                }
-            } catch (err) {
-                showNotification('Login failed', true);
-            } finally {
-                loginText.classList.remove('hidden'); loginLoader.classList.add('hidden');
-            }
-        };
-
-        const handleSignup = async () => {
-            const name = document.getElementById('signup-name').value.trim();
-            const email = document.getElementById('signup-email').value.trim();
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('signup-confirm-password').value;
-            const termsAgreed = document.getElementById('terms-agree').checked;
-            if (!name || !email || !password || !confirmPassword) { showNotification('Please fill in all fields', true); return; }
-            if (password !== confirmPassword) { showNotification('Passwords do not match', true); return; }
-            if (!termsAgreed) { showNotification('Please agree to terms', true); return; }
-            signupText.classList.add('hidden'); signupLoader.classList.remove('hidden');
-            try {
-                const resp = await api.register(name, email, password);
-                if (resp.success) {
-                    currentUser = resp.user;
-                    closeModal(signupModal);
-                    updateUIForLoggedInUser();
-                    loadCoursesAndCommunity();
-                    showNotification(`Welcome to SkillForge, ${resp.user.name}!`);
-                } else {
-                    showNotification(resp.message, true);
-                }
-            } catch (err) {
-                showNotification('Registration failed', true);
-            } finally {
-                signupText.classList.remove('hidden'); signupLoader.classList.add('hidden');
-            }
-        };
-
-        const handleLogout = () => {
-            api.logout();
-            currentUser = null;
-            updateUIForLoggedOutUser();
-            showNotification('You have been logged out');
-            loadCoursesAndCommunity();
-        };
-
-        const updateUIForLoggedInUser = () => {
-            authButtons.style.display = 'none';
-            userMenuEl.classList.remove('hidden');
-            userAvatar.textContent = currentUser.avatar || (currentUser.name.split(' ').map(n=>n[0]).join('').toUpperCase());
-            welcomeUser.textContent = currentUser.name;
-            dashboardSection.classList.remove('hidden');
-            // load user courses
-            const r = api.getUserCourses(currentUser.id);
-            if (r.success) renderContinueLearning(r.data);
-        };
-
-        const updateUIForLoggedOutUser = () => {
-            authButtons.style.display = 'flex';
-            userMenuEl.classList.add('hidden');
-            dashboardSection.classList.add('hidden');
-        };
-
-        // ---------- Enrollment ----------
+        
+        // Handle enrollment
         const handleEnrollment = async () => {
             if (!currentUser) {
-                showNotification('Please log in to enroll', true);
-                closeModal(enrollModal);
-                openModal(loginModal);
+                showNotification('Please log in to enroll in courses', false);
+                enrollModal.style.display = 'none';
+                loginModal.style.display = 'flex';
                 return;
             }
-            if (!currentCourseToEnroll) { showNotification('No course selected', true); return; }
-            const resp = await api.enrollCourse(currentUser.id, currentCourseToEnroll.id);
-            if (resp.success) {
-                closeModal(enrollModal);
-                showNotification(`Enrolled in ${currentCourseToEnroll.title}`);
-                // refresh UI
-                const userCoursesResp = api.getUserCourses(currentUser.id);
-                if (userCoursesResp.success) renderContinueLearning(userCoursesResp.data);
-                loadCoursesAndCommunity();
-            } else {
-                showNotification(resp.message, true);
-            }
-        };
-
-        // ---------- Search ----------
-        const handleSearch = () => {
-            const q = (searchInput.value || '').trim();
-            if (!q) {
+            
+            const response = await api.enrollCourse(currentUser.id, currentCourseToEnroll.id);
+            
+            if (response.success) {
+                enrollModal.style.display = 'none';
+                showNotification(`Successfully enrolled in ${currentCourseToEnroll.title}!`);
+                
+                // Refresh courses to show updated enrollment status
                 loadCourses();
-                showNotification('Showing all courses');
-                return;
+                
+                // Refresh dashboard
+                const userCoursesResponse = api.getUserCourses(currentUser.id);
+                if (userCoursesResponse.success) {
+                    renderContinueLearning(userCoursesResponse.data);
+                }
+            } else {
+                showNotification(response.message, false);
             }
-            const resp = api.getCourses(q, '');
-            if (resp.success) {
-                renderCourses(resp.data);
-                showNotification(`Found ${resp.data.length} courses for "${q}"`);
-            }
         };
-
-        // ---------- Loaders ----------
-        const loadCourses = () => {
-            const resp = api.getCourses();
-            if (resp.success) renderCourses(resp.data);
-        };
-
-        const loadCommunityPosts = () => {
-            const projectsResp = api.getCommunityPosts('project');
-            if (projectsResp.success) renderCommunityPosts(projectsResp.data, projectsContainer);
-            const tutorialsResp = api.getCommunityPosts('tutorial');
-            if (tutorialsResp.success) renderCommunityPosts(tutorialsResp.data, tutorialsContainer);
-            const articlesResp = api.getCommunityPosts('article');
-            if (articlesResp.success) renderCommunityPosts(articlesResp.data, articlesContainer);
-        };
-
-        const loadCoursesAndCommunity = () => {
-            loadCourses();
-            loadCommunityPosts();
-        };
-
-        // ---------- Init ----------
-        const initApp = () => {
-            initializeDatabase();
-            currentUser = api.getCurrentUser();
-            if (currentUser) updateUIForLoggedInUser();
-            else updateUIForLoggedOutUser();
-            setupEventListeners();
-            loadCoursesAndCommunity();
-        };
-
+        
+        // Initialize the application
         initApp();
-    })();
     </script>
 </body>
 </html>
