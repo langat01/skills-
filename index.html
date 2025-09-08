@@ -1,4 +1,4 @@
-i need backed for this <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -659,51 +659,8 @@ i need backed for this <!DOCTYPE html>
             <p>Most popular courses among our community</p>
         </div>
         
-        <div class="courses-grid">
-            <div class="course-card">
-                <div class="course-thumb">Complete Web Development Bootcamp</div>
-                <div class="course-content">
-                    <h3>Complete Web Development Bootcamp</h3>
-                    <p>Master HTML, CSS, JavaScript, React, Node.js, and More!</p>
-                    <div class="course-meta">
-                        <span class="rating">★★★★★ (4.9)</span>
-                        <span>$89.99</span>
-                    </div>
-                </div>
-            </div>
-            <div class="course-card">
-                <div class="course-thumb">Python for Data Science</div>
-                <div class="course-content">
-                    <h3>Python for Data Science</h3>
-                    <p>Learn data analysis, visualization, and machine learning with Python</p>
-                    <div class="course-meta">
-                        <span class="rating">★★★★☆ (4.7)</span>
-                        <span>$74.99</span>
-                    </div>
-                </div>
-            </div>
-            <div class="course-card">
-                <div class="course-thumb">UX/UI Design Masterclass</div>
-                <div class="course-content">
-                    <h3>UX/UI Design Masterclass</h3>
-                    <p>Design beautiful and functional user interfaces</p>
-                    <div class="course-meta">
-                        <span class="rating">★★★★★ (4.8)</span>
-                        <span>$69.99</span>
-                    </div>
-                </div>
-            </div>
-            <div class="course-card">
-                <div class="course-thumb">iOS Development with SwiftUI</div>
-                <div class="course-content">
-                    <h3>iOS Development with SwiftUI</h3>
-                    <p>Build modern iOS apps with Apple's latest framework</p>
-                    <div class="course-meta">
-                        <span class="rating">★★★★☆ (4.6)</span>
-                        <span>$79.99</span>
-                    </div>
-                </div>
-            </div>
+        <div class="courses-grid" id="courses-container">
+            <!-- Courses will be dynamically loaded here -->
         </div>
     </section>
 
@@ -721,101 +678,20 @@ i need backed for this <!DOCTYPE html>
         </div>
         
         <div class="tab-content active" id="projects">
-            <div class="courses-grid">
-                <div class="course-card">
-                    <div class="course-thumb">E-commerce React App</div>
-                    <div class="course-content">
-                        <h3>E-commerce React App</h3>
-                        <p>By: Sarah Johnson</p>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <div class="course-thumb">Weather Dashboard</div>
-                    <div class="course-content">
-                        <h3>Weather Dashboard</h3>
-                        <p>By: Michael Chen</p>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <div class="course-thumb">Task Management Tool</div>
-                    <div class="course-content">
-                        <h3>Task Management Tool</h3>
-                        <p>By: Jessica Williams</p>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <div class="course-thumb">Fitness Tracker App</div>
-                    <div class="course-content">
-                        <h3>Fitness Tracker App</h3>
-                        <p>By: David Kim</p>
-                    </div>
-                </div>
+            <div class="courses-grid" id="projects-container">
+                <!-- Projects will be dynamically loaded here -->
             </div>
         </div>
         
         <div class="tab-content" id="tutorials">
-            <div class="courses-grid">
-                <div class="course-card">
-                    <div class="course-thumb">Getting Started with React Hooks</div>
-                    <div class="course-content">
-                        <h3>Getting Started with React Hooks</h3>
-                        <p>By: Alex Thompson</p>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <div class="course-thumb">Python Data Analysis Tutorial</div>
-                    <div class="course-content">
-                        <h3>Python Data Analysis Tutorial</h3>
-                        <p>By: Maria Rodriguez</p>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <div class="course-thumb">UI Design Principles</div>
-                    <div class="course-content">
-                        <h3>UI Design Principles</h3>
-                        <p>By: James Wilson</p>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <div class="course-thumb">Mobile App Deployment</div>
-                    <div class="course-content">
-                        <h3>Mobile App Deployment Guide</h3>
-                        <p>By: Sophia Lee</p>
-                    </div>
-                </div>
+            <div class="courses-grid" id="tutorials-container">
+                <!-- Tutorials will be dynamically loaded here -->
             </div>
         </div>
         
         <div class="tab-content" id="articles">
-            <div class="courses-grid">
-                <div class="course-card">
-                    <div class="course-thumb">The Future of Web Development</div>
-                    <div class="course-content">
-                        <h3>The Future of Web Development</h3>
-                        <p>By: Robert Martinez</p>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <div class="course-thumb">AI Ethics in 2025</div>
-                    <div class="course-content">
-                        <h3>AI Ethics in 2025</h3>
-                        <p>By: Emily Chen</p>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <div class="course-thumb">Designing for Accessibility</div>
-                    <div class="course-content">
-                        <h3>Designing for Accessibility</h3>
-                        <p>By: David Kim</p>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <div class="course-thumb">Career Switching to Tech</div>
-                    <div class="course-content">
-                        <h3>Career Switching to Tech</h3>
-                        <p>By: Jennifer Adams</p>
-                    </div>
-                </div>
+            <div class="courses-grid" id="articles-container">
+                <!-- Articles will be dynamically loaded here -->
             </div>
         </div>
     </section>
@@ -919,6 +795,314 @@ i need backed for this <!DOCTYPE html>
     <div class="notification" id="notification"></div>
 
     <script>
+        // ==================== BACKEND SIMULATION ====================
+        // This section simulates a backend using localStorage
+        
+        // Database initialization
+        const initializeDatabase = () => {
+            // Users collection
+            if (!localStorage.getItem('users')) {
+                localStorage.setItem('users', JSON.stringify([
+                    { 
+                        id: 1, 
+                        name: 'Demo User', 
+                        email: 'demo@skillforge.com', 
+                        password: 'password123', 
+                        avatar: '', 
+                        enrolledCourses: [] 
+                    }
+                ]));
+            }
+            
+            // Courses collection
+            if (!localStorage.getItem('courses')) {
+                localStorage.setItem('courses', JSON.stringify([
+                    {
+                        id: 1,
+                        title: 'Complete Web Development Bootcamp',
+                        description: 'Master HTML, CSS, JavaScript, React, Node.js, and More!',
+                        thumbnail: '',
+                        price: 89.99,
+                        category: 'web',
+                        instructor: 'Sarah Johnson',
+                        rating: 4.9,
+                        totalStudents: 1250,
+                        totalHours: 42,
+                        lessons: [],
+                        requirements: [],
+                        whatYouWillLearn: [],
+                        isPublished: true
+                    },
+                    {
+                        id: 2,
+                        title: 'Python for Data Science',
+                        description: 'Learn data analysis, visualization, and machine learning with Python',
+                        thumbnail: '',
+                        price: 74.99,
+                        category: 'data',
+                        instructor: 'Michael Chen',
+                        rating: 4.7,
+                        totalStudents: 890,
+                        totalHours: 36,
+                        lessons: [],
+                        requirements: [],
+                        whatYouWillLearn: [],
+                        isPublished: true
+                    },
+                    {
+                        id: 3,
+                        title: 'UX/UI Design Masterclass',
+                        description: 'Design beautiful and functional user interfaces',
+                        thumbnail: '',
+                        price: 69.99,
+                        category: 'design',
+                        instructor: 'Jessica Williams',
+                        rating: 4.8,
+                        totalStudents: 720,
+                        totalHours: 28,
+                        lessons: [],
+                        requirements: [],
+                        whatYouWillLearn: [],
+                        isPublished: true
+                    },
+                    {
+                        id: 4,
+                        title: 'iOS Development with SwiftUI',
+                        description: 'Build modern iOS apps with Apple\'s latest framework',
+                        thumbnail: '',
+                        price: 79.99,
+                        category: 'mobile',
+                        instructor: 'David Kim',
+                        rating: 4.6,
+                        totalStudents: 540,
+                        totalHours: 32,
+                        lessons: [],
+                        requirements: [],
+                        whatYouWillLearn: [],
+                        isPublished: true
+                    }
+                ]));
+            }
+            
+            // Community posts collection
+            if (!localStorage.getItem('communityPosts')) {
+                localStorage.setItem('communityPosts', JSON.stringify([
+                    {
+                        id: 1,
+                        title: 'E-commerce React App',
+                        content: 'A full-featured e-commerce application built with React and Node.js',
+                        author: 'Sarah Johnson',
+                        type: 'project',
+                        thumbnail: '',
+                        tags: ['react', 'nodejs', 'ecommerce'],
+                        likes: 45,
+                        comments: [],
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 2,
+                        title: 'Weather Dashboard',
+                        content: 'A responsive weather dashboard using weather API',
+                        author: 'Michael Chen',
+                        type: 'project',
+                        thumbnail: '',
+                        tags: ['javascript', 'api', 'dashboard'],
+                        likes: 32,
+                        comments: [],
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 3,
+                        title: 'Getting Started with React Hooks',
+                        content: 'A comprehensive tutorial on React Hooks for beginners',
+                        author: 'Alex Thompson',
+                        type: 'tutorial',
+                        thumbnail: '',
+                        tags: ['react', 'hooks', 'tutorial'],
+                        likes: 78,
+                        comments: [],
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 4,
+                        title: 'Python Data Analysis Tutorial',
+                        content: 'Learn how to analyze data with Python and Pandas',
+                        author: 'Maria Rodriguez',
+                        type: 'tutorial',
+                        thumbnail: '',
+                        tags: ['python', 'pandas', 'data analysis'],
+                        likes: 56,
+                        comments: [],
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 5,
+                        title: 'The Future of Web Development',
+                        content: 'Exploring the latest trends in web development',
+                        author: 'Robert Martinez',
+                        type: 'article',
+                        thumbnail: '',
+                        tags: ['web development', 'trends', 'future'],
+                        likes: 102,
+                        comments: [],
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 6,
+                        title: 'AI Ethics in 2025',
+                        content: 'The ethical considerations of artificial intelligence',
+                        author: 'Emily Chen',
+                        type: 'article',
+                        thumbnail: '',
+                        tags: ['ai', 'ethics', 'technology'],
+                        likes: 87,
+                        comments: [],
+                        createdAt: new Date().toISOString()
+                    }
+                ]));
+            }
+        };
+        
+        // API simulation functions
+        const api = {
+            // User authentication
+            login: (email, password) => {
+                const users = JSON.parse(localStorage.getItem('users'));
+                const user = users.find(u => u.email === email && u.password === password);
+                
+                if (user) {
+                    const { password: _, ...userWithoutPassword } = user;
+                    localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
+                    return { success: true, user: userWithoutPassword };
+                } else {
+                    return { success: false, message: 'Invalid email or password' };
+                }
+            },
+            
+            register: (name, email, password) => {
+                const users = JSON.parse(localStorage.getItem('users'));
+                
+                if (users.some(u => u.email === email)) {
+                    return { success: false, message: 'User with this email already exists' };
+                }
+                
+                const newUser = {
+                    id: users.length + 1,
+                    name,
+                    email,
+                    password,
+                    avatar: '',
+                    enrolledCourses: []
+                };
+                
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                const { password: _, ...userWithoutPassword } = newUser;
+                localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
+                
+                return { success: true, user: userWithoutPassword };
+            },
+            
+            logout: () => {
+                localStorage.removeItem('currentUser');
+                return { success: true };
+            },
+            
+            getCurrentUser: () => {
+                const user = localStorage.getItem('currentUser');
+                return user ? JSON.parse(user) : null;
+            },
+            
+            // Courses
+            getCourses: (search = '') => {
+                let courses = JSON.parse(localStorage.getItem('courses'));
+                
+                if (search) {
+                    const searchLower = search.toLowerCase();
+                    courses = courses.filter(course => 
+                        course.title.toLowerCase().includes(searchLower) || 
+                        course.description.toLowerCase().includes(searchLower) ||
+                        course.category.toLowerCase().includes(searchLower)
+                    );
+                }
+                
+                return { success: true, data: courses };
+            },
+            
+            getCourse: (id) => {
+                const courses = JSON.parse(localStorage.getItem('courses'));
+                const course = courses.find(c => c.id === parseInt(id));
+                
+                if (course) {
+                    return { success: true, data: course };
+                } else {
+                    return { success: false, message: 'Course not found' };
+                }
+            },
+            
+            enrollCourse: (userId, courseId) => {
+                const users = JSON.parse(localStorage.getItem('users'));
+                const courses = JSON.parse(localStorage.getItem('courses'));
+                
+                const userIndex = users.findIndex(u => u.id === userId);
+                const courseIndex = courses.findIndex(c => c.id === parseInt(courseId));
+                
+                if (userIndex === -1) {
+                    return { success: false, message: 'User not found' };
+                }
+                
+                if (courseIndex === -1) {
+                    return { success: false, message: 'Course not found' };
+                }
+                
+                if (users[userIndex].enrolledCourses.includes(parseInt(courseId))) {
+                    return { success: false, message: 'User already enrolled in this course' };
+                }
+                
+                users[userIndex].enrolledCourses.push(parseInt(courseId));
+                courses[courseIndex].totalStudents += 1;
+                
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('courses', JSON.stringify(courses));
+                
+                // Update current user if it's the same user
+                const currentUser = api.getCurrentUser();
+                if (currentUser && currentUser.id === userId) {
+                    currentUser.enrolledCourses = users[userIndex].enrolledCourses;
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                }
+                
+                return { success: true, message: 'Successfully enrolled in course' };
+            },
+            
+            // Community posts
+            getCommunityPosts: (type = '') => {
+                let posts = JSON.parse(localStorage.getItem('communityPosts'));
+                
+                if (type) {
+                    posts = posts.filter(post => post.type === type);
+                }
+                
+                return { success: true, data: posts };
+            },
+            
+            likePost: (postId, userId) => {
+                const posts = JSON.parse(localStorage.getItem('communityPosts'));
+                const postIndex = posts.findIndex(p => p.id === parseInt(postId));
+                
+                if (postIndex === -1) {
+                    return { success: false, message: 'Post not found' };
+                }
+                
+                posts[postIndex].likes += 1;
+                localStorage.setItem('communityPosts', JSON.stringify(posts));
+                
+                return { success: true, data: posts[postIndex] };
+            }
+        };
+        
+        // ==================== FRONTEND CODE ====================
         // DOM Elements
         const loginBtn = document.getElementById('login-btn');
         const signupBtn = document.getElementById('signup-btn');
@@ -937,33 +1121,39 @@ i need backed for this <!DOCTYPE html>
         const userMenu = document.getElementById('user-menu');
         const userAvatar = document.getElementById('user-avatar');
         const authButtons = document.querySelector('.auth-buttons');
-        
-        // Sample user data (simulating a database)
-        const users = [
-            { email: 'demo@skillforge.com', password: 'password123', name: 'Demo User' }
-        ];
+        const coursesContainer = document.getElementById('courses-container');
+        const projectsContainer = document.getElementById('projects-container');
+        const tutorialsContainer = document.getElementById('tutorials-container');
+        const articlesContainer = document.getElementById('articles-container');
         
         // Current user
         let currentUser = null;
         
-        // Check if user is logged in (from localStorage)
-        function checkLoginStatus() {
-            const userData = localStorage.getItem('currentUser');
-            if (userData) {
-                currentUser = JSON.parse(userData);
+        // Initialize the application
+        const initApp = () => {
+            initializeDatabase();
+            checkLoginStatus();
+            loadCourses();
+            loadCommunityPosts();
+        };
+        
+        // Check if user is logged in
+        const checkLoginStatus = () => {
+            currentUser = api.getCurrentUser();
+            if (currentUser) {
                 updateUIForLoggedInUser();
             }
-        }
+        };
         
         // Update UI for logged in user
-        function updateUIForLoggedInUser() {
+        const updateUIForLoggedInUser = () => {
             authButtons.style.display = 'none';
             userMenu.style.display = 'block';
             userAvatar.src = `https://ui-avatars.com/api/?name=${currentUser.name}&background=random&size=40&rounded=true&bold=true`;
-        }
+        };
         
         // Show notification
-        function showNotification(message, isSuccess = true) {
+        const showNotification = (message, isSuccess = true) => {
             notification.textContent = message;
             notification.style.background = isSuccess ? 'var(--success)' : 'var(--accent)';
             notification.style.display = 'block';
@@ -971,7 +1161,112 @@ i need backed for this <!DOCTYPE html>
             setTimeout(() => {
                 notification.style.display = 'none';
             }, 3000);
-        }
+        };
+        
+        // Load courses from the backend
+        const loadCourses = () => {
+            const response = api.getCourses();
+            if (response.success) {
+                renderCourses(response.data);
+            }
+        };
+        
+        // Render courses to the UI
+        const renderCourses = (courses) => {
+            coursesContainer.innerHTML = '';
+            
+            courses.forEach(course => {
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                courseCard.innerHTML = `
+                    <div class="course-thumb">${course.title}</div>
+                    <div class="course-content">
+                        <h3>${course.title}</h3>
+                        <p>${course.description}</p>
+                        <div class="course-meta">
+                            <span class="rating">${'★'.repeat(Math.floor(course.rating))}${course.rating % 1 >= 0.5 ? '½' : ''} (${course.rating})</span>
+                            <span>$${course.price.toFixed(2)}</span>
+                        </div>
+                        ${currentUser ? `<button class="btn btn-primary" style="width: 100%; margin-top: 10px;" data-course-id="${course.id}">Enroll Now</button>` : ''}
+                    </div>
+                `;
+                
+                coursesContainer.appendChild(courseCard);
+                
+                // Add event listener to enroll button
+                if (currentUser) {
+                    const enrollBtn = courseCard.querySelector('button');
+                    enrollBtn.addEventListener('click', () => {
+                        const response = api.enrollCourse(currentUser.id, enrollBtn.getAttribute('data-course-id'));
+                        if (response.success) {
+                            showNotification(`Successfully enrolled in ${course.title}!`);
+                            enrollBtn.textContent = 'Enrolled';
+                            enrollBtn.disabled = true;
+                        } else {
+                            showNotification(response.message, false);
+                        }
+                    });
+                }
+            });
+        };
+        
+        // Load community posts
+        const loadCommunityPosts = () => {
+            // Load projects
+            const projectsResponse = api.getCommunityPosts('project');
+            if (projectsResponse.success) {
+                renderCommunityPosts(projectsResponse.data, projectsContainer);
+            }
+            
+            // Load tutorials
+            const tutorialsResponse = api.getCommunityPosts('tutorial');
+            if (tutorialsResponse.success) {
+                renderCommunityPosts(tutorialsResponse.data, tutorialsContainer);
+            }
+            
+            // Load articles
+            const articlesResponse = api.getCommunityPosts('article');
+            if (articlesResponse.success) {
+                renderCommunityPosts(articlesResponse.data, articlesContainer);
+            }
+        };
+        
+        // Render community posts
+        const renderCommunityPosts = (posts, container) => {
+            container.innerHTML = '';
+            
+            posts.forEach(post => {
+                const postCard = document.createElement('div');
+                postCard.className = 'course-card';
+                postCard.innerHTML = `
+                    <div class="course-thumb">${post.title}</div>
+                    <div class="course-content">
+                        <h3>${post.title}</h3>
+                        <p>By: ${post.author}</p>
+                        <div class="course-meta">
+                            <span class="rating">${post.likes} likes</span>
+                            <span>${new Date(post.createdAt).toLocaleDateString()}</span>
+                        </div>
+                        ${currentUser ? `<button class="btn btn-outline" style="width: 100%; margin-top: 10px;" data-post-id="${post.id}">❤️ Like</button>` : ''}
+                    </div>
+                `;
+                
+                container.appendChild(postCard);
+                
+                // Add event listener to like button
+                if (currentUser) {
+                    const likeBtn = postCard.querySelector('button');
+                    likeBtn.addEventListener('click', () => {
+                        const response = api.likePost(likeBtn.getAttribute('data-post-id'), currentUser.id);
+                        if (response.success) {
+                            showNotification(`Liked ${post.title}!`);
+                            const likesElement = postCard.querySelector('.rating');
+                            likesElement.textContent = `${response.data.likes} likes`;
+                        }
+                    });
+                }
+            });
+        };
         
         // Event Listeners
         loginBtn.addEventListener('click', (e) => {
@@ -1015,17 +1310,17 @@ i need backed for this <!DOCTYPE html>
                 return;
             }
             
-            // Check if user exists
-            const user = users.find(u => u.email === email && u.password === password);
+            const response = api.login(email, password);
             
-            if (user) {
-                currentUser = { name: user.name, email: user.email };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            if (response.success) {
+                currentUser = response.user;
                 loginModal.style.display = 'none';
                 updateUIForLoggedInUser();
-                showNotification(`Welcome back, ${user.name}!`);
+                loadCourses();
+                loadCommunityPosts();
+                showNotification(`Welcome back, ${response.user.name}!`);
             } else {
-                showNotification('Invalid email or password', false);
+                showNotification(response.message, false);
             }
         });
         
@@ -1041,27 +1336,29 @@ i need backed for this <!DOCTYPE html>
                 return;
             }
             
-            // Check if user already exists
-            if (users.some(u => u.email === email)) {
-                showNotification('User with this email already exists', false);
-                return;
-            }
+            const response = api.register(name, email, password);
             
-            // Add new user
-            users.push({ name, email, password });
-            currentUser = { name, email };
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            signupModal.style.display = 'none';
-            updateUIForLoggedInUser();
-            showNotification(`Welcome to SkillForge, ${name}!`);
+            if (response.success) {
+                currentUser = response.user;
+                signupModal.style.display = 'none';
+                updateUIForLoggedInUser();
+                loadCourses();
+                loadCommunityPosts();
+                showNotification(`Welcome to SkillForge, ${response.user.name}!`);
+            } else {
+                showNotification(response.message, false);
+            }
         });
         
         // Search functionality
         searchBtn.addEventListener('click', () => {
             const query = searchInput.value.trim();
             if (query) {
-                showNotification(`Searching for: ${query}`);
-                // In a real application, you would filter courses based on the query
+                const response = api.getCourses(query);
+                if (response.success) {
+                    renderCourses(response.data);
+                    showNotification(`Found ${response.data.length} courses for: ${query}`);
+                }
             }
         });
         
@@ -1078,8 +1375,11 @@ i need backed for this <!DOCTYPE html>
         document.querySelectorAll('.category-card').forEach(card => {
             card.addEventListener('click', () => {
                 const category = card.getAttribute('data-category');
-                showNotification(`Showing courses for: ${category}`);
-                // In a real application, you would filter courses by category
+                const response = api.getCourses(category);
+                if (response.success) {
+                    renderCourses(response.data);
+                    showNotification(`Showing ${response.data.length} courses for: ${category}`);
+                }
             });
         });
         
@@ -1115,8 +1415,8 @@ i need backed for this <!DOCTYPE html>
             }
         });
         
-        // Initialize the page
-        checkLoginStatus();
+        // Initialize the application
+        initApp();
     </script>
 </body>
 </html>
