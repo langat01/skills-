@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkillForge - Learn, Create, Succeed</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #4361ee;
@@ -38,7 +38,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
         
         body {
@@ -2230,6 +2230,17 @@
         const renderCourses = (courses) => {
             coursesContainer.innerHTML = '';
             
+            if (courses.length === 0) {
+                coursesContainer.innerHTML = `
+                    <div class="text-center" style="grid-column: 1 / -1; padding: 40px;">
+                        <i class="fas fa-search" style="font-size: 48px; color: var(--gray-400); margin-bottom: 20px;"></i>
+                        <h3>No courses found</h3>
+                        <p>Try adjusting your search criteria or browse our categories</p>
+                    </div>
+                `;
+                return;
+            }
+            
             courses.forEach(course => {
                 const isEnrolled = currentUser && currentUser.enrolledCourses.includes(course.id);
                 const progress = currentUser && currentUser.progress && currentUser.progress[course.id] 
@@ -2370,6 +2381,17 @@
         const renderCommunityPosts = (posts, container) => {
             container.innerHTML = '';
             
+            if (posts.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center" style="grid-column: 1 / -1; padding: 40px;">
+                        <i class="fas fa-comments" style="font-size: 48px; color: var(--gray-400); margin-bottom: 20px;"></i>
+                        <h3>No content available</h3>
+                        <p>Check back later for new community posts</p>
+                    </div>
+                `;
+                return;
+            }
+            
             posts.forEach(post => {
                 const postCard = document.createElement('div');
                 postCard.className = 'community-card';
@@ -2377,7 +2399,7 @@
                     <div class="community-header">
                         <div class="user-avatar">${post.authorAvatar}</div>
                         <div>
-                            <div><strong>${post.author}</strong></div>
+                            <div><strong>${post.author</strong></div>
                             <div style="font-size: 0.8rem; color: var(--gray-500);">${new Date(post.createdAt).toLocaleDateString()}</div>
                         </div>
                     </div>
