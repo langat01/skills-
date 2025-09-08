@@ -6,6 +6,7 @@
     <title>SkillForge - Learn, Create, Succeed</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* CSS will be streamlined with key improvements */
         :root {
             --primary: #4361ee;
             --secondary: #3a0ca3;
@@ -14,6 +15,9 @@
             --dark: #212529;
             --success: #4cc9f0;
             --warning: #f9c74f;
+            --danger: #e63946;
+            --gray-600: #6c757d;
+            --border-radius: 8px;
         }
         
         * {
@@ -36,7 +40,7 @@
             padding: 0 20px;
         }
         
-        /* Header Styles */
+        /* Improved Header Styles */
         header {
             background-color: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -58,11 +62,22 @@
             color: var(--primary);
             display: flex;
             align-items: center;
+            text-decoration: none;
         }
         
         .logo i {
             margin-right: 8px;
             color: var(--accent);
+        }
+        
+        /* Mobile menu button */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
         }
         
         nav ul {
@@ -79,6 +94,9 @@
             color: var(--dark);
             font-weight: 500;
             transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         nav ul li a:hover {
@@ -88,23 +106,33 @@
         .auth-buttons {
             display: flex;
             align-items: center;
+            gap: 10px;
         }
         
         .btn {
-            padding: 8px 16px;
-            border-radius: 6px;
+            padding: 10px 18px;
+            border-radius: var(--border-radius);
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.9rem;
         }
         
         .btn-outline {
             border: 1px solid var(--primary);
             color: var(--primary);
             background: transparent;
-            margin-right: 10px;
         }
         
         .btn-primary {
@@ -117,6 +145,12 @@
             background-color: var(--success);
             color: white;
             border: 1px solid var(--success);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+            border: 1px solid var(--danger);
         }
         
         .btn:hover {
@@ -169,6 +203,9 @@
             border-radius: 50px;
             padding: 10px 20px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         .popular-tags {
@@ -181,10 +218,15 @@
         
         .tag {
             background: rgba(255,255,255,0.2);
-            padding: 5px 15px;
+            padding: 8px 16px;
             border-radius: 50px;
             font-size: 0.9rem;
             cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .tag:hover {
+            background: rgba(255,255,255,0.3);
         }
         
         /* Features Section */
@@ -200,7 +242,7 @@
         }
         
         .section-title p {
-            color: #6c757d;
+            color: var(--gray-600);
             max-width: 700px;
             margin: 0 auto;
         }
@@ -218,11 +260,13 @@
             padding: 30px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             text-align: center;
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
         }
         
         .feature-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
         
         .feature-icon {
@@ -256,12 +300,14 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
+            height: 100%;
         }
         
         .category-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
         
         .category-content {
@@ -296,23 +342,29 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
             position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
         .course-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
         
         .course-thumb {
             height: 160px;
-            background: #ddd;
+            background: linear-gradient(45deg, #4361ee, #3a0ca3);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #999;
-            font-size: 0.9rem;
+            color: white;
+            font-size: 1.2rem;
             position: relative;
+            text-align: center;
+            padding: 15px;
         }
         
         .enrolled-badge {
@@ -329,6 +381,9 @@
         
         .course-content {
             padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
         
         .course-content h3 {
@@ -336,16 +391,35 @@
             font-size: 1.1rem;
         }
         
+        .course-content p {
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
         .course-meta {
             display: flex;
             justify-content: space-between;
             margin-top: 15px;
-            color: #6c757d;
+            color: var(--gray-600);
             font-size: 0.9rem;
         }
         
         .rating {
             color: var(--warning);
+        }
+        
+        /* Progress bar */
+        .progress-container {
+            margin-top: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            height: 6px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            border-radius: 5px;
+            background: var(--success);
         }
         
         /* Tabs */
@@ -354,13 +428,14 @@
             justify-content: center;
             margin-bottom: 30px;
             border-bottom: 1px solid #dee2e6;
+            flex-wrap: wrap;
         }
         
         .tab {
             padding: 10px 20px;
             cursor: pointer;
             font-weight: 500;
-            color: #6c757d;
+            color: var(--gray-600);
             border-bottom: 3px solid transparent;
             transition: all 0.3s;
         }
@@ -390,6 +465,7 @@
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
         
         .modal-content {
@@ -399,6 +475,8 @@
             max-width: 500px;
             padding: 30px;
             position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         
         .close-modal {
@@ -407,6 +485,9 @@
             right: 15px;
             font-size: 1.5rem;
             cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--gray-600);
         }
         
         .form-group {
@@ -425,6 +506,16 @@
             border: 1px solid #ddd;
             border-radius: 6px;
             font-size: 1rem;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 38px;
+            background: none;
+            border: none;
+            color: var(--gray-600);
+            cursor: pointer;
         }
         
         /* Footer */
@@ -469,7 +560,7 @@
             text-align: center;
             padding-top: 30px;
             border-top: 1px solid #343a40;
-            color: #6c757d;
+            color: var(--gray-600);
             font-size: 0.9rem;
         }
         
@@ -507,6 +598,26 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             display: none;
             z-index: 1000;
+            max-width: 350px;
+        }
+        
+        .notification.error {
+            background: var(--danger);
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            display: inline-block;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         
         /* My Courses Section */
@@ -523,29 +634,68 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
         .no-courses {
             text-align: center;
             padding: 40px;
-            color: #6c757d;
+            color: var(--gray-600);
+        }
+        
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-select {
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+            background: white;
         }
         
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
             .header-content {
-                flex-direction: column;
-                text-align: center;
+                flex-wrap: wrap;
+            }
+            
+            .menu-toggle {
+                display: block;
+                order: 1;
+            }
+            
+            .logo {
+                order: 0;
+            }
+            
+            .auth-buttons {
+                order: 2;
+            }
+            
+            nav {
+                order: 3;
+                width: 100%;
+                margin-top: 15px;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
             }
             
             nav ul {
-                margin: 20px 0;
-                flex-wrap: wrap;
-                justify-content: center;
+                flex-direction: column;
+                gap: 10px;
             }
             
             nav ul li {
-                margin: 5px 10px;
+                margin-left: 0;
             }
             
             .hero h1 {
@@ -556,14 +706,25 @@
                 font-size: 1rem;
             }
             
-            .tabs {
-                flex-wrap: wrap;
-            }
-            
             .my-courses-header {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+                margin-top: 15px;
+            }
+            
+            .search-bar input {
+                padding: 12px 15px;
+            }
+            
+            .search-bar button {
+                padding: 8px 15px;
             }
         }
     </style>
@@ -573,11 +734,14 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo">
+                <button class="menu-toggle" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a href="#" class="logo">
                     <i class="fas fa-gem"></i>
                     SkillForge
-                </div>
-                <nav>
+                </a>
+                <nav id="main-nav">
                     <ul>
                         <li><a href="#"><i class="fas fa-book"></i> Browse Categories</a></li>
                         <li><a href="#"><i class="fas fa-users"></i> Community</a></li>
@@ -604,7 +768,7 @@
             <p>Discover top courses, learn from expert instructors, and unlock your potential with SkillForge. Flexible, affordable, and designed for your success.</p>
             <div class="search-bar">
                 <input type="text" placeholder="Search for courses, topics, skills..." id="search-input">
-                <button id="search-btn">Search</button>
+                <button id="search-btn"><i class="fas fa-search"></i> Search</button>
             </div>
             <div class="popular-tags">
                 <span class="tag" data-search="web development">Web Development</span>
@@ -621,7 +785,14 @@
         <div class="my-courses">
             <div class="my-courses-header">
                 <h2>My Enrolled Courses</h2>
-                <button class="btn btn-primary" id="refresh-courses">Refresh My Courses</button>
+                <div class="filters">
+                    <select class="filter-select" id="course-filter">
+                        <option value="all">All Courses</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                    <button class="btn btn-primary" id="refresh-courses"><i class="fas fa-sync-alt"></i> Refresh</button>
+                </div>
             </div>
             <div class="courses-grid" id="my-courses-container">
                 <!-- Enrolled courses will be displayed here -->
@@ -630,6 +801,7 @@
                 <i class="fas fa-book-open" style="font-size: 3rem; margin-bottom: 15px;"></i>
                 <h3>You haven't enrolled in any courses yet</h3>
                 <p>Browse our courses and start learning today!</p>
+                <a href="#courses-container" class="btn btn-primary" style="margin-top: 15px;">Browse Courses</a>
             </div>
         </div>
     </section>
@@ -724,6 +896,24 @@
             <p>Most popular courses among our community</p>
         </div>
         
+        <div class="filters">
+            <select class="filter-select" id="category-filter">
+                <option value="all">All Categories</option>
+                <option value="web">Web Development</option>
+                <option value="data">Data Science</option>
+                <option value="design">Design</option>
+                <option value="mobile">Mobile Development</option>
+                <option value="marketing">Marketing</option>
+            </select>
+            <select class="filter-select" id="sort-filter">
+                <option value="popular">Most Popular</option>
+                <option value="newest">Newest</option>
+                <option value="rating">Highest Rated</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+            </select>
+        </div>
+        
         <div class="courses-grid" id="courses-container">
             <!-- Courses will be dynamically loaded here -->
         </div>
@@ -769,11 +959,11 @@
                     <h3>SkillForge</h3>
                     <p>Empowering learners worldwide with practical skills in technology, design, and business. Join thousands of students advancing their careers.</p>
                     <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
                 <div class="footer-column">
@@ -815,17 +1005,23 @@
     <!-- Login Modal -->
     <div class="modal" id="login-modal">
         <div class="modal-content">
-            <span class="close-modal" id="close-login">&times;</span>
+            <button class="close-modal" id="close-login">&times;</button>
             <h2>Login to Your Account</h2>
             <div class="form-group">
                 <label for="login-email">Email</label>
                 <input type="email" id="login-email" placeholder="Your email address">
             </div>
-            <div class="form-group">
+            <div class="form-group" style="position: relative;">
                 <label for="login-password">Password</label>
                 <input type="password" id="login-password" placeholder="Your password">
+                <button class="password-toggle" id="login-password-toggle">
+                    <i class="fas fa-eye"></i>
+                </button>
             </div>
-            <button class="btn btn-primary" style="width: 100%;" id="login-submit">Login</button>
+            <button class="btn btn-primary" style="width: 100%;" id="login-submit">
+                <span class="btn-text">Login</span>
+                <span class="spinner" style="display: none;"></span>
+            </button>
             <p style="text-align: center; margin-top: 20px;">
                 Don't have an account? <a href="#" id="switch-to-signup" style="color: var(--primary);">Sign up</a>
             </p>
@@ -835,7 +1031,7 @@
     <!-- Signup Modal -->
     <div class="modal" id="signup-modal">
         <div class="modal-content">
-            <span class="close-modal" id="close-signup">&times;</span>
+            <button class="close-modal" id="close-signup">&times;</button>
             <h2>Create an Account</h2>
             <div class="form-group">
                 <label for="signup-name">Full Name</label>
@@ -845,11 +1041,17 @@
                 <label for="signup-email">Email</label>
                 <input type="email" id="signup-email" placeholder="Your email address">
             </div>
-            <div class="form-group">
+            <div class="form-group" style="position: relative;">
                 <label for="signup-password">Password</label>
                 <input type="password" id="signup-password" placeholder="Create a password">
+                <button class="password-toggle" id="signup-password-toggle">
+                    <i class="fas fa-eye"></i>
+                </button>
             </div>
-            <button class="btn btn-primary" style="width: 100%;" id="signup-submit">Create Account</button>
+            <button class="btn btn-primary" style="width: 100%;" id="signup-submit">
+                <span class="btn-text">Create Account</span>
+                <span class="spinner" style="display: none;"></span>
+            </button>
             <p style="text-align: center; margin-top: 20px;">
                 Already have an account? <a href="#" id="switch-to-login" style="color: var(--primary);">Login</a>
             </p>
@@ -874,7 +1076,10 @@
                         email: 'demo@skillforge.com', 
                         password: 'password123', 
                         avatar: '', 
-                        enrolledCourses: [1, 3] // Demo user is enrolled in courses 1 and 3
+                        enrolledCourses: [
+                            { id: 1, progress: 65 },
+                            { id: 3, progress: 20 }
+                        ]
                     }
                 ]));
             }
@@ -896,7 +1101,8 @@
                         lessons: [],
                         requirements: [],
                         whatYouWillLearn: [],
-                        isPublished: true
+                        isPublished: true,
+                        createdAt: '2025-01-15'
                     },
                     {
                         id: 2,
@@ -912,7 +1118,8 @@
                         lessons: [],
                         requirements: [],
                         whatYouWillLearn: [],
-                        isPublished: true
+                        isPublished: true,
+                        createdAt: '2025-02-10'
                     },
                     {
                         id: 3,
@@ -928,7 +1135,8 @@
                         lessons: [],
                         requirements: [],
                         whatYouWillLearn: [],
-                        isPublished: true
+                        isPublished: true,
+                        createdAt: '2025-01-28'
                     },
                     {
                         id: 4,
@@ -944,7 +1152,8 @@
                         lessons: [],
                         requirements: [],
                         whatYouWillLearn: [],
-                        isPublished: true
+                        isPublished: true,
+                        createdAt: '2025-03-05'
                     }
                 ]));
             }
@@ -1032,41 +1241,50 @@
         const api = {
             // User authentication
             login: (email, password) => {
-                const users = JSON.parse(localStorage.getItem('users'));
-                const user = users.find(u => u.email === email && u.password === password);
-                
-                if (user) {
-                    const { password: _, ...userWithoutPassword } = user;
-                    localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
-                    return { success: true, user: userWithoutPassword };
-                } else {
-                    return { success: false, message: 'Invalid email or password' };
-                }
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        const users = JSON.parse(localStorage.getItem('users'));
+                        const user = users.find(u => u.email === email && u.password === password);
+                        
+                        if (user) {
+                            const { password: _, ...userWithoutPassword } = user;
+                            localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
+                            resolve({ success: true, user: userWithoutPassword });
+                        } else {
+                            resolve({ success: false, message: 'Invalid email or password' });
+                        }
+                    }, 1000); // Simulate network delay
+                });
             },
             
             register: (name, email, password) => {
-                const users = JSON.parse(localStorage.getItem('users'));
-                
-                if (users.some(u => u.email === email)) {
-                    return { success: false, message: 'User with this email already exists' };
-                }
-                
-                const newUser = {
-                    id: users.length + 1,
-                    name,
-                    email,
-                    password,
-                    avatar: '',
-                    enrolledCourses: []
-                };
-                
-                users.push(newUser);
-                localStorage.setItem('users', JSON.stringify(users));
-                
-                const { password: _, ...userWithoutPassword } = newUser;
-                localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
-                
-                return { success: true, user: userWithoutPassword };
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        const users = JSON.parse(localStorage.getItem('users'));
+                        
+                        if (users.some(u => u.email === email)) {
+                            resolve({ success: false, message: 'User with this email already exists' });
+                            return;
+                        }
+                        
+                        const newUser = {
+                            id: users.length + 1,
+                            name,
+                            email,
+                            password,
+                            avatar: '',
+                            enrolledCourses: []
+                        };
+                        
+                        users.push(newUser);
+                        localStorage.setItem('users', JSON.stringify(users));
+                        
+                        const { password: _, ...userWithoutPassword } = newUser;
+                        localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
+                        
+                        resolve({ success: true, user: userWithoutPassword });
+                    }, 1000); // Simulate network delay
+                });
             },
             
             logout: () => {
@@ -1080,9 +1298,10 @@
             },
             
             // Courses
-            getCourses: (search = '') => {
+            getCourses: (search = '', category = 'all', sort = 'popular') => {
                 let courses = JSON.parse(localStorage.getItem('courses'));
                 
+                // Filter by search
                 if (search) {
                     const searchLower = search.toLowerCase();
                     courses = courses.filter(course => 
@@ -1090,6 +1309,29 @@
                         course.description.toLowerCase().includes(searchLower) ||
                         course.category.toLowerCase().includes(searchLower)
                     );
+                }
+                
+                // Filter by category
+                if (category && category !== 'all') {
+                    courses = courses.filter(course => course.category === category);
+                }
+                
+                // Sort courses
+                switch(sort) {
+                    case 'newest':
+                        courses.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                        break;
+                    case 'rating':
+                        courses.sort((a, b) => b.rating - a.rating);
+                        break;
+                    case 'price-low':
+                        courses.sort((a, b) => a.price - b.price);
+                        break;
+                    case 'price-high':
+                        courses.sort((a, b) => b.price - a.price);
+                        break;
+                    default: // popular
+                        courses.sort((a, b) => b.totalStudents - a.totalStudents);
                 }
                 
                 return { success: true, data: courses };
@@ -1116,46 +1358,54 @@
                     return { success: false, message: 'User not found' };
                 }
                 
-                const enrolledCourses = courses.filter(course => 
-                    user.enrolledCourses.includes(course.id)
-                );
+                const enrolledCourses = user.enrolledCourses.map(enrollment => {
+                    const course = courses.find(c => c.id === enrollment.id);
+                    return { ...course, progress: enrollment.progress };
+                });
                 
                 return { success: true, data: enrolledCourses };
             },
             
             enrollCourse: (userId, courseId) => {
-                const users = JSON.parse(localStorage.getItem('users'));
-                const courses = JSON.parse(localStorage.getItem('courses'));
-                
-                const userIndex = users.findIndex(u => u.id === userId);
-                const courseIndex = courses.findIndex(c => c.id === parseInt(courseId));
-                
-                if (userIndex === -1) {
-                    return { success: false, message: 'User not found' };
-                }
-                
-                if (courseIndex === -1) {
-                    return { success: false, message: 'Course not found' };
-                }
-                
-                if (users[userIndex].enrolledCourses.includes(parseInt(courseId))) {
-                    return { success: false, message: 'User already enrolled in this course' };
-                }
-                
-                users[userIndex].enrolledCourses.push(parseInt(courseId));
-                courses[courseIndex].totalStudents += 1;
-                
-                localStorage.setItem('users', JSON.stringify(users));
-                localStorage.setItem('courses', JSON.stringify(courses));
-                
-                // Update current user if it's the same user
-                const currentUser = api.getCurrentUser();
-                if (currentUser && currentUser.id === userId) {
-                    currentUser.enrolledCourses = users[userIndex].enrolledCourses;
-                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                }
-                
-                return { success: true, message: 'Successfully enrolled in course' };
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        const users = JSON.parse(localStorage.getItem('users'));
+                        const courses = JSON.parse(localStorage.getItem('courses'));
+                        
+                        const userIndex = users.findIndex(u => u.id === userId);
+                        const courseIndex = courses.findIndex(c => c.id === parseInt(courseId));
+                        
+                        if (userIndex === -1) {
+                            resolve({ success: false, message: 'User not found' });
+                            return;
+                        }
+                        
+                        if (courseIndex === -1) {
+                            resolve({ success: false, message: 'Course not found' });
+                            return;
+                        }
+                        
+                        if (users[userIndex].enrolledCourses.some(c => c.id === parseInt(courseId))) {
+                            resolve({ success: false, message: 'User already enrolled in this course' });
+                            return;
+                        }
+                        
+                        users[userIndex].enrolledCourses.push({ id: parseInt(courseId), progress: 0 });
+                        courses[courseIndex].totalStudents += 1;
+                        
+                        localStorage.setItem('users', JSON.stringify(users));
+                        localStorage.setItem('courses', JSON.stringify(courses));
+                        
+                        // Update current user if it's the same user
+                        const currentUser = api.getCurrentUser();
+                        if (currentUser && currentUser.id === userId) {
+                            currentUser.enrolledCourses = users[userIndex].enrolledCourses;
+                            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                        }
+                        
+                        resolve({ success: true, message: 'Successfully enrolled in course' });
+                    }, 800); // Simulate network delay
+                });
             },
             
             // Community posts
@@ -1186,6 +1436,8 @@
         
         // ==================== FRONTEND CODE ====================
         // DOM Elements
+        const menuToggle = document.getElementById('menu-toggle');
+        const mainNav = document.getElementById('main-nav');
         const loginBtn = document.getElementById('login-btn');
         const signupBtn = document.getElementById('signup-btn');
         const loginModal = document.getElementById('login-modal');
@@ -1196,6 +1448,8 @@
         const switchToLogin = document.getElementById('switch-to-login');
         const loginSubmit = document.getElementById('login-submit');
         const signupSubmit = document.getElementById('signup-submit');
+        const loginPasswordToggle = document.getElementById('login-password-toggle');
+        const signupPasswordToggle = document.getElementById('signup-password-toggle');
         const searchInput = document.getElementById('search-input');
         const searchBtn = document.getElementById('search-btn');
         const tabs = document.querySelectorAll('.tab');
@@ -1211,6 +1465,9 @@
         const myCoursesContainer = document.getElementById('my-courses-container');
         const noCoursesMessage = document.getElementById('no-courses-message');
         const refreshCoursesBtn = document.getElementById('refresh-courses');
+        const categoryFilter = document.getElementById('category-filter');
+        const sortFilter = document.getElementById('sort-filter');
+        const courseFilter = document.getElementById('course-filter');
         
         // Current user
         let currentUser = null;
@@ -1221,6 +1478,232 @@
             checkLoginStatus();
             loadCourses();
             loadCommunityPosts();
+            setupEventListeners();
+        };
+        
+        // Setup event listeners
+        const setupEventListeners = () => {
+            // Mobile menu toggle
+            menuToggle.addEventListener('click', () => {
+                mainNav.classList.toggle('active');
+            });
+            
+            // Auth buttons
+            loginBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.style.display = 'flex';
+            });
+            
+            signupBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                signupModal.style.display = 'flex';
+            });
+            
+            // Close modals
+            closeLogin.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+            });
+            
+            closeSignup.addEventListener('click', () => {
+                signupModal.style.display = 'none';
+            });
+            
+            // Switch between login and signup
+            switchToSignup.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.style.display = 'none';
+                signupModal.style.display = 'flex';
+            });
+            
+            switchToLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                signupModal.style.display = 'none';
+                loginModal.style.display = 'flex';
+            });
+            
+            // Password visibility toggle
+            loginPasswordToggle.addEventListener('click', () => {
+                const passwordInput = document.getElementById('login-password');
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                loginPasswordToggle.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+            });
+            
+            signupPasswordToggle.addEventListener('click', () => {
+                const passwordInput = document.getElementById('signup-password');
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                signupPasswordToggle.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+            });
+            
+            // Refresh courses button
+            refreshCoursesBtn.addEventListener('click', () => {
+                loadEnrolledCourses();
+                showNotification('Refreshed your courses!');
+            });
+            
+            // Login functionality
+            loginSubmit.addEventListener('click', () => {
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                
+                // Simple validation
+                if (!email || !password) {
+                    showNotification('Please fill in all fields', false);
+                    return;
+                }
+                
+                setButtonLoading(loginSubmit, true);
+                
+                api.login(email, password).then(response => {
+                    setButtonLoading(loginSubmit, false);
+                    
+                    if (response.success) {
+                        currentUser = response.user;
+                        loginModal.style.display = 'none';
+                        updateUIForLoggedInUser();
+                        loadCourses();
+                        loadCommunityPosts();
+                        showNotification(`Welcome back, ${response.user.name}!`);
+                    } else {
+                        showNotification(response.message, false);
+                    }
+                });
+            });
+            
+            // Signup functionality
+            signupSubmit.addEventListener('click', () => {
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                
+                // Simple validation
+                if (!name || !email || !password) {
+                    showNotification('Please fill in all fields', false);
+                    return;
+                }
+                
+                setButtonLoading(signupSubmit, true);
+                
+                api.register(name, email, password).then(response => {
+                    setButtonLoading(signupSubmit, false);
+                    
+                    if (response.success) {
+                        currentUser = response.user;
+                        signupModal.style.display = 'none';
+                        updateUIForLoggedInUser();
+                        loadCourses();
+                        loadCommunityPosts();
+                        showNotification(`Welcome to SkillForge, ${response.user.name}!`);
+                    } else {
+                        showNotification(response.message, false);
+                    }
+                });
+            });
+            
+            // Search functionality
+            searchBtn.addEventListener('click', () => {
+                const query = searchInput.value.trim();
+                if (query) {
+                    const response = api.getCourses(query);
+                    if (response.success) {
+                        renderCourses(response.data);
+                        showNotification(`Found ${response.data.length} courses for: ${query}`);
+                    }
+                }
+            });
+            
+            // Filter functionality
+            categoryFilter.addEventListener('change', () => {
+                loadCourses();
+            });
+            
+            sortFilter.addEventListener('change', () => {
+                loadCourses();
+            });
+            
+            courseFilter.addEventListener('change', () => {
+                loadEnrolledCourses();
+            });
+            
+            // Popular tags search
+            document.querySelectorAll('.tag').forEach(tag => {
+                tag.addEventListener('click', () => {
+                    const searchTerm = tag.getAttribute('data-search');
+                    searchInput.value = searchTerm;
+                    searchBtn.click();
+                });
+            });
+            
+            // Category filtering
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const category = card.getAttribute('data-category');
+                    categoryFilter.value = category;
+                    loadCourses();
+                    showNotification(`Showing courses for: ${category}`);
+                });
+            });
+            
+            // Tab functionality
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.tab').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                    
+                    // Hide all tab content
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Show the corresponding tab content
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === loginModal) {
+                    loginModal.style.display = 'none';
+                }
+                if (e.target === signupModal) {
+                    signupModal.style.display = 'none';
+                }
+            });
+            
+            // Allow search with Enter key
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    searchBtn.click();
+                }
+            });
+        };
+        
+        // Set button loading state
+        const setButtonLoading = (button, isLoading) => {
+            const spinner = button.querySelector('.spinner');
+            const buttonText = button.querySelector('.btn-text');
+            
+            if (isLoading) {
+                button.disabled = true;
+                spinner.style.display = 'inline-block';
+                buttonText.textContent = 'Loading...';
+            } else {
+                button.disabled = false;
+                spinner.style.display = 'none';
+                
+                if (button.id === 'login-submit') {
+                    buttonText.textContent = 'Login';
+                } else if (button.id === 'signup-submit') {
+                    buttonText.textContent = 'Create Account';
+                }
+            }
         };
         
         // Check if user is logged in
@@ -1243,7 +1726,7 @@
         // Show notification
         const showNotification = (message, isSuccess = true) => {
             notification.textContent = message;
-            notification.style.background = isSuccess ? 'var(--success)' : 'var(--accent)';
+            notification.className = isSuccess ? 'notification' : 'notification error';
             notification.style.display = 'block';
             
             setTimeout(() => {
@@ -1253,7 +1736,10 @@
         
         // Load courses from the backend
         const loadCourses = () => {
-            const response = api.getCourses();
+            const category = categoryFilter.value;
+            const sort = sortFilter.value;
+            const response = api.getCourses('', category, sort);
+            
             if (response.success) {
                 renderCourses(response.data);
             }
@@ -1273,14 +1759,23 @@
         const renderEnrolledCourses = (courses) => {
             myCoursesContainer.innerHTML = '';
             
-            if (courses.length === 0) {
+            const filter = courseFilter.value;
+            let filteredCourses = courses;
+            
+            if (filter === 'in-progress') {
+                filteredCourses = courses.filter(course => course.progress > 0 && course.progress < 100);
+            } else if (filter === 'completed') {
+                filteredCourses = courses.filter(course => course.progress === 100);
+            }
+            
+            if (filteredCourses.length === 0) {
                 noCoursesMessage.style.display = 'block';
                 return;
             }
             
             noCoursesMessage.style.display = 'none';
             
-            courses.forEach(course => {
+            filteredCourses.forEach(course => {
                 const courseCard = document.createElement('div');
                 courseCard.className = 'course-card';
                 courseCard.innerHTML = `
@@ -1291,11 +1786,16 @@
                     <div class="course-content">
                         <h3>${course.title}</h3>
                         <p>${course.description}</p>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: ${course.progress}%"></div>
+                        </div>
                         <div class="course-meta">
-                            <span class="rating">${'★'.repeat(Math.floor(course.rating))}${course.rating % 1 >= 0.5 ? '½' : ''} (${course.rating})</span>
+                            <span>Progress: ${course.progress}%</span>
                             <span>By: ${course.instructor}</span>
                         </div>
-                        <button class="btn btn-success" style="width: 100%; margin-top: 10px;">Continue Learning</button>
+                        <button class="btn btn-success" style="width: 100%; margin-top: 10px;">
+                            <i class="fas fa-play-circle"></i> Continue Learning
+                        </button>
                     </div>
                 `;
                 
@@ -1307,8 +1807,20 @@
         const renderCourses = (courses) => {
             coursesContainer.innerHTML = '';
             
+            if (courses.length === 0) {
+                coursesContainer.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                        <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 15px; color: var(--gray-600);"></i>
+                        <h3>No courses found</h3>
+                        <p>Try adjusting your search or filters</p>
+                    </div>
+                `;
+                return;
+            }
+            
             courses.forEach(course => {
-                const isEnrolled = currentUser && currentUser.enrolledCourses.includes(course.id);
+                const isEnrolled = currentUser && currentUser.enrolledCourses.some(c => c.id === course.id);
+                const progress = isEnrolled ? currentUser.enrolledCourses.find(c => c.id === course.id).progress : 0;
                 
                 const courseCard = document.createElement('div');
                 courseCard.className = 'course-card';
@@ -1320,16 +1832,29 @@
                     <div class="course-content">
                         <h3>${course.title}</h3>
                         <p>${course.description}</p>
+                        ${isEnrolled ? `
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: ${progress}%"></div>
+                            </div>
+                        ` : ''}
                         <div class="course-meta">
                             <span class="rating">${'★'.repeat(Math.floor(course.rating))}${course.rating % 1 >= 0.5 ? '½' : ''} (${course.rating})</span>
                             <span>$${course.price.toFixed(2)}</span>
                         </div>
                         ${currentUser ? `
                             ${isEnrolled ? 
-                                '<button class="btn btn-success" style="width: 100%; margin-top: 10px;" disabled>Already Enrolled</button>' : 
-                                `<button class="btn btn-primary" style="width: 100%; margin-top: 10px;" data-course-id="${course.id}">Enroll Now</button>`
+                                `<button class="btn btn-success" style="width: 100%; margin-top: 10px;" disabled>
+                                    <i class="fas fa-check"></i> Already Enrolled
+                                </button>` : 
+                                `<button class="btn btn-primary" style="width: 100%; margin-top: 10px;" data-course-id="${course.id}">
+                                    <i class="fas fa-shopping-cart"></i> Enroll Now
+                                </button>`
                             }
-                        ` : ''}
+                        ` : `
+                            <button class="btn btn-outline" style="width: 100%; margin-top: 10px;" onclick="document.getElementById('login-btn').click()">
+                                <i class="fas fa-lock"></i> Login to Enroll
+                            </button>
+                        `}
                     </div>
                 `;
                 
@@ -1339,23 +1864,36 @@
                 if (currentUser && !isEnrolled) {
                     const enrollBtn = courseCard.querySelector('button');
                     enrollBtn.addEventListener('click', () => {
-                        const response = api.enrollCourse(currentUser.id, enrollBtn.getAttribute('data-course-id'));
-                        if (response.success) {
-                            showNotification(`Successfully enrolled in ${course.title}!`);
-                            enrollBtn.textContent = 'Enrolled';
-                            enrollBtn.disabled = true;
-                            enrollBtn.classList.remove('btn-primary');
-                            enrollBtn.classList.add('btn-success');
+                        setButtonLoading(enrollBtn, true);
+                        
+                        api.enrollCourse(currentUser.id, enrollBtn.getAttribute('data-course-id')).then(response => {
+                            setButtonLoading(enrollBtn, false);
                             
-                            // Add enrolled badge
-                            const courseThumb = courseCard.querySelector('.course-thumb');
-                            courseThumb.innerHTML = `${course.title}<div class="enrolled-badge">Enrolled</div>`;
-                            
-                            // Reload enrolled courses
-                            loadEnrolledCourses();
-                        } else {
-                            showNotification(response.message, false);
-                        }
+                            if (response.success) {
+                                showNotification(`Successfully enrolled in ${course.title}!`);
+                                enrollBtn.innerHTML = '<i class="fas fa-check"></i> Enrolled';
+                                enrollBtn.disabled = true;
+                                enrollBtn.classList.remove('btn-primary');
+                                enrollBtn.classList.add('btn-success');
+                                
+                                // Add enrolled badge
+                                const courseThumb = courseCard.querySelector('.course-thumb');
+                                courseThumb.innerHTML = `${course.title}<div class="enrolled-badge">Enrolled</div>`;
+                                
+                                // Add progress bar
+                                const courseContent = courseCard.querySelector('.course-content');
+                                const metaDiv = courseCard.querySelector('.course-meta');
+                                const progressBar = document.createElement('div');
+                                progressBar.className = 'progress-container';
+                                progressBar.innerHTML = '<div class="progress-bar" style="width: 0%"></div>';
+                                courseContent.insertBefore(progressBar, metaDiv);
+                                
+                                // Reload enrolled courses
+                                loadEnrolledCourses();
+                            } else {
+                                showNotification(response.message, false);
+                            }
+                        });
                     });
                 }
             });
@@ -1393,12 +1931,19 @@
                     <div class="course-thumb">${post.title}</div>
                     <div class="course-content">
                         <h3>${post.title}</h3>
-                        <p>By: ${post.author}</p>
+                        <p>${post.content}</p>
                         <div class="course-meta">
-                            <span class="rating">${post.likes} likes</span>
+                            <span class="rating">${post.likes} <i class="fas fa-heart"></i></span>
                             <span>${new Date(post.createdAt).toLocaleDateString()}</span>
                         </div>
-                        ${currentUser ? `<button class="btn btn-outline" style="width: 100%; margin-top: 10px;" data-post-id="${post.id}">❤️ Like</button>` : ''}
+                        <div class="course-meta">
+                            <span>By: ${post.author}</span>
+                            ${currentUser ? `
+                                <button class="btn btn-outline btn-sm" data-post-id="${post.id}">
+                                    <i class="fas fa-heart"></i> Like
+                                </button>
+                            ` : ''}
+                        </div>
                     </div>
                 `;
                 
@@ -1412,165 +1957,14 @@
                         if (response.success) {
                             showNotification(`Liked ${post.title}!`);
                             const likesElement = postCard.querySelector('.rating');
-                            likesElement.textContent = `${response.data.likes} likes`;
+                            likesElement.innerHTML = `${response.data.likes} <i class="fas fa-heart"></i>`;
+                            likeBtn.disabled = true;
+                            likeBtn.innerHTML = '<i class="fas fa-check"></i> Liked';
                         }
                     });
                 }
             });
         };
-        
-        // Event Listeners
-        loginBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginModal.style.display = 'flex';
-        });
-        
-        signupBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            signupModal.style.display = 'flex';
-        });
-        
-        closeLogin.addEventListener('click', () => {
-            loginModal.style.display = 'none';
-        });
-        
-        closeSignup.addEventListener('click', () => {
-            signupModal.style.display = 'none';
-        });
-        
-        switchToSignup.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginModal.style.display = 'none';
-            signupModal.style.display = 'flex';
-        });
-        
-        switchToLogin.addEventListener('click', (e) => {
-            e.preventDefault();
-            signupModal.style.display = 'none';
-            loginModal.style.display = 'flex';
-        });
-        
-        // Refresh courses button
-        refreshCoursesBtn.addEventListener('click', () => {
-            loadEnrolledCourses();
-            showNotification('Refreshed your courses!');
-        });
-        
-        // Login functionality
-        loginSubmit.addEventListener('click', () => {
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            
-            // Simple validation
-            if (!email || !password) {
-                showNotification('Please fill in all fields', false);
-                return;
-            }
-            
-            const response = api.login(email, password);
-            
-            if (response.success) {
-                currentUser = response.user;
-                loginModal.style.display = 'none';
-                updateUIForLoggedInUser();
-                loadCourses();
-                loadCommunityPosts();
-                showNotification(`Welcome back, ${response.user.name}!`);
-            } else {
-                showNotification(response.message, false);
-            }
-        });
-        
-        // Signup functionality
-        signupSubmit.addEventListener('click', () => {
-            const name = document.getElementById('signup-name').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            
-            // Simple validation
-            if (!name || !email || !password) {
-                showNotification('Please fill in all fields', false);
-                return;
-            }
-            
-            const response = api.register(name, email, password);
-            
-            if (response.success) {
-                currentUser = response.user;
-                signupModal.style.display = 'none';
-                updateUIForLoggedInUser();
-                loadCourses();
-                loadCommunityPosts();
-                showNotification(`Welcome to SkillForge, ${response.user.name}!`);
-            } else {
-                showNotification(response.message, false);
-            }
-        });
-        
-        // Search functionality
-        searchBtn.addEventListener('click', () => {
-            const query = searchInput.value.trim();
-            if (query) {
-                const response = api.getCourses(query);
-                if (response.success) {
-                    renderCourses(response.data);
-                    showNotification(`Found ${response.data.length} courses for: ${query}`);
-                }
-            }
-        });
-        
-        // Popular tags search
-        document.querySelectorAll('.tag').forEach(tag => {
-            tag.addEventListener('click', () => {
-                const searchTerm = tag.getAttribute('data-search');
-                searchInput.value = searchTerm;
-                searchBtn.click();
-            });
-        });
-        
-        // Category filtering
-        document.querySelectorAll('.category-card').forEach(card => {
-            card.addEventListener('click', () => {
-                const category = card.getAttribute('data-category');
-                const response = api.getCourses(category);
-                if (response.success) {
-                    renderCourses(response.data);
-                    showNotification(`Showing ${response.data.length} courses for: ${category}`);
-                }
-            });
-        });
-        
-        // Tab functionality
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Remove active class from all tabs
-                document.querySelectorAll('.tab').forEach(t => {
-                    t.classList.remove('active');
-                });
-                
-                // Add active class to clicked tab
-                tab.classList.add('active');
-                
-                // Hide all tab content
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                
-                // Show the corresponding tab content
-                const tabId = tab.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
-        
-        // Close modal when clicking outside
-        window.addEventListener('click', (e) => {
-            if (e.target === loginModal) {
-                loginModal.style.display = 'none';
-            }
-            if (e.target === signupModal) {
-                signupModal.style.display = 'none';
-            }
-        });
         
         // Initialize the application
         initApp();
