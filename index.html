@@ -1,323 +1,2177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SkillForge - Learn, Create, Succeed</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9fafc;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #4361ee;
-      color: #fff;
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    header h1 { margin: 0; }
-    nav { display: flex; gap: 15px; }
-    nav a {
-      color: #fff; text-decoration: none; font-weight: bold;
-    }
-    .auth-buttons button {
-      margin-left: 10px;
-      padding: 8px 15px;
-      border: none;
-      background: #fff;
-      color: #4361ee;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .notification {
-      display: none;
-      position: fixed;
-      top: 20px; right: 20px;
-      background: #4caf50;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-      z-index: 1000;
-    }
-    .notification.error { background: #e74c3c; }
-    .container { padding: 20px; }
-    .search-bar {
-      display: flex;
-      max-width: 600px;
-      margin: 20px auto;
-    }
-    .search-bar input {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px 0 0 5px;
-    }
-    .search-bar button {
-      padding: 10px 15px;
-      border: none;
-      background: #4361ee;
-      color: #fff;
-      border-radius: 0 5px 5px 0;
-      cursor: pointer;
-    }
-    .tabs {
-      display: flex;
-      justify-content: center;
-      margin: 30px 0;
-      border-bottom: 1px solid #ccc;
-    }
-    .tab {
-      padding: 10px 20px;
-      cursor: pointer;
-    }
-    .tab.active { border-bottom: 3px solid #4361ee; font-weight: bold; }
-    .tab-content { display: none; padding: 20px; }
-    .tab-content.active { display: block; }
-    .course-card {
-      background: #fff;
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,.1);
-    }
-    .course-badge {
-      background: #00b894;
-      color: #fff;
-      padding: 3px 8px;
-      border-radius: 5px;
-      font-size: 12px;
-      display: inline-block;
-    }
-    .progress-bar {
-      height: 6px;
-      background: #ddd;
-      border-radius: 3px;
-      margin: 10px 0;
-    }
-    .progress-fill {
-      height: 100%;
-      background: #4361ee;
-      border-radius: 3px;
-    }
-    /* Simple modals */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      justify-content: center; align-items: center;
-      z-index: 1000;
-    }
-    .modal-content {
-      background: #fff;
-      padding: 20px;
-      width: 300px;
-      border-radius: 8px;
-      position: relative;
-    }
-    .close {
-      position: absolute; top: 10px; right: 10px;
-      cursor: pointer;
-    }
-    input, select {
-      width: 100%; padding: 8px; margin: 10px 0;
-      border: 1px solid #ddd; border-radius: 5px;
-    }
-    .btn {
-      display: inline-block;
-      padding: 8px 12px;
-      background: #4361ee;
-      color: #fff; border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      text-align: center;
-    }
-    .hidden { display: none; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillForge - Learn, Build, Grow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --success: #06d6a0;
+            --danger: #ef476f;
+            --warning: #ffd166;
+            --info: #118ab2;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--secondary);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: var(--gray-100);
+            border-radius: 50px;
+            padding: 8px 15px;
+            width: 400px;
+        }
+
+        .search-bar input {
+            border: none;
+            background: transparent;
+            padding: 5px 10px;
+            width: 100%;
+            outline: none;
+        }
+
+        .search-bar button {
+            background: var(--primary);
+            border: none;
+            color: white;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 10px 0;
+            width: 200px;
+            display: none;
+        }
+
+        .user-dropdown.active {
+            display: block;
+        }
+
+        .user-dropdown-item {
+            padding: 10px 20px;
+            transition: var(--transition);
+        }
+
+        .user-dropdown-item:hover {
+            background: var(--gray-100);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-700);
+            padding: 15px 0;
+            display: block;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px 3px 0 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 60px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--gray-800);
+        }
+
+        .section-header p {
+            color: var(--gray-600);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Course Cards */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--success);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .course-thumb {
+            height: 160px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .course-content {
+            padding: 20px;
+        }
+
+        .course-content h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .course-instructor {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .course-content p {
+            color: var(--gray-700);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .rating {
+            color: var(--warning);
+            font-weight: 600;
+        }
+
+        .price {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--success);
+            border-radius: 4px;
+        }
+
+        /* Categories */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gray-100);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .category-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .category-card p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        /* Community Section */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--gray-300);
+            padding-bottom: 10px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .community-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .community-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .community-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .community-body {
+            padding: 0 20px 20px;
+        }
+
+        .community-body h3 {
+            margin-bottom: 10px;
+        }
+
+        .community-body p {
+            color: var(--gray-700);
+            margin-bottom: 15px;
+        }
+
+        .community-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 20px;
+        }
+
+        .post-action {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--gray-600);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .post-action:hover {
+            color: var(--primary);
+        }
+
+        /* Tags */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .tag {
+            background: var(--gray-100);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tag:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .dashboard-card h3 {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 450px;
+            padding: 30px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            color: var(--gray-800);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-500);
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--danger);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .form-footer {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .form-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .checkbox-group input {
+            width: auto;
+        }
+
+        /* Payment Form */
+        .payment-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .payment-method {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .payment-option {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .payment-option.active {
+            border-color: var(--primary);
+            background: var(--gray-100);
+        }
+
+        .payment-option i {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--gray-600);
+        }
+
+        .payment-option.active i {
+            color: var(--primary);
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            z-index: 1100;
+            display: none;
+        }
+
+        .notification.error {
+            background: var(--danger);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-800);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gray-700);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--gray-700);
+            color: var(--gray-400);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .search-bar {
+                width: 300px;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-bar {
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            .nav-links {
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+            
+            .courses-grid,
+            .community-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-20 {
+            margin-top: 20px;
+        }
+
+        .loader {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>SkillForge</h1>
-    <nav id="main-nav">
-      <a href="#">Home</a>
-      <a href="#">Courses</a>
-      <a href="#">Community</a>
-    </nav>
-    <div class="auth-buttons">
-      <button id="login-btn">Login</button>
-      <button id="signup-btn">Sign Up</button>
-    </div>
-    <div id="user-menu" class="hidden">
-      <span id="user-avatar"></span>
-      <button id="logout-btn">Logout</button>
-    </div>
-  </header>
-
-  <div class="notification" id="notification"></div>
-
-  <div class="container">
-    <div class="search-bar">
-      <input type="text" id="search-input" placeholder="Search courses...">
-      <button id="search-btn">Search</button>
-    </div>
-
-    <div class="tabs">
-      <div class="tab active" data-tab="courses">Courses</div>
-      <div class="tab" data-tab="projects">Projects</div>
-      <div class="tab" data-tab="tutorials">Tutorials</div>
-      <div class="tab" data-tab="articles">Articles</div>
-      <div class="tab" data-tab="dashboard-section">Dashboard</div>
-    </div>
-
-    <div id="courses" class="tab-content active">
-      <div id="courses-container"></div>
-    </div>
-    <div id="projects" class="tab-content">
-      <div id="projects-container"></div>
-    </div>
-    <div id="tutorials" class="tab-content">
-      <div id="tutorials-container"></div>
-    </div>
-    <div id="articles" class="tab-content">
-      <div id="articles-container"></div>
-    </div>
-    <div id="dashboard-section" class="tab-content hidden">
-      <h2>Welcome <span id="welcome-user"></span></h2>
-      <div id="continue-learning-container"></div>
-    </div>
-  </div>
-
-  <!-- Login Modal -->
-  <div id="login-modal" class="modal">
-    <div class="modal-content">
-      <span id="close-login" class="close">&times;</span>
-      <h3>Login</h3>
-      <input id="login-email" type="email" placeholder="Email">
-      <input id="login-password" type="password" placeholder="Password">
-      <button id="login-submit" class="btn"><span id="login-text">Login</span><span id="login-loader" class="hidden">Loading...</span></button>
-      <p>Don’t have an account? <a href="#" id="switch-to-signup">Sign up</a></p>
-    </div>
-  </div>
-
-  <!-- Signup Modal -->
-  <div id="signup-modal" class="modal">
-    <div class="modal-content">
-      <span id="close-signup" class="close">&times;</span>
-      <h3>Sign Up</h3>
-      <input id="signup-name" type="text" placeholder="Full Name">
-      <input id="signup-email" type="email" placeholder="Email">
-      <input id="signup-password" type="password" placeholder="Password">
-      <input id="signup-confirm-password" type="password" placeholder="Confirm Password">
-      <label><input type="checkbox" id="terms-agree"> I agree to terms</label>
-      <button id="signup-submit" class="btn"><span id="signup-text">Sign Up</span><span id="signup-loader" class="hidden">Loading...</span></button>
-      <p>Already have an account? <a href="#" id="switch-to-login">Login</a></p>
-    </div>
-  </div>
-
-  <!-- Enrollment Modal -->
-  <div id="enroll-modal" class="modal">
-    <div class="modal-content">
-      <span id="close-enroll" class="close">&times;</span>
-      <h3 id="enroll-course-title">Enroll in Course</h3>
-      <div id="enroll-free" class="">
-        <button id="enroll-free-btn" class="btn">Enroll for Free</button>
-      </div>
-      <div id="enroll-paid" class="hidden">
-        <p>Price: <span id="course-price"></span></p>
-        <select id="payment-method">
-          <option value="mpesa">M-Pesa</option>
-          <option value="card">Credit/Debit Card</option>
-        </select>
-        <div id="card-payment" class="hidden">
-          <input type="text" placeholder="Card Number">
-          <input type="text" placeholder="Expiry Date">
-          <input type="text" placeholder="CVV">
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    SkillForge
+                </a>
+                
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Search courses, tutorials, projects...">
+                    <button id="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" id="login-btn">Login</button>
+                    <button class="btn btn-primary" id="signup-btn">Sign Up</button>
+                </div>
+                
+                <div class="user-menu hidden" id="user-menu">
+                    <div class="user-avatar" id="user-avatar">JD</div>
+                    <div class="user-dropdown" id="user-dropdown">
+                        <div class="user-dropdown-item">My Profile</div>
+                        <div class="user-dropdown-item">My Courses</div>
+                        <div class="user-dropdown-item">Settings</div>
+                        <div class="user-dropdown-item" id="logout-btn">Logout</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <button id="enroll-paid-btn" class="btn">Pay & Enroll</button>
-      </div>
+        
+        <nav>
+            <div class="container">
+                <ul class="nav-links">
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#community">Community</a></li>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Learn, Build, and Grow Together</h1>
+            <p>Join thousands of learners building practical skills through courses, projects, and community collaboration.</p>
+            <button class="btn btn-primary">Start Learning</button>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="courses">
+        <div class="container">
+            <div class="section-header">
+                <h2>Popular Courses</h2>
+                <p>Explore our most popular courses and start your learning journey today</p>
+            </div>
+            
+            <div class="courses-grid" id="courses-container">
+                <!-- Courses will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section style="background: var(--gray-100);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Browse by Category</h2>
+                <p>Find the perfect learning path for your goals</p>
+            </div>
+            
+            <div class="categories-grid">
+                <div class="category-card" data-category="web">
+                    <div class="category-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Web Development</h3>
+                    <p>Build websites and web applications</p>
+                </div>
+                
+                <div class="category-card" data-category="data">
+                    <div class="category-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Data Science</h3>
+                    <p>Analyze and visualize data</p>
+                </div>
+                
+                <div class="category-card" data-category="design">
+                    <div class="category-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>UX/UI Design</h3>
+                    <p>Create beautiful user experiences</p>
+                </div>
+                
+                <div class="category-card" data-category="mobile">
+                    <div class="category-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Development</h3>
+                    <p>Build iOS and Android apps</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community" style="background: white;">
+        <div class="container">
+            <div class="section-header">
+                <h2>Community Hub</h2>
+                <p>Discover projects, tutorials, and articles from our community</p>
+            </div>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="projects">Projects</div>
+                <div class="tab" data-tab="tutorials">Tutorials</div>
+                <div class="tab" data-tab="articles">Articles</div>
+            </div>
+            
+            <div class="tab-content active" id="projects">
+                <div class="community-grid" id="projects-container">
+                    <!-- Projects will be dynamically inserted here -->
+                </div>
+            </div>
+            
+            <div class="tab-content" id="tutorials">
+                <div class="community-grid" id="tutorials-container">
+                    <!-- Tutorials will be dynamically inserted here -->
+                </div>
+            </div>
+            
+            <div class="tab-content" id="articles">
+                <div class="community-grid" id="articles-container">
+                    <!-- Articles will be dynamically inserted here -->
+                </div>
+            </div>
+            
+            <div class="tags">
+                <div class="tag" data-search="react">React</div>
+                <div class="tag" data-search="python">Python</div>
+                <div class="tag" data-search="javascript">JavaScript</div>
+                <div class="tag" data-search="nodejs">Node.js</div>
+                <div class="tag" data-search="api">API</div>
+                <div class="tag" data-search="web development">Web Development</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard-section" class="hidden">
+        <div class="container">
+            <div class="section-header">
+                <h2>Welcome, <span id="welcome-user">John</span></h2>
+                <p>Continue your learning journey</p>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3>Continue Learning</h3>
+                    <div class="courses-grid" id="continue-learning-container">
+                        <!-- Enrolled courses will be dynamically inserted here -->
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3>Learning Statistics</h3>
+                    <p>Your progress and achievements will appear here</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>SkillForge</h3>
+                    <p>Learn practical skills through project-based courses and community collaboration.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#courses">Courses</a></li>
+                        <li><a href="#community">Community</a></li>
+                        <li><a href="#about">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 SkillForge. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-login">&times;</span>
+            <div class="modal-header">
+                <h2>Login to Your Account</h2>
+            </div>
+            
+            <div class="form-group">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" placeholder="Enter your email">
+            </div>
+            
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="Enter your password">
+            </div>
+            
+            <button class="btn btn-primary" id="login-submit" style="width: 100%;">
+                <span id="login-text">Login</span>
+                <span class="loader hidden" id="login-loader"></span>
+            </button>
+            
+            <div class="form-footer">
+                <p>Don't have an account? <a href="#" id="switch-to-signup">Sign Up</a></p>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- ==================== BACKEND + FRONTEND JS ==================== -->
-  <script>
-    // Simulated database in localStorage
-    const initializeDatabase = () => {
-      if (!localStorage.getItem("users")) localStorage.setItem("users", JSON.stringify([]));
-      if (!localStorage.getItem("courses")) {
-        localStorage.setItem("courses", JSON.stringify([
-          {id: 1, title: "Intro to Python", free: true, price: 0},
-          {id: 2, title: "Web Development Basics", free: false, price: 2000}
-        ]));
-      }
-    };
+    <!-- Signup Modal -->
+    <div class="modal" id="signup-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-signup">&times;</span>
+            <div class="modal-header">
+                <h2>Create an Account</h2>
+            </div>
+            
+            <div class="form-group">
+                <label for="signup-name">Full Name</label>
+                <input type="text" id="signup-name" placeholder="Enter your full name">
+            </div>
+            
+            <div class="form-group">
+                <label for="signup-email">Email</label>
+                <input type="email" id="signup-email" placeholder="Enter your email">
+            </div>
+            
+            <div class="form-group">
+                <label for="signup-password">Password</label>
+                <input type="password" id="signup-password" placeholder="Create a password">
+            </div>
+            
+            <div class="form-group">
+                <label for="signup-confirm-password">Confirm Password</label>
+                <input type="password" id="signup-confirm-password" placeholder="Confirm your password">
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="terms-agree">
+                <label for="terms-agree">I agree to the Terms and Conditions</label>
+            </div>
+            
+            <button class="btn btn-primary" id="signup-submit" style="width: 100%;">
+                <span id="signup-text">Create Account</span>
+                <span class="loader hidden" id="signup-loader"></span>
+            </button>
+            
+            <div class="form-footer">
+                <p>Already have an account? <a href="#" id="switch-to-login">Login</a></p>
+            </div>
+        </div>
+    </div>
 
-    // Show notification
-    const showNotification = (msg, error=false) => {
-      const note = document.getElementById("notification");
-      note.textContent = msg;
-      note.classList.toggle("error", error);
-      note.style.display = "block";
-      setTimeout(() => note.style.display="none", 3000);
-    };
+    <!-- Enrollment Modal -->
+    <div class="modal" id="enroll-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-enroll">&times;</span>
+            <div class="modal-header">
+                <h2>Enroll in <span id="enroll-course-title">Course Name</span></h2>
+            </div>
+            
+            <div id="enroll-free" class="hidden">
+                <p>This course is free. Click the button below to enroll.</p>
+                <button class="btn btn-primary" id="enroll-free-btn" style="width: 100%; margin-top: 20px;">
+                    Enroll for Free
+                </button>
+            </div>
+            
+            <div id="enroll-paid" class="hidden">
+                <div class="price-display">
+                    <h3>Course Price: <span id="course-price">$0.00</span></h3>
+                </div>
+                
+                <div class="payment-section">
+                    <h4>Select Payment Method</h4>
+                    
+                    <div class="payment-method">
+                        <div class="payment-option active">
+                            <i class="fab fa-cc-paypal"></i>
+                            <p>PayPal</p>
+                        </div>
+                        <div class="payment-option">
+                            <i class="fab fa-cc-stripe"></i>
+                            <p>Stripe</p>
+                        </div>
+                        <div class="payment-option">
+                            <i class="fas fa-credit-card"></i>
+                            <p>Credit Card</p>
+                        </div>
+                    </div>
+                    
+                    <div id="card-payment" style="display: none;">
+                        <div class="form-group">
+                            <label for="card-number">Card Number</label>
+                            <input type="text" id="card-number" placeholder="1234 5678 9012 3456">
+                        </div>
+                        
+                        <div style="display: flex; gap: 15px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label for="card-expiry">Expiry Date</label>
+                                <input type="text" id="card-expiry" placeholder="MM/YY">
+                            </div>
+                            
+                            <div class="form-group" style="flex: 1;">
+                                <label for="card-cvc">CVC</label>
+                                <input type="text" id="card-cvc" placeholder="123">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" id="enroll-paid-btn" style="width: 100%; margin-top: 20px;">
+                        Enroll Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    // Switch tabs
-    document.querySelectorAll(".tab").forEach(tab=>{
-      tab.addEventListener("click", ()=>{
-        document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-        document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"));
-        tab.classList.add("active");
-        document.getElementById(tab.dataset.tab).classList.add("active");
-      });
-    });
-
-    // Load courses
-    const loadCourses = () => {
-      const courses = JSON.parse(localStorage.getItem("courses"));
-      const container = document.getElementById("courses-container");
-      container.innerHTML = "";
-      courses.forEach(c=>{
-        const div = document.createElement("div");
-        div.className="course-card";
-        div.innerHTML = \`
-          <h3>\${c.title}</h3>
-          <span class="course-badge">\${c.free?"Free":"Paid"}</span>
-          <button class="btn enroll-btn" data-id="\${c.id}">Enroll</button>
-        \`;
-        container.appendChild(div);
-      });
-    };
-
-    // Enrollment modal logic
-    document.addEventListener("click",(e)=>{
-      if(e.target.classList.contains("enroll-btn")){
-        const courses = JSON.parse(localStorage.getItem("courses"));
-        const course = courses.find(c=>c.id==e.target.dataset.id);
-        document.getElementById("enroll-course-title").textContent = "Enroll in "+course.title;
-        if(course.free){
-          document.getElementById("enroll-free").classList.remove("hidden");
-          document.getElementById("enroll-paid").classList.add("hidden");
-        } else {
-          document.getElementById("enroll-free").classList.add("hidden");
-          document.getElementById("enroll-paid").classList.remove("hidden");
-          document.getElementById("course-price").textContent = "KES "+course.price;
-        }
-        document.getElementById("enroll-modal").style.display="flex";
-      }
-    });
-
-    // Close modals
-    document.querySelectorAll(".close").forEach(c=>{
-      c.onclick = ()=>c.parentElement.parentElement.style.display="none";
-    });
-
-    // Init
-    initializeDatabase();
-    loadCourses();
-  </script>
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+    get me fronted for this pt>
+        // ==================== BACKEND SIMULATION ====================
+        // This section simulates a backend using localStorage
+        
+        // Database initialization
+        const initializeDatabase = () => {
+            // Users collection
+            if (!localStorage.getItem('users')) {
+                localStorage.setItem('users', JSON.stringify([
+                    { 
+                        id: 1, 
+                        name: 'John Doe', 
+                        email: 'john@example.com', 
+                        password: 'password123', 
+                        avatar: 'JD', 
+                        enrolledCourses: [1, 3],
+                        progress: {
+                            1: { completed: 5, total: 12 },
+                            3: { completed: 2, total: 10 }
+                        },
+                        createdAt: new Date().toISOString()
+                    }
+                ]));
+            }
+            
+            // Courses collection
+            if (!localStorage.getItem('courses')) {
+                localStorage.setItem('courses', JSON.stringify([
+                    {
+                        id: 1,
+                        title: 'Complete Web Development Bootcamp',
+                        description: 'Master HTML, CSS, JavaScript, React, Node.js, and More!',
+                        thumbnail: '',
+                        price: 89.99,
+                        category: 'web',
+                        instructor: 'Sarah Johnson',
+                        rating: 4.9,
+                        totalStudents: 1250,
+                        totalHours: 42,
+                        lessons: 12,
+                        level: 'Beginner',
+                        isPublished: true
+                    },
+                    {
+                        id: 2,
+                        title: 'Python for Data Science',
+                        description: 'Learn data analysis, visualization, and machine learning with Python',
+                        thumbnail: '',
+                        price: 74.99,
+                        category: 'data',
+                        instructor: 'Michael Chen',
+                        rating: 4.7,
+                        totalStudents: 890,
+                        totalHours: 36,
+                        lessons: 10,
+                        level: 'Intermediate',
+                        isPublished: true
+                    },
+                    {
+                        id: 3,
+                        title: 'UX/UI Design Masterclass',
+                        description: 'Design beautiful and functional user interfaces',
+                        thumbnail: '',
+                        price: 0,
+                        category: 'design',
+                        instructor: 'Jessica Williams',
+                        rating: 4.8,
+                        totalStudents: 720,
+                        totalHours: 28,
+                        lessons: 8,
+                        level: 'Beginner',
+                        isPublished: true
+                    },
+                    {
+                        id: 4,
+                        title: 'iOS Development with SwiftUI',
+                        description: 'Build modern iOS apps with Apple\'s latest framework',
+                        thumbnail: '',
+                        price: 79.99,
+                        category: 'mobile',
+                        instructor: 'David Kim',
+                        rating: 4.6,
+                        totalStudents: 540,
+                        totalHours: 32,
+                        lessons: 9,
+                        level: 'Intermediate',
+                        isPublished: true
+                    },
+                    {
+                        id: 5,
+                        title: 'Advanced JavaScript Concepts',
+                        description: 'Deep dive into modern JavaScript features and patterns',
+                        thumbnail: '',
+                        price: 49.99,
+                        category: 'web',
+                        instructor: 'Alex Thompson',
+                        rating: 4.8,
+                        totalStudents: 1200,
+                        totalHours: 18,
+                        lessons: 6,
+                        level: 'Advanced',
+                        isPublished: true
+                    },
+                    {
+                        id: 6,
+                        title: 'Digital Marketing Strategy',
+                        description: 'Learn to create effective digital marketing campaigns',
+                        thumbnail: '',
+                        price: 59.99,
+                        category: 'marketing',
+                        instructor: 'Maria Rodriguez',
+                        rating: 4.5,
+                        totalStudents: 650,
+                        totalHours: 24,
+                        lessons: 7,
+                        level: 'Beginner',
+                        isPublished: true
+                    }
+                ]));
+            }
+            
+            // Community posts collection
+            if (!localStorage.getItem('communityPosts')) {
+                localStorage.setItem('communityPosts', JSON.stringify([
+                    {
+                        id: 1,
+                        title: 'E-commerce React App',
+                        content: 'A full-featured e-commerce application built with React and Node.js',
+                        author: 'Sarah Johnson',
+                        authorAvatar: 'SJ',
+                        type: 'project',
+                        thumbnail: '',
+                        tags: ['react', 'nodejs', 'ecommerce'],
+                        likes: 45,
+                        comments: 12,
+                        shares: 5,
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 2,
+                        title: 'Weather Dashboard',
+                        content: 'A responsive weather dashboard using weather API',
+                        author: 'Michael Chen',
+                        authorAvatar: 'MC',
+                        type: 'project',
+                        thumbnail: '',
+                        tags: ['javascript', 'api', 'dashboard'],
+                        likes: 32,
+                        comments: 8,
+                        shares: 3,
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 3,
+                        title: 'Getting Started with React Hooks',
+                        content: 'A comprehensive tutorial on React Hooks for beginners',
+                        author: 'Alex Thompson',
+                        authorAvatar: 'AT',
+                        type: 'tutorial',
+                        thumbnail: '',
+                        tags: ['react', 'hooks', 'tutorial'],
+                        likes: 78,
+                        comments: 15,
+                        shares: 20,
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 4,
+                        title: 'Python Data Analysis Tutorial',
+                        content: 'Learn how to analyze data with Python and Pandas',
+                        author: 'Maria Rodriguez',
+                        authorAvatar: 'MR',
+                        type: 'tutorial',
+                        thumbnail: '',
+                        tags: ['python', 'pandas', 'data analysis'],
+                        likes: 56,
+                        comments: 10,
+                        shares: 12,
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 5,
+                        title: 'The Future of Web Development',
+                        content: 'Exploring the latest trends in web development',
+                        author: 'Robert Martinez',
+                        authorAvatar: 'RM',
+                        type: 'article',
+                        thumbnail: '',
+                        tags: ['web development', 'trends', 'future'],
+                        likes: 102,
+                        comments: 25,
+                        shares: 35,
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 6,
+                        title: 'AI Ethics in 2025',
+                        content: 'The ethical considerations of artificial intelligence',
+                        author: 'Emily Chen',
+                        authorAvatar: 'EC',
+                        type: 'article',
+                        thumbnail: '',
+                        tags: ['ai', 'ethics', 'technology'],
+                        likes: 87,
+                        comments: 18,
+                        shares: 22,
+                        createdAt: new Date().toISOString()
+                    }
+                ]));
+            }
+        };
+        
+        // API simulation functions
+        const api = {
+            // User authentication
+            login: (email, password) => {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        const users = JSON.parse(localStorage.getItem('users'));
+                        const user = users.find(u => u.email === email && u.password === password);
+                        
+                        if (user) {
+                            const { password: _, ...userWithoutPassword } = user;
+                            localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
+                            resolve({ success: true, user: userWithoutPassword });
+                        } else {
+                            resolve({ success: false, message: 'Invalid email or password' });
+                        }
+                    }, 1000); // Simulate network delay
+                });
+            },
+            
+            register: (name, email, password) => {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        const users = JSON.parse(localStorage.getItem('users'));
+                        
+                        if (users.some(u => u.email === email)) {
+                            resolve({ success: false, message: 'User with this email already exists' });
+                            return;
+                        }
+                        
+                        const newUser = {
+                            id: users.length + 1,
+                            name,
+                            email,
+                            password,
+                            avatar: name.split(' ').map(n => n[0]).join(''),
+                            enrolledCourses: [],
+                            progress: {},
+                            createdAt: new Date().toISOString()
+                        };
+                        
+                        users.push(newUser);
+                        localStorage.setItem('users', JSON.stringify(users));
+                        
+                        const { password: _, ...userWithoutPassword } = newUser;
+                        localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
+                        
+                        resolve({ success: true, user: userWithoutPassword });
+                    }, 1000); // Simulate network delay
+                });
+            },
+            
+            logout: () => {
+                localStorage.removeItem('currentUser');
+                return { success: true };
+            },
+            
+            getCurrentUser: () => {
+                const user = localStorage.getItem('currentUser');
+                return user ? JSON.parse(user) : null;
+            },
+            
+            // Courses
+            getCourses: (search = '', category = '') => {
+                let courses = JSON.parse(localStorage.getItem('courses'));
+                
+                if (search) {
+                    const searchLower = search.toLowerCase();
+                    courses = courses.filter(course => 
+                        course.title.toLowerCase().includes(searchLower) || 
+                        course.description.toLowerCase().includes(searchLower) ||
+                        course.category.toLowerCase().includes(searchLower) ||
+                        course.instructor.toLowerCase().includes(searchLower)
+                    );
+                }
+                
+                if (category) {
+                    courses = courses.filter(course => course.category === category);
+                }
+                
+                return { success: true, data: courses };
+            },
+            
+            getCourse: (id) => {
+                const courses = JSON.parse(localStorage.getItem('courses'));
+                const course = courses.find(c => c.id === parseInt(id));
+                
+                if (course) {
+                    return { success: true, data: course };
+                } else {
+                    return { success: false, message: 'Course not found' };
+                }
+            },
+            
+            enrollCourse: (userId, courseId) => {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        const users = JSON.parse(localStorage.getItem('users'));
+                        const courses = JSON.parse(localStorage.getItem('courses'));
+                        
+                        const userIndex = users.findIndex(u => u.id === userId);
+                        const courseIndex = courses.findIndex(c => c.id === parseInt(courseId));
+                        
+                        if (userIndex === -1) {
+                            resolve({ success: false, message: 'User not found' });
+                            return;
+                        }
+                        
+                        if (courseIndex === -1) {
+                            resolve({ success: false, message: 'Course not found' });
+                            return;
+                        }
+                        
+                        if (users[userIndex].enrolledCourses.includes(parseInt(courseId))) {
+                            resolve({ success: false, message: 'User already enrolled in this course' });
+                            return;
+                        }
+                        
+                        users[userIndex].enrolledCourses.push(parseInt(courseId));
+                        users[userIndex].progress[courseId] = { completed: 0, total: courses[courseIndex].lessons };
+                        courses[courseIndex].totalStudents += 1;
+                        
+                        localStorage.setItem('users', JSON.stringify(users));
+                        localStorage.setItem('courses', JSON.stringify(courses));
+                        
+                        // Update current user if it's the same user
+                        const currentUser = api.getCurrentUser();
+                        if (currentUser && currentUser.id === userId) {
+                            currentUser.enrolledCourses = users[userIndex].enrolledCourses;
+                            currentUser.progress = users[userIndex].progress;
+                            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                        }
+                        
+                        resolve({ success: true, message: 'Successfully enrolled in course' });
+                    }, 1500); // Simulate payment processing
+                });
+            },
+            
+            // Community posts
+            getCommunityPosts: (type = '') => {
+                let posts = JSON.parse(localStorage.getItem('communityPosts'));
+                
+                if (type) {
+                    posts = posts.filter(post => post.type === type);
+                }
+                
+                return { success: true, data: posts };
+            },
+            
+            likePost: (postId, userId) => {
+                const posts = JSON.parse(localStorage.getItem('communityPosts'));
+                const postIndex = posts.findIndex(p => p.id === parseInt(postId));
+                
+                if (postIndex === -1) {
+                    return { success: false, message: 'Post not found' };
+                }
+                
+                posts[postIndex].likes += 1;
+                localStorage.setItem('communityPosts', JSON.stringify(posts));
+                
+                return { success: true, data: posts[postIndex] };
+            },
+            
+            // Get user's enrolled courses
+            getUserCourses: (userId) => {
+                const users = JSON.parse(localStorage.getItem('users'));
+                const courses = JSON.parse(localStorage.getItem('courses'));
+                
+                const user = users.find(u => u.id === userId);
+                if (!user) {
+                    return { success: false, message: 'User not found' };
+                }
+                
+                const userCourses = courses.filter(course => 
+                    user.enrolledCourses.includes(course.id)
+                );
+                
+                return { success: true, data: userCourses };
+            }
+        };
+        
+        // ==================== FRONTEND CODE ====================
+        // DOM Elements
+        const loginBtn = document.getElementById('login-btn');
+        const signupBtn = document.getElementById('signup-btn');
+        const loginModal = document.getElementById('login-modal');
+        const signupModal = document.getElementById('signup-modal');
+        const enrollModal = document.getElementById('enroll-modal');
+        const closeLogin = document.getElementById('close-login');
+        const closeSignup = document.getElementById('close-signup');
+        const closeEnroll = document.getElementById('close-enroll');
+        const switchToSignup = document.getElementById('switch-to-signup');
+        const switchToLogin = document.getElementById('switch-to-login');
+        const loginSubmit = document.getElementById('login-submit');
+        const signupSubmit = document.getElementById('signup-submit');
+        const loginText = document.getElementById('login-text');
+        const loginLoader = document.getElementById('login-loader');
+        const signupText = document.getElementById('signup-text');
+        const signupLoader = document.getElementById('signup-loader');
+        const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
+        const tabs = document.querySelectorAll('.tab');
+        const notification = document.getElementById('notification');
+        const userMenu = document.getElementById('user-menu');
+        const userAvatar = document.getElementById('user-avatar');
+        const authButtons = document.querySelector('.auth-buttons');
+        const coursesContainer = document.getElementById('courses-container');
+        const projectsContainer = document.getElementById('projects-container');
+        const tutorialsContainer = document.getElementById('tutorials-container');
+        const articlesContainer = document.getElementById('articles-container');
+        const dashboardSection = document.getElementById('dashboard-section');
+        const welcomeUser = document.getElementById('welcome-user');
+        const continueLearningContainer = document.getElementById('continue-learning-container');
+        const logoutBtn = document.getElementById('logout-btn');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mainNav = document.getElementById('main-nav');
+        const enrollFreeBtn = document.getElementById('enroll-free-btn');
+        const enrollPaidBtn = document.getElementById('enroll-paid-btn');
+        const enrollFreeSection = document.getElementById('enroll-free');
+        const enrollPaidSection = document.getElementById('enroll-paid');
+        const paymentMethod = document.getElementById('payment-method');
+        const cardPayment = document.getElementById('card-payment');
+        
+        // Current user and state
+        let currentUser = null;
+        let currentCourseToEnroll = null;
+        
+        // Initialize the application
+        const initApp = () => {
+            initializeDatabase();
+            checkLoginStatus();
+            loadCourses();
+            loadCommunityPosts();
+            setupEventListeners();
+        };
+        
+        // Set up event listeners
+        const setupEventListeners = () => {
+            // Auth buttons
+            loginBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.style.display = 'flex';
+            });
+            
+            signupBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                signupModal.style.display = 'flex';
+            });
+            
+            // Close modals
+            closeLogin.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+            });
+            
+            closeSignup.addEventListener('click', () => {
+                signupModal.style.display = 'none';
+            });
+            
+            closeEnroll.addEventListener('click', () => {
+                enrollModal.style.display = 'none';
+            });
+            
+            // Switch between login and signup
+            switchToSignup.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.style.display = 'none';
+                signupModal.style.display = 'flex';
+            });
+            
+            switchToLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                signupModal.style.display = 'none';
+                loginModal.style.display = 'flex';
+            });
+            
+            // Login functionality
+            loginSubmit.addEventListener('click', handleLogin);
+            
+            // Signup functionality
+            signupSubmit.addEventListener('click', handleSignup);
+            
+            // Search functionality
+            searchBtn.addEventListener('click', handleSearch);
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    handleSearch();
+                }
+            });
+            
+            // Popular tags search
+            document.querySelectorAll('.tag').forEach(tag => {
+                tag.addEventListener('click', () => {
+                    const searchTerm = tag.getAttribute('data-search');
+                    searchInput.value = searchTerm;
+                    handleSearch();
+                });
+            });
+            
+            // Category filtering
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const category = card.getAttribute('data-category');
+                    const response = api.getCourses('', category);
+                    if (response.success) {
+                        renderCourses(response.data);
+                        showNotification(`Showing ${response.data.length} courses for: ${category}`);
+                    }
+                });
+            });
+            
+            // Tab functionality
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.tab').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                    
+                    // Hide all tab content
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Show the corresponding tab content
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === loginModal) {
+                    loginModal.style.display = 'none';
+                }
+                if (e.target === signupModal) {
+                    signupModal.style.display = 'none';
+                }
+                if (e.target === enrollModal) {
+                    enrollModal.style.display = 'none';
+                }
+            });
+            
+            // Logout
+            logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                handleLogout();
+            });
+            
+            // Mobile menu
+            mobileMenuBtn.addEventListener('click', () => {
+                mainNav.classList.toggle('active');
+            });
+            
+            // Payment method change
+            paymentMethod.addEventListener('change', () => {
+                if (paymentMethod.value === 'card') {
+                    cardPayment.style.display = 'block';
+                } else {
+                    cardPayment.style.display = 'none';
+                }
+            });
+            
+            // Enrollment
+            enrollFreeBtn.addEventListener('click', handleEnrollment);
+            enrollPaidBtn.addEventListener('click', handleEnrollment);
+        };
+        
+        // Check if user is logged in
+        const checkLoginStatus = () => {
+            currentUser = api.getCurrentUser();
+            if (currentUser) {
+                updateUIForLoggedInUser();
+            }
+        };
+        
+        // Update UI for logged in user
+        const updateUIForLoggedInUser = () => {
+            authButtons.style.display = 'none';
+            userMenu.classList.remove('hidden');
+            userAvatar.textContent = currentUser.avatar;
+            welcomeUser.textContent = currentUser.name;
+            dashboardSection.classList.remove('hidden');
+            
+            // Load user's courses for the dashboard
+            const response = api.getUserCourses(currentUser.id);
+            if (response.success) {
+                renderContinueLearning(response.data);
+            }
+        };
+        
+        // Update UI for logged out user
+        const updateUIForLoggedOutUser = () => {
+            authButtons.style.display = 'flex';
+            userMenu.classList.add('hidden');
+            dashboardSection.classList.add('hidden');
+        };
+        
+        // Show notification
+        const showNotification = (message, isSuccess = true) => {
+            notification.textContent = message;
+            notification.className = 'notification';
+            if (!isSuccess) {
+                notification.classList.add('error');
+            }
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        };
+        
+        // Handle login
+        const handleLogin = async () => {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Simple validation
+            if (!email || !password) {
+                showNotification('Please fill in all fields', false);
+                return;
+            }
+            
+            // Show loading state
+            loginText.classList.add('hidden');
+            loginLoader.classList.remove('hidden');
+            
+            try {
+                const response = await api.login(email, password);
+                
+                if (response.success) {
+                    currentUser = response.user;
+                    loginModal.style.display = 'none';
+                    updateUIForLoggedInUser();
+                    loadCourses();
+                    loadCommunityPosts();
+                    showNotification(`Welcome back, ${response.user.name}!`);
+                } else {
+                    showNotification(response.message, false);
+                }
+            } catch (error) {
+                showNotification('An error occurred during login', false);
+            } finally {
+                // Hide loading state
+                loginText.classList.remove('hidden');
+                loginLoader.classList.add('hidden');
+            }
+        };
+        
+        // Handle signup
+        const handleSignup = async () => {
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm-password').value;
+            const termsAgreed = document.getElementById('terms-agree').checked;
+            
+            // Simple validation
+            if (!name || !email || !password || !confirmPassword) {
+                showNotification('Please fill in all fields', false);
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showNotification('Passwords do not match', false);
+                return;
+            }
+            
+            if (!termsAgreed) {
+                showNotification('Please agree to the terms and conditions', false);
+                return;
+            }
+            
+            // Show loading state
+            signupText.classList.add('hidden');
+            signupLoader.classList.remove('hidden');
+            
+            try {
+                const response = await api.register(name, email, password);
+                
+                if (response.success) {
+                    currentUser = response.user;
+                    signupModal.style.display = 'none';
+                    updateUIForLoggedInUser();
+                    loadCourses();
+                    loadCommunityPosts();
+                    showNotification(`Welcome to SkillForge, ${response.user.name}!`);
+                } else {
+                    showNotification(response.message, false);
+                }
+            } catch (error) {
+                showNotification('An error occurred during registration', false);
+            } finally {
+                // Hide loading state
+                signupText.classList.remove('hidden');
+                signupLoader.classList.add('hidden');
+            }
+        };
+        
+        // Handle logout
+        const handleLogout = () => {
+            api.logout();
+            currentUser = null;
+            updateUIForLoggedOutUser();
+            showNotification('You have been logged out');
+        };
+        
+        // Handle search
+        const handleSearch = () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                const response = api.getCourses(query);
+                if (response.success) {
+                    renderCourses(response.data);
+                    showNotification(`Found ${response.data.length} courses for: ${query}`);
+                }
+            } else {
+                loadCourses();
+            }
+        };
+        
+        // Load courses from the backend
+        const loadCourses = () => {
+            const response = api.getCourses();
+            if (response.success) {
+                renderCourses(response.data);
+            }
+        };
+        
+        // Render courses to the UI
+        const renderCourses = (courses) => {
+            coursesContainer.innerHTML = '';
+            
+            courses.forEach(course => {
+                const isEnrolled = currentUser && currentUser.enrolledCourses.includes(course.id);
+                const progress = currentUser && currentUser.progress && currentUser.progress[course.id] 
+                    ? currentUser.progress[course.id] 
+                    : null;
+                
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                courseCard.innerHTML = `
+                    ${course.price === 0 ? '<div class="course-badge">Free</div>' : ''}
+                    <div class="course-thumb">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="course-content">
+                        <h3>${course.title}</h3>
+                        <div class="course-instructor">
+                            <i class="fas fa-user"></i> ${course.instructor}
+                        </div>
+                        <p>${course.description}</p>
+                        <div class="course-meta">
+                            <div>
+                                <div class="rating">${'★'.repeat(Math.floor(course.rating))}${course.rating % 1 >= 0.5 ? '½' : ''} ${course.rating}</div>
+                                <div>${course.totalStudents} students</div>
+                            </div>
+                            <div class="price">${course.price === 0 ? 'Free' : '$' + course.price.toFixed(2)}</div>
+                        </div>
+                        ${progress ? `
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${(progress.completed / progress.total) * 100}%"></div>
+                            </div>
+                            <div class="course-meta">
+                                <span>${Math.round((progress.completed / progress.total) * 100)}% complete</span>
+                                <button class="btn btn-primary btn-sm">Continue</button>
+                            </div>
+                        ` : `
+                            <button class="btn btn-primary" style="width: 100%; margin-top: 10px;" 
+                                data-course-id="${course.id}" 
+                                data-course-title="${course.title}"
+                                data-course-price="${course.price}">
+                                ${isEnrolled ? 'Go to Course' : (course.price === 0 ? 'Enroll for Free' : 'Enroll Now')}
+                            </button>
+                        `}
+                    </div>
+                `;
+                
+                coursesContainer.appendChild(courseCard);
+                
+                // Add event listener to enroll button
+                const enrollBtn = courseCard.querySelector('button');
+                if (enrollBtn && !isEnrolled) {
+                    enrollBtn.addEventListener('click', () => {
+                        currentCourseToEnroll = {
+                            id: enrollBtn.getAttribute('data-course-id'),
+                            title: enrollBtn.getAttribute('data-course-title'),
+                            price: parseFloat(enrollBtn.getAttribute('data-course-price'))
+                        };
+                        
+                        // Show enrollment modal
+                        document.getElementById('enroll-course-title').textContent = currentCourseToEnroll.title;
+                        
+                        if (currentCourseToEnroll.price === 0) {
+                            enrollFreeSection.classList.remove('hidden');
+                            enrollPaidSection.classList.add('hidden');
+                        } else {
+                            enrollFreeSection.classList.add('hidden');
+                            enrollPaidSection.classList.remove('hidden');
+                            document.getElementById('course-price').textContent = '$' + currentCourseToEnroll.price.toFixed(2);
+                        }
+                        
+                        enrollModal.style.display = 'flex';
+                    });
+                }
+            });
+        };
+        
+        // Render continue learning courses
+        const renderContinueLearning = (courses) => {
+            continueLearningContainer.innerHTML = '';
+            
+            if (courses.length === 0) {
+                continueLearningContainer.innerHTML = `
+                    <div class="text-center">
+                        <p>You haven't enrolled in any courses yet.</p>
+                        <a href="#" class="btn btn-primary mt-20">Browse Courses</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            courses.slice(0, 3).forEach(course => {
+                const progress = currentUser.progress[course.id];
+                const progressPercent = Math.round((progress.completed / progress.total) * 100);
+                
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                courseCard.innerHTML = `
+                    <div class="course-thumb">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="course-content">
+                        <h3>${course.title}</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${progressPercent}%"></div>
+                        </div>
+                        <div class="course-meta">
+                            <span>${progressPercent}% complete</span>
+                            <button class="btn btn-primary btn-sm">Continue</button>
+                        </div>
+                    </div>
+                `;
+                
+                continueLearningContainer.appendChild(courseCard);
+            });
+        };
+        
+        // Load community posts
+        const loadCommunityPosts = () => {
+            // Load projects
+            const projectsResponse = api.getCommunityPosts('project');
+            if (projectsResponse.success) {
+                renderCommunityPosts(projectsResponse.data, projectsContainer);
+            }
+            
+            // Load tutorials
+            const tutorialsResponse = api.getCommunityPosts('tutorial');
+            if (tutorialsResponse.success) {
+                renderCommunityPosts(tutorialsResponse.data, tutorialsContainer);
+            }
+            
+            // Load articles
+            const articlesResponse = api.getCommunityPosts('article');
+            if (articlesResponse.success) {
+                renderCommunityPosts(articlesResponse.data, articlesContainer);
+            }
+        };
+        
+        // Render community posts
+        const renderCommunityPosts = (posts, container) => {
+            container.innerHTML = '';
+            
+            posts.forEach(post => {
+                const postCard = document.createElement('div');
+                postCard.className = 'community-card';
+                postCard.innerHTML = `
+                    <div class="community-header">
+                        <div class="user-avatar">${post.authorAvatar}</div>
+                        <div>
+                            <div><strong>${post.author}</strong></div>
+                            <div style="font-size: 0.8rem; color: var(--gray-500);">${new Date(post.createdAt).toLocaleDateString()}</div>
+                        </div>
+                    </div>
+                    <div class="community-body">
+                        <h3>${post.title}</h3>
+                        <p>${post.content}</p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            ${post.tags.map(tag => `<span style="background: var(--gray-200); padding: 4px 10px; border-radius: 50px; font-size: 0.8rem;">#${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="community-footer">
+                        <div class="post-actions">
+                            <div class="post-action" data-post-id="${post.id}">
+                                <i class="fas fa-heart"></i> <span>${post.likes}</span>
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-comment"></i> <span>${post.comments}</span>
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-share"></i> <span>${post.shares}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(postCard);
+                
+                // Add event listener to like button
+                const likeBtn = postCard.querySelector('.post-action');
+                likeBtn.addEventListener('click', () => {
+                    if (!currentUser) {
+                        showNotification('Please log in to like posts', false);
+                        return;
+                    }
+                    
+                    const response = api.likePost(likeBtn.getAttribute('data-post-id'), currentUser.id);
+                    if (response.success) {
+                        const likesElement = likeBtn.querySelector('span');
+                        likesElement.textContent = response.data.likes;
+                        showNotification(`Liked ${post.title}!`);
+                    }
+                });
+            });
+        };
+        
+        // Handle enrollment
+        const handleEnrollment = async () => {
+            if (!currentUser) {
+                showNotification('Please log in to enroll in courses', false);
+                enrollModal.style.display = 'none';
+                loginModal.style.display = 'flex';
+                return;
+            }
+            
+            const response = await api.enrollCourse(currentUser.id, currentCourseToEnroll.id);
+            
+            if (response.success) {
+                enrollModal.style.display = 'none';
+                showNotification(`Successfully enrolled in ${currentCourseToEnroll.title}!`);
+                
+                // Refresh courses to show updated enrollment status
+                loadCourses();
+                
+                // Refresh dashboard
+                const userCoursesResponse = api.getUserCourses(currentUser.id);
+                if (userCoursesResponse.success) {
+                    renderContinueLearning(userCoursesResponse.data);
+                }
+            } else {
+                showNotification(response.message, false);
+            }
+        };
+        
+        // Initialize the application
+        initApp();
+    </script>
 </body>
 </html>
