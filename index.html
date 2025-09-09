@@ -6,7 +6,6 @@
     <title>SkillForge - Learn, Create, Succeed</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Your existing CSS styles */
         :root {
             --primary: #4361ee;
             --secondary: #3a0ca3;
@@ -40,7 +39,7 @@
             padding: 0 20px;
         }
         
-        /* Improved Header Styles */
+        /* Header Styles */
         header {
             background-color: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -299,7 +298,7 @@
             background: white;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 5px極端15px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
             height: 100%;
@@ -341,8 +340,8 @@
             background: white;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 極端0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0極端.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
             position: relative;
             height: 100%;
             display: flex;
@@ -373,7 +372,7 @@
             right: 10px;
             background: var(--success);
             color: white;
-            padding: 5px 極端10px;
+            padding: 5px 10px;
             border-radius: 50px;
             font-size: 0.8rem;
             font-weight: bold;
@@ -386,7 +385,7 @@
             flex-direction: column;
         }
         
-        .course-content極端 h3 {
+        .course-content h3 {
             margin-bottom: 10px;
             font-size: 1.1rem;
         }
@@ -427,7 +426,7 @@
             display: flex;
             justify-content: center;
             margin-bottom: 30px;
-            border-bottom: 1px solid #de極端e2e6;
+            border-bottom: 1px solid #dee2e6;
             flex-wrap: wrap;
         }
         
@@ -466,6 +465,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            overflow: auto;
         }
         
         .modal-content {
@@ -500,7 +500,7 @@
             font-weight: 500;
         }
         
-極端        .form-group input {
+        .form-group input {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid #ddd;
@@ -534,7 +534,7 @@
         
         .footer-column h3 {
             font-size: 1.2rem;
-極端            margin-bottom: 20px;
+            margin-bottom: 20px;
             color: var(--success);
         }
         
@@ -552,7 +552,7 @@
             transition: color 0.3s;
         }
         
-        .極端footer-column ul li極端 a:hover {
+        .footer-column ul li a:hover {
             color: white;
         }
         
@@ -641,12 +641,12 @@
         .no-courses {
             text-align: center;
             padding: 40px;
-極端            color: var(--gray-600);
+            color: var(--gray-600);
         }
         
         /* Filters */
         .filters {
-            display:極端 flex;
+            display: flex;
             gap: 15px;
             margin-bottom: 20px;
             flex-wrap: wrap;
@@ -733,7 +733,7 @@
     <!-- Header -->
     <header>
         <div class="container">
-            <div class極端="header-content">
+            <div class="header-content">
                 <button class="menu-toggle" id="menu-toggle">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -752,7 +752,7 @@
                 </nav>
                 <div class="auth-buttons">
                     <a href="#" class="btn btn-outline" id="login-btn">Log In</a>
-                    <a href="#" class="btn btn-primary"極端 id="signup-btn">Sign Up</a>
+                    <a href="#" class="btn btn-primary" id="signup-btn">Sign Up</a>
                     <div id="user-menu" style="display: none;">
                         <img src="" alt="User" id="user-avatar" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer;">
                     </div>
@@ -783,7 +783,7 @@
     <!-- My Courses Section (Only shown when logged in) -->
     <section class="container" id="my-courses-section" style="display: none;">
         <div class="my-courses">
-            <div class="my極端-courses-header">
+            <div class="my-courses-header">
                 <h2>My Enrolled Courses</h2>
                 <div class="filters">
                     <select class="filter-select" id="course-filter">
@@ -799,7 +799,7 @@
             </div>
             <div class="no-courses" id="no-courses-message">
                 <i class="fas fa-book-open" style="font-size: 3rem; margin-bottom: 15px;"></i>
-                <h極端3>You haven't enrolled in any courses yet</h3>
+                <h3>You haven't enrolled in any courses yet</h3>
                 <p>Browse our courses and start learning today!</p>
                 <a href="#courses-container" class="btn btn-primary" style="margin-top: 15px;">Browse Courses</a>
             </div>
@@ -810,14 +810,14 @@
     <section class="container">
         <div class="section-title">
             <h2>Why Choose SkillForge?</h2>
-            <p>Everything you need to succeed, all in one place.</極端p>
+            <p>Everything you need to succeed, all in one place.</p>
         </div>
         <div class="features">
-            <極端div class="feature-card">
+            <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-chalkboard-teacher"></i>
                 </div>
-                <h3>Expert Instructors</極端h3>
+                <h3>Expert Instructors</h3>
                 <p>Learn from industry leaders and real-world practitioners.</p>
             </div>
             <div class="feature-card">
@@ -860,7 +860,7 @@
                 <div class="category-content">
                     <h3>Data Science & AI <span class="course-count">8 courses</span></h3>
                     <p>Learn Python, machine learning, and data visualization</p>
-                </極端div>
+                </div>
             </div>
             <div class="category-card" data-category="cyber">
                 <div class="category-content">
@@ -905,9 +905,9 @@
                 <option value="mobile">Mobile Development</option>
                 <option value="marketing">Marketing</option>
             </select>
-            <select class="filter-select極端" id="sort-filter">
+            <select class="filter-select" id="sort-filter">
                 <option value="popular">Most Popular</option>
-                <option value="new極端est">Newest</option>
+                <option value="newest">Newest</option>
                 <option value="rating">Highest Rated</option>
                 <option value="price-low">Price: Low to High</option>
                 <option value="price-high">Price: High to Low</option>
@@ -928,7 +928,7 @@
         
         <div class="tabs">
             <div class="tab active" data-tab="projects">Projects</div>
-            <div class="tab" data-tab="tutorials">Tutorial極端s</div>
+            <div class="tab" data-tab="tutorials">Tutorials</div>
             <div class="tab" data-tab="articles">Articles</div>
         </div>
         
@@ -948,7 +948,7 @@
             <div class="courses-grid" id="articles-container">
                 <!-- Articles will be dynamically loaded here -->
             </div>
-極端        </div>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -962,8 +962,8 @@
                         <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                         <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="LinkedIn"><極端i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" aria-label="YouTube"><i class極端="fab fa-youtube"></極端i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
                 <div class="footer-column">
@@ -971,7 +971,7 @@
                     <ul>
                         <li><a href="#">Affiliate Program</a></li>
                         <li><a href="#">Code Playground</a></li>
-                        <li><a href="#">Community</a></極端li>
+                        <li><a href="#">Community</a></li>
                         <li><a href="#">Pricing</a></li>
                         <li><a href="#">Blog</a></li>
                     </ul>
@@ -1034,7 +1034,7 @@
             <button class="close-modal" id="close-signup">&times;</button>
             <h2>Create an Account</h2>
             <div class="form-group">
-                <label for極端="signup-name">Full Name</label>
+                <label for="signup-name">Full Name</label>
                 <input type="text" id="signup-name" placeholder="Your full name">
             </div>
             <div class="form-group">
@@ -1064,15 +1064,15 @@
     <!-- Firebase SDK -->
     <script type="module">
         // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
         import { 
             getAuth, 
             createUserWithEmailAndPassword, 
             signInWithEmailAndPassword,
             signOut,
             onAuthStateChanged
-        } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import {
             getFirestore,
             collection,
@@ -1080,16 +1080,17 @@
             getDocs,
             doc,
             getDoc,
+            setDoc,
             updateDoc,
             query,
             where,
             orderBy,
             runTransaction
-        } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyDK2jl9uzjLQn7_my極端ShgXAXhALUg3GIKV0",
+            apiKey: "AIzaSyDK2jl9uzjLQn7_myShgXAXhALUg3GIKV0",
             authDomain: "skillbase-372c1.firebaseapp.com",
             projectId: "skillbase-372c1",
             storageBucket: "skillbase-372c1.firebasestorage.app",
@@ -1425,7 +1426,7 @@
                     const samplePosts = [
                         {
                             title: 'E-commerce React App',
-                            content: 'A full-featured e-commerce application built with React and極端 Node.js',
+                            content: 'A full-featured e-commerce application built with React and Node.js',
                             author: 'Sarah Johnson',
                             type: 'project',
                             tags: ['react', 'nodejs', 'ecommerce'],
@@ -1445,7 +1446,7 @@
                             title: 'Getting Started with React Hooks',
                             content: 'A comprehensive tutorial on React Hooks for beginners',
                             author: 'Alex Thompson',
-                            type極端: 'tutorial',
+                            type: 'tutorial',
                             tags: ['react', 'hooks', 'tutorial'],
                             likes: 78,
                             createdAt: new Date().toISOString()
@@ -1457,7 +1458,7 @@
                             type: 'tutorial',
                             tags: ['python', 'pandas', 'data analysis'],
                             likes: 56,
-                            createdAt: new Date().極端toISOString()
+                            createdAt: new Date().toISOString()
                         },
                         {
                             title: 'The Future of Web Development',
@@ -1526,7 +1527,7 @@
         const switchToSignup = document.getElementById('switch-to-signup');
         const switchToLogin = document.getElementById('switch-to-login');
         const loginSubmit = document.getElementById('login-submit');
-        const signupSubmit = document.getElementById('sign極端up-submit');
+        const signupSubmit = document.getElementById('signup-submit');
         const loginPasswordToggle = document.getElementById('login-password-toggle');
         const signupPasswordToggle = document.getElementById('signup-password-toggle');
         const searchInput = document.getElementById('search-input');
@@ -1583,12 +1584,12 @@
                 loginModal.style.display = 'none';
             });
             
-            close極端Signup.addEventListener('click', () => {
+            closeSignup.addEventListener('click', () => {
                 signupModal.style.display = 'none';
             });
             
             // Switch between login and signup
-            switchToSignup.addEventListener('click極端', (e) => {
+            switchToSignup.addEventListener('click', (e) => {
                 e.preventDefault();
                 loginModal.style.display = 'none';
                 signupModal.style.display = 'flex';
@@ -1668,7 +1669,7 @@
                     setButtonLoading(signupSubmit, false);
                     
                     if (response.success) {
-                        current極端User = response.user;
+                        currentUser = response.user;
                         signupModal.style.display = 'none';
                         updateUIForLoggedInUser();
                         loadCourses();
@@ -1810,7 +1811,7 @@
             notification.style.display = 'block';
             
             setTimeout(() => {
-                notification.style.display極端 = 'none';
+                notification.style.display = 'none';
             }, 3000);
         };
         
@@ -1876,7 +1877,7 @@
                             <span>By: ${course.instructor}</span>
                         </div>
                         <button class="btn btn-success" style="width: 100%; margin-top: 10px;">
-                            <i class="fas fa-play-circle"></極端i> Continue Learning
+                            <i class="fas fa-play-circle"></i> Continue Learning
                         </button>
                     </div>
                 `;
@@ -1934,17 +1935,17 @@
                                 </button>`
                             }
                         ` : `
-                            <button class="btn btn-outline極端" style="width: 100%; margin-top: 10px;" onclick="document.getElementById('login-btn').click()">
+                            <button class="btn btn-outline" style="width: 100%; margin-top: 10px;" onclick="document.getElementById('login-btn').click()">
                                 <i class="fas fa-lock"></i> Login to Enroll
                             </button>
                         `}
-                    </極端div>
+                    </div>
                 `;
                 
                 coursesContainer.appendChild(courseCard);
                 
                 // Add event listener to enroll button
-                if (currentUser && !is極端Enrolled) {
+                if (currentUser && !isEnrolled) {
                     const enrollBtn = courseCard.querySelector('button');
                     enrollBtn.addEventListener('click', () => {
                         setButtonLoading(enrollBtn, true);
@@ -2045,7 +2046,7 @@
                                 const likesElement = postCard.querySelector('.rating');
                                 likesElement.innerHTML = `${response.data.likes} <i class="fas fa-heart"></i>`;
                                 likeBtn.disabled = true;
-                                likeBtn.innerHTML = '<極端i class="fas fa-check"></i> Liked';
+                                likeBtn.innerHTML = '<i class="fas fa-check"></i> Liked';
                             }
                         });
                     });
