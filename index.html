@@ -8,14 +8,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #4361ee;
-            --primary-dark: #3a0ca3;
-            --primary-light: #4895ef;
-            --secondary: #f72585;
-            --accent: #4cc9f0;
-            --success: #4ade80;
-            --warning: #f9c74f;
-            --error: #f43f5e;
+            --primary: #e83e8c;  /* Changed to pink */
+            --primary-dark: #c2185b;  /* Darker pink */
+            --primary-light: #f8bbd0;  /* Light pink */
+            --secondary: #4caf50;  /* Changed to green */
+            --secondary-dark: #388e3c;  /* Darker green */
+            --secondary-light: #a5d6a7;  /* Light green */
+            --accent: #ff4081;  /* Accent pink */
+            --success: #66bb6a;  /* Success green */
+            --warning: #ffb74d;  /* Warning orange */
+            --error: #f44336;  /* Error red */
             --light: #f8f9fa;
             --dark: #212529;
             --gray-100: #f8f9fa;
@@ -177,7 +179,7 @@
         }
         
         .btn-secondary:hover {
-            background-color: #e11d74;
+            background-color: var(--secondary-dark);
             transform: translateY(-2px);
             box-shadow: var(--shadow-md);
         }
@@ -260,7 +262,7 @@
         
         .search-bar input:focus {
             outline: none;
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.3);
+            box-shadow: 0 0 0 3px rgba(232, 62, 140, 0.3);
         }
         
         .search-bar button {
@@ -280,7 +282,7 @@
         }
         
         .search-bar button:hover {
-            background: #e11d74;
+            background: var(--secondary-dark);
         }
         
         .popular-tags {
@@ -370,7 +372,7 @@
         .feature-icon {
             width: 80px;
             height: 80px;
-            background: rgba(67, 97, 238, 0.1);
+            background: rgba(232, 62, 140, 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -439,7 +441,7 @@
         }
         
         .course-count {
-            background: var(--primary-light);
+            background: var(--secondary);
             color: white;
             font-size: 0.8rem;
             padding: 4px 12px;
@@ -483,7 +485,7 @@
         
         .course-thumb {
             height: 180px;
-            background: linear-gradient(45deg, #6c63ff, #3a0ca3);
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -820,7 +822,7 @@
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            box-shadow: 0 0 0 3px rgba(232, 62, 140, 0.2);
         }
         
         .form-check {
@@ -1839,3 +1841,428 @@
                 
                 if (type) {
                     posts = posts.filter(post => post.type === type);
+                }
+                
+                return { success: true, data: posts };
+            }
+        };
+        
+        // ==================== FRONTEND FUNCTIONALITY ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the database
+            initializeDatabase();
+            
+            // DOM Elements
+            const loginBtn = document.getElementById('login-btn');
+            const signupBtn = document.getElementById('signup-btn');
+            const loginModal = document.getElementById('login-modal');
+            const signupModal = document.getElementById('signup-modal');
+            const enrollModal = document.getElementById('enroll-modal');
+            const closeLogin = document.getElementById('close-login');
+            const closeSignup = document.getElementById('close-signup');
+            const closeEnroll = document.getElementById('close-enroll');
+            const switchToSignup = document.getElementById('switch-to-signup');
+            const switchToLogin = document.getElementById('switch-to-login');
+            const loginSubmit = document.getElementById('login-submit');
+            const signupSubmit = document.getElementById('signup-submit');
+            const loginText = document.getElementById('login-text');
+            const loginLoader = document.getElementById('login-loader');
+            const signupText = document.getElementById('signup-text');
+            const signupLoader = document.getElementById('signup-loader');
+            const logoutBtn = document.getElementById('logout-btn');
+            const userMenu = document.getElementById('user-menu');
+            const userAvatar = document.getElementById('user-avatar');
+            const welcomeUser = document.getElementById('welcome-user');
+            const dashboardSection = document.getElementById('dashboard-section');
+            const searchBtn = document.getElementById('search-btn');
+            const searchInput = document.getElementById('search-input');
+            const coursesContainer = document.getElementById('courses-container');
+            const projectsContainer = document.getElementById('projects-container');
+            const tutorialsContainer = document.getElementById('tutorials-container');
+            const articlesContainer = document.getElementById('articles-container');
+            const continueLearningContainer = document.getElementById('continue-learning-container');
+            const notification = document.getElementById('notification');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mainNav = document.getElementById('main-nav');
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            // Check if user is logged in
+            const currentUser = api.getCurrentUser();
+            if (currentUser) {
+                // User is logged in
+                loginBtn.classList.add('hidden');
+                signupBtn.classList.add('hidden');
+                userMenu.classList.remove('hidden');
+                userAvatar.textContent = currentUser.avatar;
+                welcomeUser.textContent = currentUser.name;
+                dashboardSection.classList.remove('hidden');
+                
+                // Load user's enrolled courses
+                loadContinueLearningCourses();
+            }
+            
+            // Load initial data
+            loadCourses();
+            loadCommunityPosts('projects', projectsContainer);
+            loadCommunityPosts('tutorials', tutorialsContainer);
+            loadCommunityPosts('articles', articlesContainer);
+            
+            // Event Listeners
+            loginBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginModal.style.display = 'flex';
+            });
+            
+            signupBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                signupModal.style.display = 'flex';
+            });
+            
+            closeLogin.addEventListener('click', function() {
+                loginModal.style.display = 'none';
+            });
+            
+            closeSignup.addEventListener('click', function() {
+                signupModal.style.display = 'none';
+            });
+            
+            closeEnroll.addEventListener('click', function() {
+                enrollModal.style.display = 'none';
+            });
+            
+            switchToSignup.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginModal.style.display = 'none';
+                signupModal.style.display = 'flex';
+            });
+            
+            switchToLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                signupModal.style.display = 'none';
+                loginModal.style.display = 'flex';
+            });
+            
+            loginSubmit.addEventListener('click', function() {
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                
+                if (!email || !password) {
+                    showNotification('Please fill in all fields', 'error');
+                    return;
+                }
+                
+                // Show loading state
+                loginText.classList.add('hidden');
+                loginLoader.classList.remove('hidden');
+                
+                api.login(email, password).then(response => {
+                    if (response.success) {
+                        showNotification('Login successful!', 'success');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    } else {
+                        showNotification(response.message, 'error');
+                        loginText.classList.remove('hidden');
+                        loginLoader.classList.add('hidden');
+                    }
+                });
+            });
+            
+            signupSubmit.addEventListener('click', function() {
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                const confirmPassword = document.getElementById('signup-confirm-password').value;
+                const termsAgree = document.getElementById('terms-agree').checked;
+                
+                if (!name || !email || !password || !confirmPassword) {
+                    showNotification('Please fill in all fields', 'error');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    showNotification('Passwords do not match', 'error');
+                    return;
+                }
+                
+                if (!termsAgree) {
+                    showNotification('Please agree to the terms and conditions', 'error');
+                    return;
+                }
+                
+                // Show loading state
+                signupText.classList.add('hidden');
+                signupLoader.classList.remove('hidden');
+                
+                api.register(name, email, password).then(response => {
+                    if (response.success) {
+                        showNotification('Account created successfully!', 'success');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    } else {
+                        showNotification(response.message, 'error');
+                        signupText.classList.remove('hidden');
+                        signupLoader.classList.add('hidden');
+                    }
+                });
+            });
+            
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                api.logout();
+                showNotification('Logged out successfully', 'success');
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            });
+            
+            searchBtn.addEventListener('click', function() {
+                const searchTerm = searchInput.value;
+                loadCourses(searchTerm);
+            });
+            
+            searchInput.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    const searchTerm = searchInput.value;
+                    loadCourses(searchTerm);
+                }
+            });
+            
+            // Popular tags search
+            document.querySelectorAll('.tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    const searchTerm = this.getAttribute('data-search');
+                    searchInput.value = searchTerm;
+                    loadCourses(searchTerm);
+                });
+            });
+            
+            // Category filtering
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    loadCourses('', category);
+                    // Scroll to courses section
+                    document.querySelector('.courses-grid').scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // Tab switching
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === tabId) {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', function() {
+                mainNav.classList.toggle('active');
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target === loginModal) {
+                    loginModal.style.display = 'none';
+                }
+                if (e.target === signupModal) {
+                    signupModal.style.display = 'none';
+                }
+                if (e.target === enrollModal) {
+                    enrollModal.style.display = 'none';
+                }
+            });
+            
+            // Functions
+            function loadCourses(search = '', category = '') {
+                const response = api.getCourses(search, category);
+                
+                coursesContainer.innerHTML = '';
+                
+                if (response.data.length === 0) {
+                    coursesContainer.innerHTML = '<p class="text-center">No courses found. Try a different search.</p>';
+                    return;
+                }
+                
+                response.data.forEach(course => {
+                    const courseCard = document.createElement('div');
+                    courseCard.className = 'course-card';
+                    courseCard.innerHTML = `
+                        ${course.price === 0 ? '<div class="course-badge">Free</div>' : ''}
+                        <div class="course-thumb">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="course-content">
+                            <h3>${course.title}</h3>
+                            <div class="course-instructor">
+                                <i class="fas fa-user"></i> ${course.instructor}
+                            </div>
+                            <p>${course.description}</p>
+                            <div class="course-meta">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i> ${course.rating}
+                                </div>
+                                <div class="price">
+                                    ${course.price === 0 ? 'Free' : '$' + course.price}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Add click event to enroll in course
+                    courseCard.addEventListener('click', function() {
+                        if (!currentUser) {
+                            showNotification('Please log in to enroll in this course', 'error');
+                            loginModal.style.display = 'flex';
+                            return;
+                        }
+                        
+                        document.getElementById('enroll-course-title').textContent = course.title;
+                        
+                        if (course.price === 0) {
+                            document.getElementById('enroll-free').classList.remove('hidden');
+                            document.getElementById('enroll-paid').classList.add('hidden');
+                        } else {
+                            document.getElementById('enroll-free').classList.add('hidden');
+                            document.getElementById('enroll-paid').classList.remove('hidden');
+                            document.getElementById('course-price').textContent = '$' + course.price;
+                        }
+                        
+                        enrollModal.style.display = 'flex';
+                        
+                        // Handle enrollment
+                        document.getElementById('enroll-free-btn').onclick = function() {
+                            enrollCourse(course.id);
+                        };
+                        
+                        document.getElementById('enroll-paid-btn').onclick = function() {
+                            enrollCourse(course.id);
+                        };
+                    });
+                    
+                    coursesContainer.appendChild(courseCard);
+                });
+            }
+            
+            function loadCommunityPosts(type, container) {
+                const response = api.getCommunityPosts(type);
+                
+                container.innerHTML = '';
+                
+                response.data.forEach(post => {
+                    const postCard = document.createElement('div');
+                    postCard.className = 'community-card';
+                    postCard.innerHTML = `
+                        <div class="community-header">
+                            <div class="user-avatar">${post.authorAvatar}</div>
+                            <div>
+                                <strong>${post.author}</strong>
+                                <div style="font-size: 0.8rem; color: var(--gray-500);">${new Date(post.createdAt).toLocaleDateString()}</div>
+                            </div>
+                        </div>
+                        <div class="community-body">
+                            <h3>${post.title}</h3>
+                            <p>${post.content}</p>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                ${post.tags.map(tag => `<span style="background: var(--gray-200); padding: 4px 10px; border-radius: 50px; font-size: 0.8rem;">#${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="community-footer">
+                            <div class="post-actions">
+                                <div class="post-action">
+                                    <i class="fas fa-heart"></i> ${post.likes}
+                                </div>
+                                <div class="post-action">
+                                    <i class="fas fa-comment"></i> ${post.comments}
+                                </div>
+                                <div class="post-action">
+                                    <i class="fas fa-share"></i> ${post.shares}
+                                </div>
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-bookmark"></i>
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.appendChild(postCard);
+                });
+            }
+            
+            function loadContinueLearningCourses() {
+                if (!currentUser || currentUser.enrolledCourses.length === 0) {
+                    continueLearningContainer.innerHTML = '<p>You haven\'t enrolled in any courses yet.</p>';
+                    return;
+                }
+                
+                const courses = JSON.parse(localStorage.getItem('courses'));
+                const userCourses = courses.filter(course => currentUser.enrolledCourses.includes(course.id));
+                
+                continueLearningContainer.innerHTML = '';
+                
+                userCourses.forEach(course => {
+                    const progress = currentUser.progress[course.id];
+                    const progressPercent = (progress.completed / progress.total) * 100;
+                    
+                    const courseCard = document.createElement('div');
+                    courseCard.className = 'course-card';
+                    courseCard.innerHTML = `
+                        <div class="course-thumb">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="course-content">
+                            <h3>${course.title}</h3>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${progressPercent}%"></div>
+                            </div>
+                            <div class="course-meta">
+                                <div>${progress.completed}/${progress.total} lessons</div>
+                                <div>${Math.round(progressPercent)}% complete</div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    continueLearningContainer.appendChild(courseCard);
+                });
+            }
+            
+            function enrollCourse(courseId) {
+                api.enrollCourse(currentUser.id, courseId).then(response => {
+                    if (response.success) {
+                        showNotification(response.message, 'success');
+                        enrollModal.style.display = 'none';
+                        loadContinueLearningCourses();
+                    } else {
+                        showNotification(response.message, 'error');
+                    }
+                });
+            }
+            
+            function showNotification(message, type = 'success') {
+                notification.textContent = message;
+                notification.className = 'notification';
+                notification.classList.add(type);
+                notification.style.display = 'block';
+                
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
