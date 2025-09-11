@@ -626,6 +626,7 @@
             align-items: center;
             gap: 12px;
             margin-bottom: 15px;
+            position: relative;
         }
         
         .user-avatar {
@@ -810,6 +811,7 @@
             margin-bottom: 8px;
             font-weight: 500;
             color: var(--gray-700);
+            position: relative;
         }
         
         .form-group input, .form-group select, .form-group textarea {
@@ -1488,172 +1490,417 @@
     <div class="notification" id="notification"></div>
 
     <script>
-        // ==================== BACKEND SERVICE ====================
-        // This simulates a complete backend API
+        // ==================== BACKEND SIMULATION ====================
+        // This section simulates a backend using localStorage
         
-        class BackendService {
-            constructor() {
-                this.baseUrl = "https://api.skillforge.com";
-                this.token = localStorage.getItem('authToken');
-                this.currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+        // Database initialization
+        const initializeDatabase = () => {
+            // Users collection
+            if (!localStorage.getItem('users')) {
+                localStorage.setItem('users', JSON.stringify([
+                    { 
+                        id: 1, 
+                        name: 'John Doe', 
+                        email: 'john@example.com', 
+                        password: 'password123', 
+                        avatar: 'JD', 
+                        enrolledCourses: [1, 3],
+                        progress: {
+                            1: { completed: 5, total: 12 },
+                            3: { completed: 2, total: 10 }
+                        },
+                        createdAt: new Date().toISOString()
+                    }
+                ]));
             }
             
-            // Simulate API request delay
-            async delay(ms) {
-                return new Promise(resolve => setTimeout(resolve, ms));
-            }
-            
-            // Generic API request method
-            async request(endpoint, options = {}) {
-                // Simulate network delay
-                await this.delay(500);
-                
-                const url = `${this.baseUrl}${endpoint}`;
-                const config = {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        ...(this.token ? {'Authorization': `Bearer ${this.token}`} : {}),
-                        ...options.headers
+            // Courses collection - I've added a comprehensive set of sample courses
+            if (!localStorage.getItem('courses')) {
+                localStorage.setItem('courses', JSON.stringify([
+                    {
+                        id: 1,
+                        title: 'Complete Web Development Bootcamp',
+                        description: 'Master HTML, CSS, JavaScript, React, Node.js, and More!',
+                        thumbnail: '',
+                        price: 89.99,
+                        category: 'web',
+                        instructor: 'Sarah Johnson',
+                        rating: 4.9,
+                        totalStudents: 1250,
+                        totalHours: 42,
+                        lessons: 12,
+                        level: 'Beginner',
+                        isPublished: true
                     },
-                    ...options
-                };
-                
-                // In a real app, this would be a fetch request
-                // For simulation, we'll handle different endpoints
-                return this.handleSimulatedRequest(endpoint, config);
+                    {
+                        id: 2,
+                        title: 'Python for Data Science',
+                        description: 'Learn data analysis, visualization, and machine learning with Python',
+                        thumbnail: '',
+                        price: 74.99,
+                        category: 'data',
+                        instructor: 'Michael Chen',
+                        rating: 4.7,
+                        totalStudents: 890,
+                        totalHours: 36,
+                        lessons: 10,
+                        level: 'Intermediate',
+                        isPublished: true
+                    },
+                    {
+                        id: 3,
+                        title: 'UX/UI Design Masterclass',
+                        description: 'Design beautiful and functional user interfaces',
+                        thumbnail: '',
+                        price: 0,
+                        category: 'design',
+                        instructor: 'Jessica Williams',
+                        rating: 4.8,
+                        totalStudents: 720,
+                        totalHours: 28,
+                        lessons: 8,
+                        level: 'Beginner',
+                        isPublished: true
+                    },
+                    {
+                        id: 4,
+                        title: 'iOS Development with SwiftUI',
+                        description: 'Build modern iOS apps with Apple\'s latest framework',
+                        thumbnail: '',
+                        price: 79.99,
+                        category: 'mobile',
+                        instructor: 'David Kim',
+                        rating: 4.6,
+                        totalStudents: 540,
+                        totalHours: 32,
+                        lessons: 9,
+                        level: 'Intermediate',
+                        isPublished: true
+                    },
+                    {
+                        id: 5,
+                        title: 'Advanced JavaScript Concepts',
+                        description: 'Deep dive into modern JavaScript features and patterns',
+                        thumbnail: '',
+                        price: 49.99,
+                        category: 'web',
+                        instructor: 'Alex Thompson',
+                        rating: 4.8,
+                        totalStudents: 1200,
+                        totalHours: 18,
+                        lessons: 6,
+                        level: 'Advanced',
+                        isPublished: true
+                    },
+                    {
+                        id: 6,
+                        title: 'Digital Marketing Strategy',
+                        description: 'Learn to create effective digital marketing campaigns',
+                        thumbnail: '',
+                        price: 59.99,
+                        category: 'marketing',
+                        instructor: 'Maria Rodriguez',
+                        rating: 4.5,
+                        totalStudents: 650,
+                        totalHours: 24,
+                        lessons: 7,
+                        level: 'Beginner',
+                        isPublished: true
+                    },
+                    {
+                        id: 7,
+                        title: 'React Native Mobile App Development',
+                        description: 'Build cross-platform mobile apps with React Native',
+                        thumbnail: '',
+                        price: 69.99,
+                        category: 'mobile',
+                        instructor: 'Chris Wilson',
+                        rating: 4.7,
+                        totalStudents: 890,
+                        totalHours: 30,
+                        lessons: 10,
+                        level: 'Intermediate',
+                        isPublished: true
+                    },
+                    {
+                        id: 8,
+                        title: 'Machine Learning Fundamentals',
+                        description: 'Introduction to ML algorithms and applications',
+                        thumbnail: '',
+                        price: 84.99,
+                        category: 'data',
+                        instructor: 'Dr. Emily Zhang',
+                        rating: 4.8,
+                        totalStudents: 1100,
+                        totalHours: 40,
+                        lessons: 14,
+                        level: 'Intermediate',
+                        isPublished: true
+                    },
+                    {
+                        id: 9,
+                        title: 'Cybersecurity Essentials',
+                        description: 'Protect systems and networks from digital threats',
+                        thumbnail: '',
+                        price: 64.99,
+                        category: 'cyber',
+                        instructor: 'James Anderson',
+                        rating: 4.6,
+                        totalStudents: 720,
+                        totalHours: 26,
+                        lessons: 9,
+                        level: 'Beginner',
+                        isPublished: true
+                    },
+                    {
+                        id: 10,
+                        title: 'Advanced Graphic Design with Adobe Creative Suite',
+                        description: 'Master Photoshop, Illustrator, and InDesign',
+                        thumbnail: '',
+                        price: 59.99,
+                        category: 'design',
+                        instructor: 'Sophia Martinez',
+                        rating: 4.7,
+                        totalStudents: 950,
+                        totalHours: 32,
+                        lessons: 11,
+                        level: 'Intermediate',
+                        isPublished: true
+                    },
+                    {
+                        id: 11,
+                        title: 'Node.js Backend Development',
+                        description: 'Build scalable server-side applications with Node.js',
+                        thumbnail: '',
+                        price: 74.99,
+                        category: 'web',
+                        instructor: 'Ryan Lee',
+                        rating: 4.8,
+                        totalStudents: 830,
+                        totalHours: 28,
+                        lessons: 9,
+                        level: 'Intermediate',
+                        isPublished: true
+                    },
+                    {
+                        id: 12,
+                        title: 'Social Media Marketing Mastery',
+                        description: 'Grow your brand with effective social media strategies',
+                        thumbnail: '',
+                        price: 49.99,
+                        category: 'marketing',
+                        instructor: 'Olivia Parker',
+                        rating: 4.5,
+                        totalStudents: 680,
+                        totalHours: 22,
+                        lessons: 8,
+                        level: 'Beginner',
+                        isPublished: true
+                    },
+                    {
+                        id: 13,
+                        title: 'Flutter App Development',
+                        description: 'Create beautiful native apps with Flutter',
+                        thumbnail: '',
+                        price: 69.99,
+                        category: 'mobile',
+                        instructor: 'Daniel Kim',
+                        rating: 4.6,
+                        totalStudents: 540,
+                        totalHours: 24,
+                        lessons: 8,
+                        level: 'Intermediate',
+                        isPublished: true
+                    },
+                    {
+                        id: 14,
+                        title: 'Data Visualization with Tableau',
+                        description: 'Transform data into compelling visual stories',
+                        thumbnail: '',
+                        price: 54.99,
+                        category: 'data',
+                        instructor: 'Rachel Wong',
+                        rating: 4.7,
+                        totalStudents: 610,
+                        totalHours: 20,
+                        lessons: 7,
+                        level: 'Beginner',
+                        isPublished: true
+                    },
+                    {
+                        id: 15,
+                        title: 'Ethical Hacking Fundamentals',
+                        description: 'Learn ethical hacking techniques to secure systems',
+                        thumbnail: '',
+                        price: 89.99,
+                        category: 'cyber',
+                        instructor: 'Marcus Johnson',
+                        rating: 4.9,
+                        totalStudents: 780,
+                        totalHours: 36,
+                        lessons: 12,
+                        level: 'Advanced',
+                        isPublished: true
+                    }
+                ]));
             }
             
-            // Handle simulated requests based on endpoint
-            async handleSimulatedRequest(endpoint, config) {
-                try {
-                    let response;
-                    
-                    // Auth endpoints
-                    if (endpoint === '/auth/login' && config.method === 'POST') {
-                        response = await this.handleLogin(config.body);
-                    } 
-                    else if (endpoint === '/auth/register' && config.method === 'POST') {
-                        response = await this.handleRegister(config.body);
+            // Community posts collection
+            if (!localStorage.getItem('communityPosts')) {
+                localStorage.setItem('communityPosts', JSON.stringify([
+                    {
+                        id: 1,
+                        title: 'E-commerce React App',
+                        content: 'A full-featured e-commerce application built with React and Node.js',
+                        author: 'Sarah Johnson',
+                        authorAvatar: 'SJ',
+                        type: 'project',
+                        thumbnail: '',
+                        tags: ['react', 'nodejs', 'ecommerce'],
+                        likes: 45,
+                        comments: 12,
+                        shares: 5,
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 2,
+                        title: 'Weather Dashboard',
+                        content: 'A responsive weather dashboard using weather API',
+                        author: 'Michael Chen',
+                        authorAvatar: 'MC',
+                        type: 'project',
+                        thumbnail: '',
+                        tags: ['javascript', 'api', 'dashboard'],
+                        likes: 32,
+                        comments: 8,
+                        shares: 3,
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 3,
+                        title: 'Getting Started with React Hooks',
+                        content: 'A comprehensive tutorial on React Hooks for beginners',
+                        author: 'Alex Thompson',
+                        authorAvatar: 'AT',
+                        type: 'tutorial',
+                        thumbnail: '',
+                        tags: ['react', 'hooks', 'tutorial'],
+                        likes: 78,
+                        comments: 15,
+                        shares: 20,
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 4,
+                        title: 'Python Data Analysis Tutorial',
+                        content: 'Learn how to analyze data with Python and Pandas',
+                        author: 'Maria Rodriguez',
+                        authorAvatar: 'MR',
+                        type: 'tutorial',
+                        thumbnail: '',
+                        tags: ['python', 'pandas', 'data analysis'],
+                        likes: 56,
+                        comments: 10,
+                        shares: 12,
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 5,
+                        title: 'The Future of Web Development',
+                        content: 'Exploring the latest trends in web development',
+                        author: 'Robert Martinez',
+                        authorAvatar: 'RM',
+                        type: 'article',
+                        thumbnail: '',
+                        tags: ['web development', 'trends', 'future'],
+                        likes: 102,
+                        comments: 25,
+                        shares: 35,
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 6,
+                        title: 'AI Ethics in 2025',
+                        content: 'The ethical considerations of artificial intelligence',
+                        author: 'Emily Chen',
+                        authorAvatar: 'EC',
+                        type: 'article',
+                        thumbnail: '',
+                        tags: ['ai', 'ethics', 'technology'],
+                        likes: 87,
+                        comments: 18,
+                        shares: 22,
+                        createdAt: new Date().toISOString()
                     }
-                    else if (endpoint === '/auth/logout' && config.method === 'POST') {
-                        response = await this.handleLogout();
-                    }
-                    // Course endpoints
-                    else if (endpoint === '/courses') {
-                        response = await this.handleGetCourses(config);
-                    }
-                    else if (endpoint.startsWith('/courses/')) {
-                        const courseId = endpoint.split('/')[2];
-                        response = await this.handleGetCourse(courseId);
-                    }
-                    else if (endpoint === '/enroll' && config.method === 'POST') {
-                        response = await this.handleEnrollment(config.body);
-                    }
-                    // User endpoints
-                    else if (endpoint === '/user') {
-                        response = await this.handleGetCurrentUser();
-                    }
-                    // Community endpoints
-                    else if (endpoint === '/community') {
-                        response = await this.handleGetCommunityPosts(config);
-                    }
-                    else {
-                        throw new Error(`Endpoint ${endpoint} not found`);
-                    }
-                    
-                    return response;
-                } catch (error) {
-                    return {
-                        success: false,
-                        message: error.message
-                    };
-                }
+                ]));
             }
-            
-            // Auth handlers
-            async handleLogin(body) {
-                const { email, password } = JSON.parse(body);
-                const users = JSON.parse(localStorage.getItem('users') || '[]');
-                const user = users.find(u => u.email === email && u.password === password);
-                
-                if (user) {
-                    const { password: _, ...userWithoutPassword } = user;
-                    this.currentUser = userWithoutPassword;
-                    this.token = 'simulated_jwt_token_' + Date.now();
-                    
-                    localStorage.setItem('authToken', this.token);
-                    localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
-                    
-                    return {
-                        success: true,
-                        data: {
-                            user: userWithoutPassword,
-                            token: this.token
+        };
+        
+        // API simulation functions
+        const api = {
+            // User authentication
+            login: (email, password) => {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        const users = JSON.parse(localStorage.getItem('users'));
+                        const user = users.find(u => u.email === email && u.password === password);
+                        
+                        if (user) {
+                            const { password: _, ...userWithoutPassword } = user;
+                            localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
+                            resolve({ success: true, user: userWithoutPassword });
+                        } else {
+                            resolve({ success: false, message: 'Invalid email or password' });
                         }
-                    };
-                } else {
-                    throw new Error('Invalid email or password');
-                }
-            }
+                    }, 1000); // Simulate network delay
+                });
+            },
             
-            async handleRegister(body) {
-                const { name, email, password } = JSON.parse(body);
-                const users = JSON.parse(localStorage.getItem('users') || '[]');
-                
-                if (users.some(u => u.email === email)) {
-                    throw new Error('User with this email already exists');
-                }
-                
-                const newUser = {
-                    id: users.length + 1,
-                    name,
-                    email,
-                    password,
-                    avatar: name.split(' ').map(n => n[0]).join(''),
-                    enrolledCourses: [],
-                    progress: {},
-                    createdAt: new Date().toISOString()
-                };
-                
-                users.push(newUser);
-                localStorage.setItem('users', JSON.stringify(users));
-                
-                const { password: _, ...userWithoutPassword } = newUser;
-                this.currentUser = userWithoutPassword;
-                this.token = 'simulated_jwt_token_' + Date.now();
-                
-                localStorage.setItem('authToken', this.token);
-                localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
-                
-                return {
-                    success: true,
-                    data: {
-                        user: userWithoutPassword,
-                        token: this.token
-                    }
-                };
-            }
+            register: (name, email, password) => {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        const users = JSON.parse(localStorage.getItem('users'));
+                        
+                        if (users.some(u => u.email === email)) {
+                            resolve({ success: false, message: 'User with this email already exists' });
+                            return;
+                        }
+                        
+                        const newUser = {
+                            id: users.length + 1,
+                            name,
+                            email,
+                            password,
+                            avatar: name.split(' ').map(n => n[0]).join(''),
+                            enrolledCourses: [],
+                            progress: {},
+                            createdAt: new Date().toISOString()
+                        };
+                        
+                        users.push(newUser);
+                        localStorage.setItem('users', JSON.stringify(users));
+                        
+                        const { password: _, ...userWithoutPassword } = newUser;
+                        localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
+                        
+                        resolve({ success: true, user: userWithoutPassword });
+                    }, 1000); // Simulate network delay
+                });
+            },
             
-            async handleLogout() {
-                this.token = null;
-                this.currentUser = null;
-                localStorage.removeItem('authToken');
+            logout: () => {
                 localStorage.removeItem('currentUser');
-                
-                return {
-                    success: true,
-                    message: 'Logged out successfully'
-                };
-            }
+                return { success: true };
+            },
             
-            // Course handlers
-            async handleGetCourses(config) {
-                let courses = JSON.parse(localStorage.getItem('courses') || '[]');
-                
-                // Handle search query
-                const url = new URL(`http://dummy.com${config.url || ''}`);
-                const search = url.searchParams.get('search');
-                const category = url.searchParams.get('category');
+            getCurrentUser: () => {
+                const user = localStorage.getItem('currentUser');
+                return user ? JSON.parse(user) : null;
+            },
+            
+            // Courses
+            getCourses: (search = '', category = '') => {
+                let courses = JSON.parse(localStorage.getItem('courses'));
                 
                 if (search) {
                     const searchLower = search.toLowerCase();
@@ -1669,114 +1916,86 @@
                     courses = courses.filter(course => course.category === category);
                 }
                 
-                return {
-                    success: true,
-                    data: courses
-                };
-            }
+                return { success: true, data: courses };
+            },
             
-            async handleGetCourse(courseId) {
-                const courses = JSON.parse(localStorage.getItem('courses') || '[]');
-                const course = courses.find(c => c.id === parseInt(courseId));
+            getCourse: (id) => {
+                const courses = JSON.parse(localStorage.getItem('courses'));
+                const course = courses.find(c => c.id === parseInt(id));
                 
                 if (course) {
-                    return {
-                        success: true,
-                        data: course
-                    };
+                    return { success: true, data: course };
                 } else {
-                    throw new Error('Course not found');
+                    return { success: false, message: 'Course not found' };
                 }
-            }
+            },
             
-            async handleEnrollment(body) {
-                const { courseId } = JSON.parse(body);
-                
-                if (!this.currentUser) {
-                    throw new Error('User not authenticated');
-                }
-                
-                const courses = JSON.parse(localStorage.getItem('courses') || '[]');
-                const course = courses.find(c => c.id === parseInt(courseId));
-                
-                if (!course) {
-                    throw new Error('Course not found');
-                }
-                
-                const users = JSON.parse(localStorage.getItem('users') || '[]');
-                const userIndex = users.findIndex(u => u.id === this.currentUser.id);
-                
-                if (userIndex === -1) {
-                    throw new Error('User not found');
-                }
-                
-                if (users[userIndex].enrolledCourses.includes(parseInt(courseId))) {
-                    throw new Error('User already enrolled in this course');
-                }
-                
-                users[userIndex].enrolledCourses.push(parseInt(courseId));
-                users[userIndex].progress[courseId] = { completed: 0, total: course.lessons };
-                course.totalStudents += 1;
-                
-                localStorage.setItem('users', JSON.stringify(users));
-                localStorage.setItem('courses', JSON.stringify(courses));
-                
-                // Update current user
-                this.currentUser = users[userIndex];
-                localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-                
-                return {
-                    success: true,
-                    message: 'Successfully enrolled in course'
-                };
-            }
+            enrollCourse: (userId, courseId) => {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        const users = JSON.parse(localStorage.getItem('users'));
+                        const courses = JSON.parse(localStorage.getItem('courses'));
+                        
+                        const userIndex = users.findIndex(u => u.id === userId);
+                        const courseIndex = courses.findIndex(c => c.id === parseInt(courseId));
+                        
+                        if (userIndex === -1) {
+                            resolve({ success: false, message: 'User not found' });
+                            return;
+                        }
+                        
+                        if (courseIndex === -1) {
+                            resolve({ success: false, message: 'Course not found' });
+                            return;
+                        }
+                        
+                        if (users[userIndex].enrolledCourses.includes(parseInt(courseId))) {
+                            resolve({ success: false, message: 'User already enrolled in this course' });
+                            return;
+                        }
+                        
+                        users[userIndex].enrolledCourses.push(parseInt(courseId));
+                        users[userIndex].progress[courseId] = { completed: 0, total: courses[courseIndex].lessons };
+                        courses[courseIndex].totalStudents += 1;
+                        
+                        localStorage.setItem('users', JSON.stringify(users));
+                        localStorage.setItem('courses', JSON.stringify(courses));
+                        
+                        // Update current user if it's the same user
+                        const currentUser = api.getCurrentUser();
+                        if (currentUser && currentUser.id === userId) {
+                            currentUser.enrolledCourses = users[userIndex].enrolledCourses;
+                            currentUser.progress = users[userIndex].progress;
+                            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                        }
+                        
+                        resolve({ success: true, message: 'Successfully enrolled in course' });
+                    }, 1500); // Simulate payment processing
+                });
+            },
             
-            // User handlers
-            async handleGetCurrentUser() {
-                if (!this.currentUser) {
-                    throw new Error('User not authenticated');
-                }
-                
-                return {
-                    success: true,
-                    data: this.currentUser
-                };
-            }
-            
-            // Community handlers
-            async handleGetCommunityPosts(config) {
-                const url = new URL(`http://dummy.com${config.url || ''}`);
-                const type = url.searchParams.get('type');
-                
-                let posts = JSON.parse(localStorage.getItem('communityPosts') || '[]');
+            // Community posts
+            getCommunityPosts: (type = '') => {
+                let posts = JSON.parse(localStorage.getItem('communityPosts'));
                 
                 if (type) {
                     posts = posts.filter(post => post.type === type);
                 }
                 
-                return {
-                    success: true,
-                    data: posts
-                };
+                return { success: true, data: posts };
             }
-        }
+        };
 
         // ==================== FRONTEND APPLICATION ====================
         // UI Controller - handles all UI interactions
         
-        class SkillForgeApp {
-            constructor() {
-                this.api = new BackendService();
-                this.currentEnrollingCourse = null;
-                this.init();
-            }
-            
+        const uiController = {
             // Initialize the application
             init() {
                 this.bindEvents();
                 this.checkAuthStatus();
                 this.loadInitialData();
-            }
+            },
             
             // Bind event listeners
             bindEvents() {
@@ -1872,16 +2091,17 @@
                 document.getElementById('mobile-menu-btn').addEventListener('click', () => {
                     this.toggleMobileMenu();
                 });
-            }
+            },
             
             // Check if user is authenticated
-            async checkAuthStatus() {
-                if (this.api.currentUser) {
-                    this.showAuthenticatedUI(this.api.currentUser);
+            checkAuthStatus() {
+                const user = api.getCurrentUser();
+                if (user) {
+                    this.showAuthenticatedUI(user);
                 } else {
                     this.showUnauthenticatedUI();
                 }
-            }
+            },
             
             // Show UI for authenticated users
             showAuthenticatedUI(user) {
@@ -1894,7 +2114,7 @@
                 
                 // Load user-specific data
                 this.loadUserCourses();
-            }
+            },
             
             // Show UI for unauthenticated users
             showUnauthenticatedUI() {
@@ -1902,260 +2122,47 @@
                 document.getElementById('signup-btn').classList.remove('hidden');
                 document.getElementById('user-menu').classList.add('hidden');
                 document.getElementById('dashboard-section').classList.add('hidden');
-            }
+            },
             
             // Load initial data
-            async loadInitialData() {
-                try {
-                    // Initialize database if needed
-                    this.initializeDatabase();
-                    
-                    // Load courses
-                    const coursesResponse = await this.api.request('/courses');
-                    if (coursesResponse.success) {
-                        this.displayCourses(coursesResponse.data);
-                    }
-                    
-                    // Load community posts
-                    const postsResponse = await this.api.request('/community?type=projects');
-                    if (postsResponse.success) {
-                        this.displayCommunityPosts(postsResponse.data, 'projects');
-                    }
-                } catch (error) {
-                    this.showNotification('Failed to load data. Please try again.', 'error');
-                }
-            }
-            
-            // Initialize database with sample data
-            initializeDatabase() {
-                if (!localStorage.getItem('users')) {
-                    localStorage.setItem('users', JSON.stringify([
-                        { 
-                            id: 1, 
-                            name: 'John Doe', 
-                            email: 'john@example.com', 
-                            password: 'password123', 
-                            avatar: 'JD', 
-                            enrolledCourses: [1, 3],
-                            progress: {
-                                1: { completed: 5, total: 12 },
-                                3: { completed: 2, total: 10 }
-                            },
-                            createdAt: new Date().toISOString()
-                        }
-                    ]));
+            loadInitialData() {
+                // Initialize database if needed
+                initializeDatabase();
+                
+                // Load courses
+                const coursesResponse = api.getCourses();
+                if (coursesResponse.success) {
+                    this.displayCourses(coursesResponse.data);
                 }
                 
-                if (!localStorage.getItem('courses')) {
-                    localStorage.setItem('courses', JSON.stringify([
-                        {
-                            id: 1,
-                            title: 'Complete Web Development Bootcamp',
-                            description: 'Master HTML, CSS, JavaScript, React, Node.js, and More!',
-                            thumbnail: '',
-                            price: 89.99,
-                            category: 'web',
-                            instructor: 'Sarah Johnson',
-                            rating: 4.9,
-                            totalStudents: 1250,
-                            totalHours: 42,
-                            lessons: 12,
-                            level: 'Beginner',
-                            isPublished: true
-                        },
-                        {
-                            id: 2,
-                            title: 'Python for Data Science',
-                            description: 'Learn data analysis, visualization, and machine learning with Python',
-                            thumbnail: '',
-                            price: 74.99,
-                            category: 'data',
-                            instructor: 'Michael Chen',
-                            rating: 4.7,
-                            totalStudents: 890,
-                            totalHours: 36,
-                            lessons: 10,
-                            level: 'Intermediate',
-                            isPublished: true
-                        },
-                        {
-                            id: 3,
-                            title: 'UX/UI Design Masterclass',
-                            description: 'Design beautiful and functional user interfaces',
-                            thumbnail: '',
-                            price: 0,
-                            category: 'design',
-                            instructor: 'Jessica Williams',
-                            rating: 4.8,
-                            totalStudents: 720,
-                            totalHours: 28,
-                            lessons: 8,
-                            level: 'Beginner',
-                            isPublished: true
-                        },
-                        {
-                            id: 4,
-                            title: 'iOS Development with SwiftUI',
-                            description: 'Build modern iOS apps with Apple\'s latest framework',
-                            thumbnail: '',
-                            price: 79.99,
-                            category: 'mobile',
-                            instructor: 'David Kim',
-                            rating: 4.6,
-                            totalStudents: 540,
-                            totalHours: 32,
-                            lessons: 9,
-                            level: 'Intermediate',
-                            isPublished: true
-                        },
-                        {
-                            id: 5,
-                            title: 'Advanced JavaScript Concepts',
-                            description: 'Deep dive into modern JavaScript features and patterns',
-                            thumbnail: '',
-                            price: 49.99,
-                            category: 'web',
-                            instructor: 'Alex Thompson',
-                            rating: 4.8,
-                            totalStudents: 1200,
-                            totalHours: 18,
-                            lessons: 6,
-                            level: 'Advanced',
-                            isPublished: true
-                        },
-                        {
-                            id: 6,
-                            title: 'Digital Marketing Strategy',
-                            description: 'Learn to create effective digital marketing campaigns',
-                            thumbnail: '',
-                            price: 59.99,
-                            category: 'marketing',
-                            instructor: 'Maria Rodriguez',
-                            rating: 4.5,
-                            totalStudents: 650,
-                            totalHours: 24,
-                            lessons: 7,
-                            level: 'Beginner',
-                            isPublished: true
-                        }
-                    ]));
+                // Load community posts
+                const postsResponse = api.getCommunityPosts('projects');
+                if (postsResponse.success) {
+                    this.displayCommunityPosts(postsResponse.data, 'projects');
                 }
-                
-                if (!localStorage.getItem('communityPosts')) {
-                    localStorage.setItem('communityPosts', JSON.stringify([
-                        {
-                            id: 1,
-                            title: 'E-commerce React App',
-                            content: 'A full-featured e-commerce application built with React and Node.js',
-                            author: 'Sarah Johnson',
-                            authorAvatar: 'SJ',
-                            type: 'project',
-                            thumbnail: '',
-                            tags: ['react', 'nodejs', 'ecommerce'],
-                            likes: 45,
-                            comments: 12,
-                            shares: 5,
-                            createdAt: new Date().toISOString()
-                        },
-                        {
-                            id: 2,
-                            title: 'Weather Dashboard',
-                            content: 'A responsive weather dashboard using weather API',
-                            author: 'Michael Chen',
-                            authorAvatar: 'MC',
-                            type: 'project',
-                            thumbnail: '',
-                            tags: ['javascript', 'api', 'dashboard'],
-                            likes: 32,
-                            comments: 8,
-                            shares: 3,
-                            createdAt: new Date().toISOString()
-                        },
-                        {
-                            id: 3,
-                            title: 'Getting Started with React Hooks',
-                            content: 'A comprehensive tutorial on React Hooks for beginners',
-                            author: 'Alex Thompson',
-                            authorAvatar: 'AT',
-                            type: 'tutorial',
-                            thumbnail: '',
-                            tags: ['react', 'hooks', 'tutorial'],
-                            likes: 78,
-                            comments: 15,
-                            shares: 20,
-                            createdAt: new Date().toISOString()
-                        },
-                        {
-                            id: 4,
-                            title: 'Python Data Analysis Tutorial',
-                            content: 'Learn how to analyze data with Python and Pandas',
-                            author: 'Maria Rodriguez',
-                            authorAvatar: 'MR',
-                            type: 'tutorial',
-                            thumbnail: '',
-                            tags: ['python', 'pandas', 'data analysis'],
-                            likes: 56,
-                            comments: 10,
-                            shares: 12,
-                            createdAt: new Date().toISOString()
-                        },
-                        {
-                            id: 5,
-                            title: 'The Future of Web Development',
-                            content: 'Exploring the latest trends in web development',
-                            author: 'Robert Martinez',
-                            authorAvatar: 'RM',
-                            type: 'article',
-                            thumbnail: '',
-                            tags: ['web development', 'trends', 'future'],
-                            likes: 102,
-                            comments: 25,
-                            shares: 35,
-                            createdAt: new Date().toISOString()
-                        },
-                        {
-                            id: 6,
-                            title: 'AI Ethics in 2025',
-                            content: 'The ethical considerations of artificial intelligence',
-                            author: 'Emily Chen',
-                            authorAvatar: 'EC',
-                            type: 'article',
-                            thumbnail: '',
-                            tags: ['ai', 'ethics', 'technology'],
-                            likes: 87,
-                            comments: 18,
-                            shares: 22,
-                            createdAt: new Date().toISOString()
-                        }
-                    ]));
-                }
-            }
+            },
             
             // Load user's courses
-            async loadUserCourses() {
-                try {
-                    const user = this.api.currentUser;
-                    if (user && user.enrolledCourses && user.enrolledCourses.length > 0) {
-                        const container = document.getElementById('continue-learning-container');
-                        container.innerHTML = '<p>Loading your courses...</p>';
+            loadUserCourses() {
+                const user = api.getCurrentUser();
+                if (user && user.enrolledCourses && user.enrolledCourses.length > 0) {
+                    const container = document.getElementById('continue-learning-container');
+                    container.innerHTML = '<p>Loading your courses...</p>';
+                    
+                    const coursesResponse = api.getCourses();
+                    if (coursesResponse.success) {
+                        const userCourses = coursesResponse.data.filter(course => 
+                            user.enrolledCourses.includes(course.id)
+                        );
                         
-                        const coursesResponse = await this.api.request('/courses');
-                        if (coursesResponse.success) {
-                            const userCourses = coursesResponse.data.filter(course => 
-                                user.enrolledCourses.includes(course.id)
-                            );
-                            
-                            if (userCourses.length > 0) {
-                                this.displayCourses(userCourses, container);
-                            } else {
-                                container.innerHTML = '<p>You haven\'t enrolled in any courses yet.</p>';
-                            }
+                        if (userCourses.length > 0) {
+                            this.displayCourses(userCourses, container);
+                        } else {
+                            container.innerHTML = '<p>You haven\'t enrolled in any courses yet.</p>';
                         }
                     }
-                } catch (error) {
-                    console.error('Failed to load user courses:', error);
                 }
-            }
+            },
             
             // Handle login
             async handleLogin() {
@@ -2170,10 +2177,7 @@
                 this.showLoader('login');
                 
                 try {
-                    const response = await this.api.request('/auth/login', {
-                        method: 'POST',
-                        body: JSON.stringify({ email, password })
-                    });
+                    const response = await api.login(email, password);
                     
                     if (response.success) {
                         this.hideModal('login-modal');
@@ -2187,7 +2191,7 @@
                 } finally {
                     this.hideLoader('login');
                 }
-            }
+            },
             
             // Handle signup
             async handleSignup() {
@@ -2215,10 +2219,7 @@
                 this.showLoader('signup');
                 
                 try {
-                    const response = await this.api.request('/auth/register', {
-                        method: 'POST',
-                        body: JSON.stringify({ name, email, password })
-                    });
+                    const response = await api.register(name, email, password);
                     
                     if (response.success) {
                         this.hideModal('signup-modal');
@@ -2232,24 +2233,17 @@
                 } finally {
                     this.hideLoader('signup');
                 }
-            }
+            },
             
             // Handle logout
-            async logout() {
-                try {
-                    await this.api.request('/auth/logout', {
-                        method: 'POST'
-                    });
-                    this.showNotification('Logged out successfully', 'success');
-                    this.showUnauthenticatedUI();
-                } catch (error) {
-                    console.error('Logout error:', error);
-                    this.showNotification('Logout failed', 'error');
-                }
-            }
+            logout() {
+                api.logout();
+                this.showNotification('Logged out successfully', 'success');
+                this.showUnauthenticatedUI();
+            },
             
             // Handle search
-            async handleSearch() {
+            handleSearch() {
                 const searchTerm = document.getElementById('search-input').value;
                 
                 if (!searchTerm) {
@@ -2257,22 +2251,18 @@
                     return;
                 }
                 
-                try {
-                    const response = await this.api.request(`/courses?search=${encodeURIComponent(searchTerm)}`);
-                    
-                    if (response.success) {
-                        this.displayCourses(response.data);
-                        this.showNotification(`Found ${response.data.length} courses for "${searchTerm}"`);
-                    } else {
-                        this.showNotification('Search failed', 'error');
-                    }
-                } catch (error) {
-                    this.showNotification('Search failed. Please try again.', 'error');
+                const response = api.getCourses(searchTerm);
+                
+                if (response.success) {
+                    this.displayCourses(response.data);
+                    this.showNotification(`Found ${response.data.length} courses for "${searchTerm}"`);
+                } else {
+                    this.showNotification('Search failed', 'error');
                 }
-            }
+            },
             
             // Switch tabs
-            async switchTab(tabName) {
+            switchTab(tabName) {
                 // Update active tab
                 document.querySelectorAll('.tab').forEach(tab => {
                     tab.classList.remove('active');
@@ -2288,73 +2278,61 @@
                 // Load data for this tab if not already loaded
                 const container = document.getElementById(`${tabName}-container`);
                 if (container.children.length === 0) {
-                    try {
-                        const response = await this.api.request(`/community?type=${tabName}`);
-                        if (response.success) {
-                            this.displayCommunityPosts(response.data, tabName);
-                        }
-                    } catch (error) {
-                        this.showNotification('Failed to load content', 'error');
+                    const response = api.getCommunityPosts(tabName);
+                    if (response.success) {
+                        this.displayCommunityPosts(response.data, tabName);
                     }
                 }
-            }
+            },
             
             // Show course enrollment modal
-            async showEnrollModal(courseId) {
-                try {
-                    const response = await this.api.request(`/courses/${courseId}`);
+            showEnrollModal(courseId) {
+                const response = api.getCourse(courseId);
+                
+                if (response.success) {
+                    const course = response.data;
+                    document.getElementById('enroll-course-title').textContent = course.title;
                     
-                    if (response.success) {
-                        const course = response.data;
-                        document.getElementById('enroll-course-title').textContent = course.title;
-                        
-                        if (course.price === 0) {
-                            document.getElementById('enroll-free').classList.remove('hidden');
-                            document.getElementById('enroll-paid').classList.add('hidden');
-                        } else {
-                            document.getElementById('enroll-free').classList.add('hidden');
-                            document.getElementById('enroll-paid').classList.remove('hidden');
-                            document.getElementById('course-price').textContent = `$${course.price.toFixed(2)}`;
-                        }
-                        
-                        this.currentEnrollingCourse = courseId;
-                        this.showModal('enroll-modal');
+                    if (course.price === 0) {
+                        document.getElementById('enroll-free').classList.remove('hidden');
+                        document.getElementById('enroll-paid').classList.add('hidden');
                     } else {
-                        this.showNotification('Failed to load course details', 'error');
+                        document.getElementById('enroll-free').classList.add('hidden');
+                        document.getElementById('enroll-paid').classList.remove('hidden');
+                        document.getElementById('course-price').textContent = `$${course.price.toFixed(2)}`;
                     }
-                } catch (error) {
+                    
+                    this.currentEnrollingCourse = courseId;
+                    this.showModal('enroll-modal');
+                } else {
                     this.showNotification('Failed to load course details', 'error');
                 }
-            }
+            },
             
             // Handle course enrollment
             async handleEnrollment() {
                 if (!this.currentEnrollingCourse) return;
                 
+                const user = api.getCurrentUser();
+                if (!user) {
+                    this.showNotification('Please log in to enroll in courses', 'error');
+                    return;
+                }
+                
                 try {
-                    const response = await this.api.request('/enroll', {
-                        method: 'POST',
-                        body: JSON.stringify({ courseId: this.currentEnrollingCourse })
-                    });
+                    const response = await api.enrollCourse(user.id, this.currentEnrollingCourse);
                     
                     if (response.success) {
                         this.hideModal('enroll-modal');
                         this.showNotification('Successfully enrolled in the course!', 'success');
-                        
-                        // Refresh user data to show the new enrollment
-                        const userResponse = await this.api.request('/user');
-                        if (userResponse.success) {
-                            this.api.currentUser = userResponse.data;
-                            localStorage.setItem('currentUser', JSON.stringify(userResponse.data));
-                            this.loadUserCourses();
-                        }
+                        this.loadUserCourses();
                     } else {
                         this.showNotification(response.message || 'Enrollment failed', 'error');
                     }
                 } catch (error) {
                     this.showNotification('Enrollment failed. Please try again.', 'error');
                 }
-            }
+            },
             
             // Display courses in the UI
             displayCourses(courses, container = null) {
@@ -2398,7 +2376,7 @@
                         this.showEnrollModal(courseId);
                     });
                 });
-            }
+            },
             
             // Display community posts
             displayCommunityPosts(posts, type) {
@@ -2442,35 +2420,35 @@
                         </div>
                     </div>
                 `).join('');
-            }
+            },
             
             // Toggle mobile menu
             toggleMobileMenu() {
                 const nav = document.getElementById('main-nav');
                 nav.classList.toggle('active');
-            }
+            },
             
             // Show modal
             showModal(modalId) {
                 document.getElementById(modalId).style.display = 'flex';
-            }
+            },
             
             // Hide modal
             hideModal(modalId) {
                 document.getElementById(modalId).style.display = 'none';
-            }
+            },
             
             // Show loader
             showLoader(type) {
                 document.getElementById(`${type}-text`).classList.add('hidden');
                 document.getElementById(`${type}-loader`).classList.remove('hidden');
-            }
+            },
             
             // Hide loader
             hideLoader(type) {
                 document.getElementById(`${type}-text`).classList.remove('hidden');
                 document.getElementById(`${type}-loader`).classList.add('hidden');
-            }
+            },
             
             // Show notification
             showNotification(message, type = 'success') {
@@ -2483,11 +2461,11 @@
                     notification.style.display = 'none';
                 }, 3000);
             }
-        }
+        };
 
         // Initialize the application when the DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
-            window.skillForgeApp = new SkillForgeApp();
+            uiController.init();
         });
     </script>
 </body>
