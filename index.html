@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Your existing CSS remains exactly the same */
         :root {
             --primary: #4caf50;
             --primary-dark: #388e3c;
@@ -58,13 +57,1028 @@
             padding: 0 20px;
         }
         
-        /* All your existing CSS styles remain exactly the same */
-        /* ... */
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
         
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo i {
+            margin-right: 8px;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .logo:hover i {
+            transform: rotate(15deg);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+        }
+        
+        nav ul li a i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+            background-color: var(--gray-100);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .btn {
+            padding: 10px 18px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            font-size: 14px;
+        }
+        
+        .btn i {
+            font-size: 14px;
+        }
+        
+        .btn-outline {
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: 1px solid var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+            border: 1px solid var(--secondary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--secondary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray-700);
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M0,128L48,117.3C96,107,192,85,288,112C384,139,480,213,576,224C672,235,768,181,864,160C960,139,1056,149,1152,165.3C1248,181,1344,203,1392,213.3L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center bottom;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+            max-width: 600px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+        
+        .search-bar {
+            max-width: 600px;
+            margin: 0 auto 20px;
+            position: relative;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 16px 24px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1rem;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+        }
+        
+        .search-bar button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 11px 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .search-bar button:hover {
+            background: var(--secondary-dark);
+        }
+        
+        .popular-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            gap: 10px;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+        
+        .tag {
+            background: rgba(255,255,255,0.2);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+        
+        .tag:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* Features Section */
+        .section-title {
+            text-align: center;
+            margin: 80px 0 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .section-title p {
+            color: var(--gray-600);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .feature-card:hover::after {
+            transform: scaleX(1);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--primary);
+            font-size: 32px;
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover .feature-icon {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        /* Categories Section */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .category-icon {
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+        }
+        
+        .category-content {
+            padding: 20px;
+        }
+        
+        .category-content h3 {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+        
+        .course-count {
+            background: var(--secondary);
+            color: white;
+            font-size: 0.8rem;
+            padding: 4px 12px;
+            border-radius: 50px;
+        }
+        
+        /* Courses Section */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+        
+        .course-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .course-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--secondary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 2;
+        }
+        
+        .course-thumb {
+            height: 180px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .course-thumb::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.2);
+        }
+        
+        .course-thumb i {
+            font-size: 40px;
+            z-index: 1;
+        }
+        
+        .course-content {
+            padding: 20px;
+        }
+        
+        .course-content h3 {
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        
+        .course-instructor {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            align-items: center;
+        }
+        
+        .rating {
+            color: var(--warning);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .price {
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background-color: var(--gray-200);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--success);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--gray-300);
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--gray-600);
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Community Posts */
+        .community-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .community-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        
+        .community-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .community-header {
+            padding: 20px 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .community-body {
+            padding: 0 20px;
+        }
+        
+        .community-body h3 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .community-body p {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+        
+        .community-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .post-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .post-action {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .post-action:hover {
+            color: var(--primary);
+        }
+        
+        /* Dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .sidebar {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            height: fit-content;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 8px;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: var(--gray-700);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+        }
+        
+        .dashboard-content {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: var(--gray-100);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        
+        .stat-card p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            animation: slideUp 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-500);
+            transition: var(--transition);
+        }
+        
+        .close-modal:hover {
+            color: var(--gray-700);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+        
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .form-check input {
+            width: auto;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 80px 0 30px;
+            margin-top: 100px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column ul li a {
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--gray-800);
+            color: var(--gray-500);
+            font-size: 0.9rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            display: none;
+            z-index: 2000;
+            animation: slideInRight 0.3s ease;
+            max-width: 350px;
+        }
+        
+        .notification.error {
+            background: var(--error);
+        }
+        
+        .notification.warning {
+            background: var(--warning);
+        }
+        
+        /* Loader */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            
+            nav {
+                order: 3;
+                width: 100%;
+                margin-top: 15px;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            nav ul li {
+                margin-left: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .auth-buttons {
+                margin-left: auto;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .courses-grid, .community-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        
+        /* Utility classes */
+        .text-center {
+            text-align: center;
+        }
+        
+        .mt-20 {
+            margin-top: 20px;
+        }
+        
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .visible {
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <!-- Your HTML structure remains exactly the same -->
+    <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
@@ -157,7 +1171,7 @@
         </div>
     </section>
 
-    <!-- Dashboard Section -->
+    <!-- Dashboard Section (visible only when logged in) -->
     <section class="container hidden" id="dashboard-section">
         <div class="section-title">
             <h2>My Learning Dashboard</h2>
@@ -474,164 +1488,295 @@
     <div class="notification" id="notification"></div>
 
     <script>
-        // ==================== REAL BACKEND INTEGRATION ====================
-        // Replace these with your actual backend API endpoints
-        const API_BASE_URL = 'https://your-backend-domain.com/api';
-        const API_ENDPOINTS = {
-            login: `${API_BASE_URL}/auth/login`,
-            register: `${API_BASE_URL}/auth/register`,
-            logout: `${API_BASE_URL}/auth/logout`,
-            courses: `${API_BASE_URL}/courses`,
-            enroll: `${API_BASE_URL}/enroll`,
-            community: `${API_BASE_URL}/community`,
-            user: `${API_BASE_URL}/user`
-        };
-
-        // API service functions
-        const apiService = {
-            // Generic request function
-            async request(url, options = {}) {
-                try {
-                    const response = await fetch(url, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${this.getToken()}`,
-                            ...options.headers
-                        },
-                        ...options
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    
-                    return await response.json();
-                } catch (error) {
-                    console.error('API request failed:', error);
-                    throw error;
-                }
-            },
-            
-            // Get authentication token from storage
-            getToken() {
-                return localStorage.getItem('authToken');
-            },
-            
-            // Store authentication token
-            setToken(token) {
-                localStorage.setItem('authToken', token);
-            },
-            
-            // Remove authentication token
-            removeToken() {
-                localStorage.removeItem('authToken');
-            },
-            
-            // User authentication
-            async login(email, password) {
-                const response = await this.request(API_ENDPOINTS.login, {
-                    method: 'POST',
-                    body: JSON.stringify({ email, password })
-                });
-                
-                if (response.success && response.data.token) {
-                    this.setToken(response.data.token);
-                }
-                
-                return response;
-            },
-            
-            async register(name, email, password) {
-                const response = await this.request(API_ENDPOINTS.register, {
-                    method: 'POST',
-                    body: JSON.stringify({ name, email, password })
-                });
-                
-                if (response.success && response.data.token) {
-                    this.setToken(response.data.token);
-                }
-                
-                return response;
-            },
-            
-            async logout() {
-                try {
-                    await this.request(API_ENDPOINTS.logout, {
-                        method: 'POST'
-                    });
-                } catch (error) {
-                    console.error('Logout API call failed, but proceeding anyway:', error);
-                } finally {
-                    this.removeToken();
-                    localStorage.removeItem('currentUser');
-                }
-                
-                return { success: true };
-            },
-            
-            // Get current user data
-            async getCurrentUser() {
-                try {
-                    const response = await this.request(API_ENDPOINTS.user);
-                    if (response.success) {
-                        localStorage.setItem('currentUser', JSON.stringify(response.data));
-                        return response.data;
-                    }
-                } catch (error) {
-                    console.error('Failed to fetch user data:', error);
-                    return null;
-                }
-            },
-            
-            // Courses
-            async getCourses(search = '', category = '') {
-                let url = API_ENDPOINTS.courses;
-                const params = new URLSearchParams();
-                
-                if (search) params.append('search', search);
-                if (category) params.append('category', category);
-                
-                if (params.toString()) {
-                    url += `?${params.toString()}`;
-                }
-                
-                const response = await this.request(url);
-                return response;
-            },
-            
-            async getCourse(id) {
-                const response = await this.request(`${API_ENDPOINTS.courses}/${id}`);
-                return response;
-            },
-            
-            async enrollCourse(courseId) {
-                const response = await this.request(API_ENDPOINTS.enroll, {
-                    method: 'POST',
-                    body: JSON.stringify({ courseId })
-                });
-                return response;
-            },
-            
-            // Community posts
-            async getCommunityPosts(type = '') {
-                let url = API_ENDPOINTS.community;
-                if (type) {
-                    url += `?type=${type}`;
-                }
-                
-                const response = await this.request(url);
-                return response;
+        // ==================== BACKEND SERVICE ====================
+        // This simulates a complete backend API
+        
+        class BackendService {
+            constructor() {
+                this.baseUrl = "https://api.skillforge.com";
+                this.token = localStorage.getItem('authToken');
+                this.currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
             }
-        };
+            
+            // Simulate API request delay
+            async delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+            
+            // Generic API request method
+            async request(endpoint, options = {}) {
+                // Simulate network delay
+                await this.delay(500);
+                
+                const url = `${this.baseUrl}${endpoint}`;
+                const config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(this.token ? {'Authorization': `Bearer ${this.token}`} : {}),
+                        ...options.headers
+                    },
+                    ...options
+                };
+                
+                // In a real app, this would be a fetch request
+                // For simulation, we'll handle different endpoints
+                return this.handleSimulatedRequest(endpoint, config);
+            }
+            
+            // Handle simulated requests based on endpoint
+            async handleSimulatedRequest(endpoint, config) {
+                try {
+                    let response;
+                    
+                    // Auth endpoints
+                    if (endpoint === '/auth/login' && config.method === 'POST') {
+                        response = await this.handleLogin(config.body);
+                    } 
+                    else if (endpoint === '/auth/register' && config.method === 'POST') {
+                        response = await this.handleRegister(config.body);
+                    }
+                    else if (endpoint === '/auth/logout' && config.method === 'POST') {
+                        response = await this.handleLogout();
+                    }
+                    // Course endpoints
+                    else if (endpoint === '/courses') {
+                        response = await this.handleGetCourses(config);
+                    }
+                    else if (endpoint.startsWith('/courses/')) {
+                        const courseId = endpoint.split('/')[2];
+                        response = await this.handleGetCourse(courseId);
+                    }
+                    else if (endpoint === '/enroll' && config.method === 'POST') {
+                        response = await this.handleEnrollment(config.body);
+                    }
+                    // User endpoints
+                    else if (endpoint === '/user') {
+                        response = await this.handleGetCurrentUser();
+                    }
+                    // Community endpoints
+                    else if (endpoint === '/community') {
+                        response = await this.handleGetCommunityPosts(config);
+                    }
+                    else {
+                        throw new Error(`Endpoint ${endpoint} not found`);
+                    }
+                    
+                    return response;
+                } catch (error) {
+                    return {
+                        success: false,
+                        message: error.message
+                    };
+                }
+            }
+            
+            // Auth handlers
+            async handleLogin(body) {
+                const { email, password } = JSON.parse(body);
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const user = users.find(u => u.email === email && u.password === password);
+                
+                if (user) {
+                    const { password: _, ...userWithoutPassword } = user;
+                    this.currentUser = userWithoutPassword;
+                    this.token = 'simulated_jwt_token_' + Date.now();
+                    
+                    localStorage.setItem('authToken', this.token);
+                    localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
+                    
+                    return {
+                        success: true,
+                        data: {
+                            user: userWithoutPassword,
+                            token: this.token
+                        }
+                    };
+                } else {
+                    throw new Error('Invalid email or password');
+                }
+            }
+            
+            async handleRegister(body) {
+                const { name, email, password } = JSON.parse(body);
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                
+                if (users.some(u => u.email === email)) {
+                    throw new Error('User with this email already exists');
+                }
+                
+                const newUser = {
+                    id: users.length + 1,
+                    name,
+                    email,
+                    password,
+                    avatar: name.split(' ').map(n => n[0]).join(''),
+                    enrolledCourses: [],
+                    progress: {},
+                    createdAt: new Date().toISOString()
+                };
+                
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                const { password: _, ...userWithoutPassword } = newUser;
+                this.currentUser = userWithoutPassword;
+                this.token = 'simulated_jwt_token_' + Date.now();
+                
+                localStorage.setItem('authToken', this.token);
+                localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
+                
+                return {
+                    success: true,
+                    data: {
+                        user: userWithoutPassword,
+                        token: this.token
+                    }
+                };
+            }
+            
+            async handleLogout() {
+                this.token = null;
+                this.currentUser = null;
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('currentUser');
+                
+                return {
+                    success: true,
+                    message: 'Logged out successfully'
+                };
+            }
+            
+            // Course handlers
+            async handleGetCourses(config) {
+                let courses = JSON.parse(localStorage.getItem('courses') || '[]');
+                
+                // Handle search query
+                const url = new URL(`http://dummy.com${config.url || ''}`);
+                const search = url.searchParams.get('search');
+                const category = url.searchParams.get('category');
+                
+                if (search) {
+                    const searchLower = search.toLowerCase();
+                    courses = courses.filter(course => 
+                        course.title.toLowerCase().includes(searchLower) || 
+                        course.description.toLowerCase().includes(searchLower) ||
+                        course.category.toLowerCase().includes(searchLower) ||
+                        course.instructor.toLowerCase().includes(searchLower)
+                    );
+                }
+                
+                if (category) {
+                    courses = courses.filter(course => course.category === category);
+                }
+                
+                return {
+                    success: true,
+                    data: courses
+                };
+            }
+            
+            async handleGetCourse(courseId) {
+                const courses = JSON.parse(localStorage.getItem('courses') || '[]');
+                const course = courses.find(c => c.id === parseInt(courseId));
+                
+                if (course) {
+                    return {
+                        success: true,
+                        data: course
+                    };
+                } else {
+                    throw new Error('Course not found');
+                }
+            }
+            
+            async handleEnrollment(body) {
+                const { courseId } = JSON.parse(body);
+                
+                if (!this.currentUser) {
+                    throw new Error('User not authenticated');
+                }
+                
+                const courses = JSON.parse(localStorage.getItem('courses') || '[]');
+                const course = courses.find(c => c.id === parseInt(courseId));
+                
+                if (!course) {
+                    throw new Error('Course not found');
+                }
+                
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const userIndex = users.findIndex(u => u.id === this.currentUser.id);
+                
+                if (userIndex === -1) {
+                    throw new Error('User not found');
+                }
+                
+                if (users[userIndex].enrolledCourses.includes(parseInt(courseId))) {
+                    throw new Error('User already enrolled in this course');
+                }
+                
+                users[userIndex].enrolledCourses.push(parseInt(courseId));
+                users[userIndex].progress[courseId] = { completed: 0, total: course.lessons };
+                course.totalStudents += 1;
+                
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('courses', JSON.stringify(courses));
+                
+                // Update current user
+                this.currentUser = users[userIndex];
+                localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+                
+                return {
+                    success: true,
+                    message: 'Successfully enrolled in course'
+                };
+            }
+            
+            // User handlers
+            async handleGetCurrentUser() {
+                if (!this.currentUser) {
+                    throw new Error('User not authenticated');
+                }
+                
+                return {
+                    success: true,
+                    data: this.currentUser
+                };
+            }
+            
+            // Community handlers
+            async handleGetCommunityPosts(config) {
+                const url = new URL(`http://dummy.com${config.url || ''}`);
+                const type = url.searchParams.get('type');
+                
+                let posts = JSON.parse(localStorage.getItem('communityPosts') || '[]');
+                
+                if (type) {
+                    posts = posts.filter(post => post.type === type);
+                }
+                
+                return {
+                    success: true,
+                    data: posts
+                };
+            }
+        }
 
+        // ==================== FRONTEND APPLICATION ====================
         // UI Controller - handles all UI interactions
-        const uiController = {
+        
+        class SkillForgeApp {
+            constructor() {
+                this.api = new BackendService();
+                this.currentEnrollingCourse = null;
+                this.init();
+            }
+            
             // Initialize the application
             init() {
                 this.bindEvents();
                 this.checkAuthStatus();
                 this.loadInitialData();
-            },
+            }
             
             // Bind event listeners
             bindEvents() {
@@ -722,43 +1867,34 @@
                 document.getElementById('enroll-paid-btn').addEventListener('click', () => {
                     this.handleEnrollment();
                 });
-            },
+                
+                // Mobile menu
+                document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+                    this.toggleMobileMenu();
+                });
+            }
             
             // Check if user is authenticated
             async checkAuthStatus() {
-                const token = apiService.getToken();
-                if (token) {
-                    try {
-                        const user = await apiService.getCurrentUser();
-                        if (user) {
-                            this.showAuthenticatedUI(user);
-                        } else {
-                            // Token might be invalid
-                            apiService.removeToken();
-                            this.showUnauthenticatedUI();
-                        }
-                    } catch (error) {
-                        console.error('Auth check failed:', error);
-                        apiService.removeToken();
-                        this.showUnauthenticatedUI();
-                    }
+                if (this.api.currentUser) {
+                    this.showAuthenticatedUI(this.api.currentUser);
                 } else {
                     this.showUnauthenticatedUI();
                 }
-            },
+            }
             
             // Show UI for authenticated users
             showAuthenticatedUI(user) {
                 document.getElementById('login-btn').classList.add('hidden');
                 document.getElementById('signup-btn').classList.add('hidden');
                 document.getElementById('user-menu').classList.remove('hidden');
-                document.getElementById('user-avatar').textContent = user.name.split(' ').map(n => n[0]).join('');
+                document.getElementById('user-avatar').textContent = user.avatar;
                 document.getElementById('dashboard-section').classList.remove('hidden');
                 document.getElementById('welcome-user').textContent = user.name;
                 
                 // Load user-specific data
                 this.loadUserCourses();
-            },
+            }
             
             // Show UI for unauthenticated users
             showUnauthenticatedUI() {
@@ -766,38 +1902,244 @@
                 document.getElementById('signup-btn').classList.remove('hidden');
                 document.getElementById('user-menu').classList.add('hidden');
                 document.getElementById('dashboard-section').classList.add('hidden');
-            },
+            }
             
             // Load initial data
             async loadInitialData() {
                 try {
+                    // Initialize database if needed
+                    this.initializeDatabase();
+                    
                     // Load courses
-                    const coursesResponse = await apiService.getCourses();
+                    const coursesResponse = await this.api.request('/courses');
                     if (coursesResponse.success) {
                         this.displayCourses(coursesResponse.data);
                     }
                     
                     // Load community posts
-                    const postsResponse = await apiService.getCommunityPosts('projects');
+                    const postsResponse = await this.api.request('/community?type=projects');
                     if (postsResponse.success) {
                         this.displayCommunityPosts(postsResponse.data, 'projects');
                     }
                 } catch (error) {
                     this.showNotification('Failed to load data. Please try again.', 'error');
                 }
-            },
+            }
+            
+            // Initialize database with sample data
+            initializeDatabase() {
+                if (!localStorage.getItem('users')) {
+                    localStorage.setItem('users', JSON.stringify([
+                        { 
+                            id: 1, 
+                            name: 'John Doe', 
+                            email: 'john@example.com', 
+                            password: 'password123', 
+                            avatar: 'JD', 
+                            enrolledCourses: [1, 3],
+                            progress: {
+                                1: { completed: 5, total: 12 },
+                                3: { completed: 2, total: 10 }
+                            },
+                            createdAt: new Date().toISOString()
+                        }
+                    ]));
+                }
+                
+                if (!localStorage.getItem('courses')) {
+                    localStorage.setItem('courses', JSON.stringify([
+                        {
+                            id: 1,
+                            title: 'Complete Web Development Bootcamp',
+                            description: 'Master HTML, CSS, JavaScript, React, Node.js, and More!',
+                            thumbnail: '',
+                            price: 89.99,
+                            category: 'web',
+                            instructor: 'Sarah Johnson',
+                            rating: 4.9,
+                            totalStudents: 1250,
+                            totalHours: 42,
+                            lessons: 12,
+                            level: 'Beginner',
+                            isPublished: true
+                        },
+                        {
+                            id: 2,
+                            title: 'Python for Data Science',
+                            description: 'Learn data analysis, visualization, and machine learning with Python',
+                            thumbnail: '',
+                            price: 74.99,
+                            category: 'data',
+                            instructor: 'Michael Chen',
+                            rating: 4.7,
+                            totalStudents: 890,
+                            totalHours: 36,
+                            lessons: 10,
+                            level: 'Intermediate',
+                            isPublished: true
+                        },
+                        {
+                            id: 3,
+                            title: 'UX/UI Design Masterclass',
+                            description: 'Design beautiful and functional user interfaces',
+                            thumbnail: '',
+                            price: 0,
+                            category: 'design',
+                            instructor: 'Jessica Williams',
+                            rating: 4.8,
+                            totalStudents: 720,
+                            totalHours: 28,
+                            lessons: 8,
+                            level: 'Beginner',
+                            isPublished: true
+                        },
+                        {
+                            id: 4,
+                            title: 'iOS Development with SwiftUI',
+                            description: 'Build modern iOS apps with Apple\'s latest framework',
+                            thumbnail: '',
+                            price: 79.99,
+                            category: 'mobile',
+                            instructor: 'David Kim',
+                            rating: 4.6,
+                            totalStudents: 540,
+                            totalHours: 32,
+                            lessons: 9,
+                            level: 'Intermediate',
+                            isPublished: true
+                        },
+                        {
+                            id: 5,
+                            title: 'Advanced JavaScript Concepts',
+                            description: 'Deep dive into modern JavaScript features and patterns',
+                            thumbnail: '',
+                            price: 49.99,
+                            category: 'web',
+                            instructor: 'Alex Thompson',
+                            rating: 4.8,
+                            totalStudents: 1200,
+                            totalHours: 18,
+                            lessons: 6,
+                            level: 'Advanced',
+                            isPublished: true
+                        },
+                        {
+                            id: 6,
+                            title: 'Digital Marketing Strategy',
+                            description: 'Learn to create effective digital marketing campaigns',
+                            thumbnail: '',
+                            price: 59.99,
+                            category: 'marketing',
+                            instructor: 'Maria Rodriguez',
+                            rating: 4.5,
+                            totalStudents: 650,
+                            totalHours: 24,
+                            lessons: 7,
+                            level: 'Beginner',
+                            isPublished: true
+                        }
+                    ]));
+                }
+                
+                if (!localStorage.getItem('communityPosts')) {
+                    localStorage.setItem('communityPosts', JSON.stringify([
+                        {
+                            id: 1,
+                            title: 'E-commerce React App',
+                            content: 'A full-featured e-commerce application built with React and Node.js',
+                            author: 'Sarah Johnson',
+                            authorAvatar: 'SJ',
+                            type: 'project',
+                            thumbnail: '',
+                            tags: ['react', 'nodejs', 'ecommerce'],
+                            likes: 45,
+                            comments: 12,
+                            shares: 5,
+                            createdAt: new Date().toISOString()
+                        },
+                        {
+                            id: 2,
+                            title: 'Weather Dashboard',
+                            content: 'A responsive weather dashboard using weather API',
+                            author: 'Michael Chen',
+                            authorAvatar: 'MC',
+                            type: 'project',
+                            thumbnail: '',
+                            tags: ['javascript', 'api', 'dashboard'],
+                            likes: 32,
+                            comments: 8,
+                            shares: 3,
+                            createdAt: new Date().toISOString()
+                        },
+                        {
+                            id: 3,
+                            title: 'Getting Started with React Hooks',
+                            content: 'A comprehensive tutorial on React Hooks for beginners',
+                            author: 'Alex Thompson',
+                            authorAvatar: 'AT',
+                            type: 'tutorial',
+                            thumbnail: '',
+                            tags: ['react', 'hooks', 'tutorial'],
+                            likes: 78,
+                            comments: 15,
+                            shares: 20,
+                            createdAt: new Date().toISOString()
+                        },
+                        {
+                            id: 4,
+                            title: 'Python Data Analysis Tutorial',
+                            content: 'Learn how to analyze data with Python and Pandas',
+                            author: 'Maria Rodriguez',
+                            authorAvatar: 'MR',
+                            type: 'tutorial',
+                            thumbnail: '',
+                            tags: ['python', 'pandas', 'data analysis'],
+                            likes: 56,
+                            comments: 10,
+                            shares: 12,
+                            createdAt: new Date().toISOString()
+                        },
+                        {
+                            id: 5,
+                            title: 'The Future of Web Development',
+                            content: 'Exploring the latest trends in web development',
+                            author: 'Robert Martinez',
+                            authorAvatar: 'RM',
+                            type: 'article',
+                            thumbnail: '',
+                            tags: ['web development', 'trends', 'future'],
+                            likes: 102,
+                            comments: 25,
+                            shares: 35,
+                            createdAt: new Date().toISOString()
+                        },
+                        {
+                            id: 6,
+                            title: 'AI Ethics in 2025',
+                            content: 'The ethical considerations of artificial intelligence',
+                            author: 'Emily Chen',
+                            authorAvatar: 'EC',
+                            type: 'article',
+                            thumbnail: '',
+                            tags: ['ai', 'ethics', 'technology'],
+                            likes: 87,
+                            comments: 18,
+                            shares: 22,
+                            createdAt: new Date().toISOString()
+                        }
+                    ]));
+                }
+            }
             
             // Load user's courses
             async loadUserCourses() {
                 try {
-                    const user = JSON.parse(localStorage.getItem('currentUser'));
+                    const user = this.api.currentUser;
                     if (user && user.enrolledCourses && user.enrolledCourses.length > 0) {
-                        // In a real app, you might have a specific endpoint for user courses
                         const container = document.getElementById('continue-learning-container');
                         container.innerHTML = '<p>Loading your courses...</p>';
                         
-                        // This would be replaced with an actual API call to get user's courses
-                        const coursesResponse = await apiService.getCourses();
+                        const coursesResponse = await this.api.request('/courses');
                         if (coursesResponse.success) {
                             const userCourses = coursesResponse.data.filter(course => 
                                 user.enrolledCourses.includes(course.id)
@@ -813,7 +2155,7 @@
                 } catch (error) {
                     console.error('Failed to load user courses:', error);
                 }
-            },
+            }
             
             // Handle login
             async handleLogin() {
@@ -828,7 +2170,10 @@
                 this.showLoader('login');
                 
                 try {
-                    const response = await apiService.login(email, password);
+                    const response = await this.api.request('/auth/login', {
+                        method: 'POST',
+                        body: JSON.stringify({ email, password })
+                    });
                     
                     if (response.success) {
                         this.hideModal('login-modal');
@@ -842,7 +2187,7 @@
                 } finally {
                     this.hideLoader('login');
                 }
-            },
+            }
             
             // Handle signup
             async handleSignup() {
@@ -870,7 +2215,10 @@
                 this.showLoader('signup');
                 
                 try {
-                    const response = await apiService.register(name, email, password);
+                    const response = await this.api.request('/auth/register', {
+                        method: 'POST',
+                        body: JSON.stringify({ name, email, password })
+                    });
                     
                     if (response.success) {
                         this.hideModal('signup-modal');
@@ -884,19 +2232,21 @@
                 } finally {
                     this.hideLoader('signup');
                 }
-            },
+            }
             
             // Handle logout
             async logout() {
                 try {
-                    await apiService.logout();
+                    await this.api.request('/auth/logout', {
+                        method: 'POST'
+                    });
                     this.showNotification('Logged out successfully', 'success');
                     this.showUnauthenticatedUI();
                 } catch (error) {
                     console.error('Logout error:', error);
                     this.showNotification('Logout failed', 'error');
                 }
-            },
+            }
             
             // Handle search
             async handleSearch() {
@@ -908,7 +2258,7 @@
                 }
                 
                 try {
-                    const response = await apiService.getCourses(searchTerm);
+                    const response = await this.api.request(`/courses?search=${encodeURIComponent(searchTerm)}`);
                     
                     if (response.success) {
                         this.displayCourses(response.data);
@@ -919,7 +2269,7 @@
                 } catch (error) {
                     this.showNotification('Search failed. Please try again.', 'error');
                 }
-            },
+            }
             
             // Switch tabs
             async switchTab(tabName) {
@@ -939,7 +2289,7 @@
                 const container = document.getElementById(`${tabName}-container`);
                 if (container.children.length === 0) {
                     try {
-                        const response = await apiService.getCommunityPosts(tabName);
+                        const response = await this.api.request(`/community?type=${tabName}`);
                         if (response.success) {
                             this.displayCommunityPosts(response.data, tabName);
                         }
@@ -947,51 +2297,64 @@
                         this.showNotification('Failed to load content', 'error');
                     }
                 }
-            },
+            }
             
             // Show course enrollment modal
-            showEnrollModal(courseId) {
-                // In a real app, you would fetch course details first
-                const course = this.getCourseFromCache(courseId);
-                
-                if (course) {
-                    document.getElementById('enroll-course-title').textContent = course.title;
+            async showEnrollModal(courseId) {
+                try {
+                    const response = await this.api.request(`/courses/${courseId}`);
                     
-                    if (course.price === 0) {
-                        document.getElementById('enroll-free').classList.remove('hidden');
-                        document.getElementById('enroll-paid').classList.add('hidden');
+                    if (response.success) {
+                        const course = response.data;
+                        document.getElementById('enroll-course-title').textContent = course.title;
+                        
+                        if (course.price === 0) {
+                            document.getElementById('enroll-free').classList.remove('hidden');
+                            document.getElementById('enroll-paid').classList.add('hidden');
+                        } else {
+                            document.getElementById('enroll-free').classList.add('hidden');
+                            document.getElementById('enroll-paid').classList.remove('hidden');
+                            document.getElementById('course-price').textContent = `$${course.price.toFixed(2)}`;
+                        }
+                        
+                        this.currentEnrollingCourse = courseId;
+                        this.showModal('enroll-modal');
                     } else {
-                        document.getElementById('enroll-free').classList.add('hidden');
-                        document.getElementById('enroll-paid').classList.remove('hidden');
-                        document.getElementById('course-price').textContent = `$${course.price.toFixed(2)}`;
+                        this.showNotification('Failed to load course details', 'error');
                     }
-                    
-                    this.currentEnrollingCourse = courseId;
-                    this.showModal('enroll-modal');
+                } catch (error) {
+                    this.showNotification('Failed to load course details', 'error');
                 }
-            },
+            }
             
             // Handle course enrollment
             async handleEnrollment() {
                 if (!this.currentEnrollingCourse) return;
                 
                 try {
-                    const response = await apiService.enrollCourse(this.currentEnrollingCourse);
+                    const response = await this.api.request('/enroll', {
+                        method: 'POST',
+                        body: JSON.stringify({ courseId: this.currentEnrollingCourse })
+                    });
                     
                     if (response.success) {
                         this.hideModal('enroll-modal');
                         this.showNotification('Successfully enrolled in the course!', 'success');
                         
                         // Refresh user data to show the new enrollment
-                        await apiService.getCurrentUser();
-                        this.loadUserCourses();
+                        const userResponse = await this.api.request('/user');
+                        if (userResponse.success) {
+                            this.api.currentUser = userResponse.data;
+                            localStorage.setItem('currentUser', JSON.stringify(userResponse.data));
+                            this.loadUserCourses();
+                        }
                     } else {
                         this.showNotification(response.message || 'Enrollment failed', 'error');
                     }
                 } catch (error) {
                     this.showNotification('Enrollment failed. Please try again.', 'error');
                 }
-            },
+            }
             
             // Display courses in the UI
             displayCourses(courses, container = null) {
@@ -1035,7 +2398,7 @@
                         this.showEnrollModal(courseId);
                     });
                 });
-            },
+            }
             
             // Display community posts
             displayCommunityPosts(posts, type) {
@@ -1079,37 +2442,35 @@
                         </div>
                     </div>
                 `).join('');
-            },
+            }
             
-            // Utility function to get course from cache
-            getCourseFromCache(courseId) {
-                // In a real app, you might have a proper cache system
-                // This is a simplified version
-                const courses = JSON.parse(localStorage.getItem('coursesCache') || '[]');
-                return courses.find(c => c.id === parseInt(courseId));
-            },
+            // Toggle mobile menu
+            toggleMobileMenu() {
+                const nav = document.getElementById('main-nav');
+                nav.classList.toggle('active');
+            }
             
             // Show modal
             showModal(modalId) {
                 document.getElementById(modalId).style.display = 'flex';
-            },
+            }
             
             // Hide modal
             hideModal(modalId) {
                 document.getElementById(modalId).style.display = 'none';
-            },
+            }
             
             // Show loader
             showLoader(type) {
                 document.getElementById(`${type}-text`).classList.add('hidden');
                 document.getElementById(`${type}-loader`).classList.remove('hidden');
-            },
+            }
             
             // Hide loader
             hideLoader(type) {
                 document.getElementById(`${type}-text`).classList.remove('hidden');
                 document.getElementById(`${type}-loader`).classList.add('hidden');
-            },
+            }
             
             // Show notification
             showNotification(message, type = 'success') {
@@ -1122,11 +2483,11 @@
                     notification.style.display = 'none';
                 }, 3000);
             }
-        };
+        }
 
         // Initialize the application when the DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
-            uiController.init();
+            window.skillForgeApp = new SkillForgeApp();
         });
     </script>
 </body>
