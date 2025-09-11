@@ -626,7 +626,6 @@
             align-items: center;
             gap: 12px;
             margin-bottom: 15px;
-            position: relative;
         }
         
         .user-avatar {
@@ -701,8 +700,6 @@
         
         .sidebar-menu {
             list-style: none;
-            margin: 0;
-            padding: 0;
         }
         
         .sidebar-menu li {
@@ -758,6 +755,124 @@
             font-size: 0.9rem;
         }
         
+        /* Course Player */
+        .course-player {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .course-sidebar {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            height: fit-content;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .module {
+            margin-bottom: 20px;
+        }
+        
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .module-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .lessons {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .lesson {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            cursor: pointer;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        
+        .lesson.active {
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .lesson.completed .lesson-title {
+            text-decoration: line-through;
+            color: var(--gray-500);
+        }
+        
+        .lesson-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-500);
+        }
+        
+        .lesson.active .lesson-icon {
+            color: var(--primary);
+        }
+        
+        .lesson-title {
+            flex: 1;
+        }
+        
+        .lesson-duration {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+        }
+        
+        .course-content {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            background: var(--gray-900);
+        }
+        
+        .video-container iframe,
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .content-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-200);
+        }
+        
         /* Modal */
         .modal {
             display: none;
@@ -804,6 +919,7 @@
         
         .form-group {
             margin-bottom: 20px;
+            position: relative;
         }
         
         .form-group label {
@@ -811,7 +927,6 @@
             margin-bottom: 8px;
             font-weight: 500;
             color: var(--gray-700);
-            position: relative;
         }
         
         .form-group input, .form-group select, .form-group textarea {
@@ -993,7 +1108,7 @@
         
         /* Responsive */
         @media (max-width: 992px) {
-            .dashboard {
+            .dashboard, .course-player {
                 grid-template-columns: 1fr;
             }
             
@@ -1077,6 +1192,13 @@
         .visible {
             display: block;
         }
+        
+        .error-text {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -1114,9 +1236,23 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
+    <!-- Main Content Area -->
+    <main class="container">
+        <!-- Course Player Section (visible only when viewing a course) -->
+        <section class="hidden" id="course-player-section">
+            <div class="course-player">
+                <div class="course-sidebar" id="course-sidebar">
+                    <!-- Course navigation will be loaded here -->
+                </div>
+                
+                <div class="course-content" id="course-content-area">
+                    <!-- Course content will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Hero Section -->
+        <section class="hero" id="hero-section">
             <div class="hero-content">
                 <h1>Learn, Create, Succeed</h1>
                 <p>Discover top courses, learn from expert instructors, and unlock your potential with SkillForge. Flexible, affordable, and designed for your success.</p>
@@ -1132,203 +1268,203 @@
                     <span class="tag" data-search="mobile apps">Mobile Apps</span>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Why Choose SkillForge -->
-    <section class="container">
-        <div class="section-title">
-            <h2>Why Choose SkillForge?</h2>
-            <p>Everything you need to succeed, all in one place.</p>
-        </div>
-        <div class="features">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-chalkboard-teacher"></i>
-                </div>
-                <h3>Expert Instructors</h3>
-                <p>Learn from industry leaders and real-world practitioners.</p>
+        <!-- Why Choose SkillForge -->
+        <section id="features-section">
+            <div class="section-title">
+                <h2>Why Choose SkillForge?</h2>
+                <p>Everything you need to succeed, all in one place.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-certificate"></i>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3>Expert Instructors</h3>
+                    <p>Learn from industry leaders and real-world practitioners.</p>
                 </div>
-                <h3>Certification</h3>
-                <p>Earn certificates to showcase your skills and boost your career.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-comments"></i>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>Certification</h3>
+                    <p>Earn certificates to showcase your skills and boost your career.</p>
                 </div>
-                <h3>Community</h3>
-                <p>Join a supportive community of learners and mentors.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-laptop"></i>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Community</h3>
+                    <p>Join a supportive community of learners and mentors.</p>
                 </div>
-                <h3>Flexible Learning</h3>
-                <p>Learn at your own pace, anytime, anywhere.</p>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3>Flexible Learning</h3>
+                    <p>Learn at your own pace, anytime, anywhere.</p>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Dashboard Section (visible only when logged in) -->
-    <section class="container hidden" id="dashboard-section">
-        <div class="section-title">
-            <h2>My Learning Dashboard</h2>
-            <p>Track your progress and continue your learning journey</p>
-        </div>
-        
-        <div class="dashboard">
-            <div class="sidebar">
-                <ul class="sidebar-menu">
-                    <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
-                    <li><a href="#"><i class="fas fa-book"></i> My Courses</a></li>
-                    <li><a href="#"><i class="fas fa-trophy"></i> Achievements</a></li>
-                    <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
-                    <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
-                    <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                </ul>
+        <!-- Dashboard Section (visible only when logged in) -->
+        <section class="hidden" id="dashboard-section">
+            <div class="section-title">
+                <h2>My Learning Dashboard</h2>
+                <p>Track your progress and continue your learning journey</p>
             </div>
             
-            <div class="dashboard-content">
-                <h3>Welcome back, <span id="welcome-user">John</span>!</h3>
-                <p class="mb-20">Continue your learning journey from where you left off.</p>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h3>5</h3>
-                        <p>Enrolled Courses</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>12</h3>
-                        <p>Completed Lessons</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>3</h3>
-                        <p>Certificates Earned</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>15</h3>
-                        <p>Learning Hours</p>
-                    </div>
+            <div class="dashboard">
+                <div class="sidebar">
+                    <ul class="sidebar-menu">
+                        <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                        <li><a href="#"><i class="fas fa-book"></i> My Courses</a></li>
+                        <li><a href="#"><i class="fas fa-trophy"></i> Achievements</a></li>
+                        <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+                        <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                        <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
                 </div>
                 
-                <h4>Continue Learning</h4>
-                <div class="courses-grid" id="continue-learning-container">
-                    <!-- Continue learning courses will be loaded here -->
+                <div class="dashboard-content">
+                    <h3>Welcome back, <span id="welcome-user">John</span>!</h3>
+                    <p class="mb-20">Continue your learning journey from where you left off.</p>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>5</h3>
+                            <p>Enrolled Courses</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>12</h3>
+                            <p>Completed Lessons</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>3</h3>
+                            <p>Certificates Earned</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>15</h3>
+                            <p>Learning Hours</p>
+                        </div>
+                    </div>
+                    
+                    <h4>Continue Learning</h4>
+                    <div class="courses-grid" id="continue-learning-container">
+                        <!-- Continue learning courses will be loaded here -->
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Categories -->
-    <section class="container">
-        <div class="section-title">
-            <h2>Select Your Favourite Category And Start Learning</h2>
-        </div>
-        <div class="categories">
-            <div class="category-card" data-category="web">
-                <div class="category-icon">
-                    <i class="fas fa-code"></i>
+        <!-- Categories -->
+        <section id="categories-section">
+            <div class="section-title">
+                <h2>Select Your Favourite Category And Start Learning</h2>
+            </div>
+            <div class="categories">
+                <div class="category-card" data-category="web">
+                    <div class="category-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Web Development <span class="course-count">15 courses</span></h3>
+                        <p>Master HTML, CSS, JavaScript and modern frameworks</p>
+                    </div>
                 </div>
-                <div class="category-content">
-                    <h3>Web Development <span class="course-count">15 courses</span></h3>
-                    <p>Master HTML, CSS, JavaScript and modern frameworks</p>
+                <div class="category-card" data-category="data">
+                    <div class="category-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Data Science & AI <span class="course-count">8 courses</span></h3>
+                        <p>Learn Python, machine learning, and data visualization</p>
+                    </div>
+                </div>
+                <div class="category-card" data-category="cyber">
+                    <div class="category-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Cyber Security <span class="course-count">6 courses</span></h3>
+                        <p>Protect systems and networks from digital attacks</p>
+                    </div>
+                </div>
+                <div class="category-card" data-category="design">
+                    <div class="category-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Graphic Design <span class="course-count">7 courses</span></h3>
+                        <p>Create visual content to communicate messages</p>
+                    </div>
+                </div>
+                <div class="category-card" data-category="marketing">
+                    <div class="category-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Digital Marketing <span class="course-count">5 courses</span></h3>
+                        <p>Promote brands through digital channels</p>
+                    </div>
+                </div>
+                <div class="category-card" data-category="mobile">
+                    <div class="category-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Mobile Development <span class="course-count">9 courses</span></h3>
+                        <p>Build apps for iOS and Android platforms</p>
+                    </div>
                 </div>
             </div>
-            <div class="category-card" data-category="data">
-                <div class="category-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <div class="category-content">
-                    <h3>Data Science & AI <span class="course-count">8 courses</span></h3>
-                    <p>Learn Python, machine learning, and data visualization</p>
-                </div>
-            </div>
-            <div class="category-card" data-category="cyber">
-                <div class="category-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <div class="category-content">
-                    <h3>Cyber Security <span class="course-count">6 courses</span></h3>
-                    <p>Protect systems and networks from digital attacks</p>
-                </div>
-            </div>
-            <div class="category-card" data-category="design">
-                <div class="category-icon">
-                    <i class="fas fa-paint-brush"></i>
-                </div>
-                <div class="category-content">
-                    <h3>Graphic Design <span class="course-count">7 courses</span></h3>
-                    <p>Create visual content to communicate messages</p>
-                </div>
-            </div>
-            <div class="category-card" data-category="marketing">
-                <div class="category-icon">
-                    <i class="fas fa-bullhorn"></i>
-                </div>
-                <div class="category-content">
-                    <h3>Digital Marketing <span class="course-count">5 courses</span></h3>
-                    <p>Promote brands through digital channels</p>
-                </div>
-            </div>
-            <div class="category-card" data-category="mobile">
-                <div class="category-icon">
-                    <i class="fas fa-mobile-alt"></i>
-                </div>
-                <div class="category-content">
-                    <h3>Mobile Development <span class="course-count">9 courses</span></h3>
-                    <p>Build apps for iOS and Android platforms</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Trending Courses -->
-    <section class="container">
-        <div class="section-title">
-            <h2>Trending Courses</h2>
-            <p>Most popular courses among our community</p>
-        </div>
-        
-        <div class="courses-grid" id="courses-container">
-            <!-- Courses will be dynamically loaded here -->
-        </div>
-    </section>
+        <!-- Trending Courses -->
+        <section id="courses-section">
+            <div class="section-title">
+                <h2>Trending Courses</h2>
+                <p>Most popular courses among our community</p>
+            </div>
+            
+            <div class="courses-grid" id="courses-container">
+                <!-- Courses will be dynamically loaded here -->
+            </div>
+        </section>
 
-    <!-- Community Content -->
-    <section class="container">
-        <div class="section-title">
-            <h2>Community Creations</h2>
-            <p>Content created by our talented community members</p>
-        </div>
-        
-        <div class="tabs">
-            <div class="tab active" data-tab="projects">Projects</div>
-            <div class="tab" data-tab="tutorials">Tutorials</div>
-            <div class="tab" data-tab="articles">Articles</div>
-        </div>
-        
-        <div class="tab-content active" id="projects">
-            <div class="community-grid" id="projects-container">
-                <!-- Projects will be dynamically loaded here -->
+        <!-- Community Content -->
+        <section id="community-section">
+            <div class="section-title">
+                <h2>Community Creations</h2>
+                <p>Content created by our talented community members</p>
             </div>
-        </div>
-        
-        <div class="tab-content" id="tutorials">
-            <div class="community-grid" id="tutorials-container">
-                <!-- Tutorials will be dynamically loaded here -->
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="projects">Projects</div>
+                <div class="tab" data-tab="tutorials">Tutorials</div>
+                <div class="tab" data-tab="articles">Articles</div>
             </div>
-        </div>
-        
-        <div class="tab-content" id="articles">
-            <div class="community-grid" id="articles-container">
-                <!-- Articles will be dynamically loaded here -->
+            
+            <div class="tab-content active" id="projects">
+                <div class="community-grid" id="projects-container">
+                    <!-- Projects will be dynamically loaded here -->
+                </div>
             </div>
-        </div>
-    </section>
+            
+            <div class="tab-content" id="tutorials">
+                <div class="community-grid" id="tutorials-container">
+                    <!-- Tutorials will be dynamically loaded here -->
+                </div>
+            </div>
+            
+            <div class="tab-content" id="articles">
+                <div class="community-grid" id="articles-container">
+                    <!-- Articles will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -1389,10 +1525,12 @@
             <div class="form-group">
                 <label for="login-email">Email</label>
                 <input type="email" id="login-email" placeholder="Your email address">
+                <div class="error-text" id="login-email-error">Please enter a valid email address</div>
             </div>
             <div class="form-group">
                 <label for="login-password">Password</label>
                 <input type="password" id="login-password" placeholder="Your password">
+                <div class="error-text" id="login-password-error">Password is required</div>
             </div>
             <div class="form-check">
                 <input type="checkbox" id="remember-me">
@@ -1419,22 +1557,27 @@
             <div class="form-group">
                 <label for="signup-name">Full Name</label>
                 <input type="text" id="signup-name" placeholder="Your full name">
+                <div class="error-text" id="signup-name-error">Please enter your name</div>
             </div>
             <div class="form-group">
                 <label for="signup-email">Email</label>
                 <input type="email" id="signup-email" placeholder="Your email address">
+                <div class="error-text" id="signup-email-error">Please enter a valid email address</div>
             </div>
             <div class="form-group">
                 <label for="signup-password">Password</label>
                 <input type="password" id="signup-password" placeholder="Create a password">
+                <div class="error-text" id="signup-password-error">Password must be at least 6 characters</div>
             </div>
             <div class="form-group">
                 <label for="signup-confirm-password">Confirm Password</label>
                 <input type="password" id="signup-confirm-password" placeholder="Confirm your password">
+                <div class="error-text" id="signup-confirm-error">Passwords do not match</div>
             </div>
             <div class="form-check">
                 <input type="checkbox" id="terms-agree">
-                <label for="terms-agree">I agree to the <a href="#" style="color: var(--primary);">Terms of Service</a> and <a href="#" style="color: var(--primary);">Privacy Policy</a></label>
+                <label for="terms-agree">I agree to the <a href="#" style="color: var(--primary);">Terms of Service</a> and <a href="#" style="color: var(--primary;">Privacy Policy</a></label>
+                <div class="error-text" id="terms-error">You must agree to the terms</div>
             </div>
             <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" id="signup-submit">
                 <span id="signup-text">Create Account</span>
@@ -1487,986 +1630,1019 @@
     </div>
 
     <!-- Notification -->
-    <div class="notification" id="notification"></div>
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i> <span id="notification-text">Operation completed successfully</span>
+    </div>
 
     <script>
-        // ==================== BACKEND SIMULATION ====================
-        // This section simulates a backend using localStorage
-        
-        // Database initialization
-        const initializeDatabase = () => {
-            // Users collection
-            if (!localStorage.getItem('users')) {
-                localStorage.setItem('users', JSON.stringify([
-                    { 
-                        id: 1, 
-                        name: 'John Doe', 
-                        email: 'john@example.com', 
-                        password: 'password123', 
-                        avatar: 'JD', 
-                        enrolledCourses: [1, 3],
-                        progress: {
-                            1: { completed: 5, total: 12 },
-                            3: { completed: 2, total: 10 }
-                        },
-                        createdAt: new Date().toISOString()
-                    }
-                ]));
+        // Sample data for courses
+        const courses = [
+            {
+                id: 1,
+                title: "Complete Web Development Bootcamp",
+                instructor: "Sarah Johnson",
+                rating: 4.8,
+                students: 12500,
+                price: 89.99,
+                thumbnail: "web-dev",
+                category: "web",
+                description: "Learn to build modern web applications from scratch using HTML, CSS, JavaScript, React, Node.js and more.",
+                duration: "42 hours",
+                lessons: 320,
+                level: "Beginner to Advanced",
+                isFree: false
+            },
+            {
+                id: 2,
+                title: "Python for Data Science and Machine Learning",
+                instructor: "David Chen",
+                rating: 4.7,
+                students: 8900,
+                price: 94.99,
+                thumbnail: "data-science",
+                category: "data",
+                description: "Master Python for data analysis, visualization, and machine learning with real-world projects.",
+                duration: "36 hours",
+                lessons: 285,
+                level: "Intermediate",
+                isFree: false
+            },
+            {
+                id: 3,
+                title: "UI/UX Design Fundamentals",
+                instructor: "Emma Wilson",
+                rating: 4.9,
+                students: 6700,
+                price: 0,
+                thumbnail: "ui-ux",
+                category: "design",
+                description: "Learn the principles of user interface and experience design with practical examples.",
+                duration: "28 hours",
+                lessons: 210,
+                level: "Beginner",
+                isFree: true
+            },
+            {
+                id: 4,
+                title: "iOS App Development with Swift",
+                instructor: "Michael Rodriguez",
+                rating: 4.6,
+                students: 5400,
+                price: 79.99,
+                thumbnail: "ios-dev",
+                category: "mobile",
+                description: "Build iOS applications from scratch using Swift and Apple's latest development tools.",
+                duration: "38 hours",
+                lessons: 295,
+                level: "Intermediate",
+                isFree: false
+            },
+            {
+                id: 5,
+                title: "Ethical Hacking and Cyber Security",
+                instructor: "Alex Turner",
+                rating: 4.8,
+                students: 7200,
+                price: 99.99,
+                thumbnail: "cyber-security",
+                category: "cyber",
+                description: "Learn ethical hacking techniques to protect systems from cyber threats and vulnerabilities.",
+                duration: "45 hours",
+                lessons: 340,
+                level: "Advanced",
+                isFree: false
+            },
+            {
+                id: 6,
+                title: "Digital Marketing Masterclass",
+                instructor: "Jessica Lee",
+                rating: 4.5,
+                students: 9300,
+                price: 0,
+                thumbnail: "digital-marketing",
+                category: "marketing",
+                description: "Master SEO, social media marketing, email campaigns, and analytics to grow businesses online.",
+                duration: "32 hours",
+                lessons: 250,
+                level: "Beginner to Intermediate",
+                isFree: true
             }
-            
-            // Courses collection - I've added a comprehensive set of sample courses
-            if (!localStorage.getItem('courses')) {
-                localStorage.setItem('courses', JSON.stringify([
-                    {
-                        id: 1,
-                        title: 'Complete Web Development Bootcamp',
-                        description: 'Master HTML, CSS, JavaScript, React, Node.js, and More!',
-                        thumbnail: '',
-                        price: 89.99,
-                        category: 'web',
-                        instructor: 'Sarah Johnson',
-                        rating: 4.9,
-                        totalStudents: 1250,
-                        totalHours: 42,
-                        lessons: 12,
-                        level: 'Beginner',
-                        isPublished: true
-                    },
-                    {
-                        id: 2,
-                        title: 'Python for Data Science',
-                        description: 'Learn data analysis, visualization, and machine learning with Python',
-                        thumbnail: '',
-                        price: 74.99,
-                        category: 'data',
-                        instructor: 'Michael Chen',
-                        rating: 4.7,
-                        totalStudents: 890,
-                        totalHours: 36,
-                        lessons: 10,
-                        level: 'Intermediate',
-                        isPublished: true
-                    },
-                    {
-                        id: 3,
-                        title: 'UX/UI Design Masterclass',
-                        description: 'Design beautiful and functional user interfaces',
-                        thumbnail: '',
-                        price: 0,
-                        category: 'design',
-                        instructor: 'Jessica Williams',
-                        rating: 4.8,
-                        totalStudents: 720,
-                        totalHours: 28,
-                        lessons: 8,
-                        level: 'Beginner',
-                        isPublished: true
-                    },
-                    {
-                        id: 4,
-                        title: 'iOS Development with SwiftUI',
-                        description: 'Build modern iOS apps with Apple\'s latest framework',
-                        thumbnail: '',
-                        price: 79.99,
-                        category: 'mobile',
-                        instructor: 'David Kim',
-                        rating: 4.6,
-                        totalStudents: 540,
-                        totalHours: 32,
-                        lessons: 9,
-                        level: 'Intermediate',
-                        isPublished: true
-                    },
-                    {
-                        id: 5,
-                        title: 'Advanced JavaScript Concepts',
-                        description: 'Deep dive into modern JavaScript features and patterns',
-                        thumbnail: '',
-                        price: 49.99,
-                        category: 'web',
-                        instructor: 'Alex Thompson',
-                        rating: 4.8,
-                        totalStudents: 1200,
-                        totalHours: 18,
-                        lessons: 6,
-                        level: 'Advanced',
-                        isPublished: true
-                    },
-                    {
-                        id: 6,
-                        title: 'Digital Marketing Strategy',
-                        description: 'Learn to create effective digital marketing campaigns',
-                        thumbnail: '',
-                        price: 59.99,
-                        category: 'marketing',
-                        instructor: 'Maria Rodriguez',
-                        rating: 4.5,
-                        totalStudents: 650,
-                        totalHours: 24,
-                        lessons: 7,
-                        level: 'Beginner',
-                        isPublished: true
-                    },
-                    {
-                        id: 7,
-                        title: 'React Native Mobile App Development',
-                        description: 'Build cross-platform mobile apps with React Native',
-                        thumbnail: '',
-                        price: 69.99,
-                        category: 'mobile',
-                        instructor: 'Chris Wilson',
-                        rating: 4.7,
-                        totalStudents: 890,
-                        totalHours: 30,
-                        lessons: 10,
-                        level: 'Intermediate',
-                        isPublished: true
-                    },
-                    {
-                        id: 8,
-                        title: 'Machine Learning Fundamentals',
-                        description: 'Introduction to ML algorithms and applications',
-                        thumbnail: '',
-                        price: 84.99,
-                        category: 'data',
-                        instructor: 'Dr. Emily Zhang',
-                        rating: 4.8,
-                        totalStudents: 1100,
-                        totalHours: 40,
-                        lessons: 14,
-                        level: 'Intermediate',
-                        isPublished: true
-                    },
-                    {
-                        id: 9,
-                        title: 'Cybersecurity Essentials',
-                        description: 'Protect systems and networks from digital threats',
-                        thumbnail: '',
-                        price: 64.99,
-                        category: 'cyber',
-                        instructor: 'James Anderson',
-                        rating: 4.6,
-                        totalStudents: 720,
-                        totalHours: 26,
-                        lessons: 9,
-                        level: 'Beginner',
-                        isPublished: true
-                    },
-                    {
-                        id: 10,
-                        title: 'Advanced Graphic Design with Adobe Creative Suite',
-                        description: 'Master Photoshop, Illustrator, and InDesign',
-                        thumbnail: '',
-                        price: 59.99,
-                        category: 'design',
-                        instructor: 'Sophia Martinez',
-                        rating: 4.7,
-                        totalStudents: 950,
-                        totalHours: 32,
-                        lessons: 11,
-                        level: 'Intermediate',
-                        isPublished: true
-                    },
-                    {
-                        id: 11,
-                        title: 'Node.js Backend Development',
-                        description: 'Build scalable server-side applications with Node.js',
-                        thumbnail: '',
-                        price: 74.99,
-                        category: 'web',
-                        instructor: 'Ryan Lee',
-                        rating: 4.8,
-                        totalStudents: 830,
-                        totalHours: 28,
-                        lessons: 9,
-                        level: 'Intermediate',
-                        isPublished: true
-                    },
-                    {
-                        id: 12,
-                        title: 'Social Media Marketing Mastery',
-                        description: 'Grow your brand with effective social media strategies',
-                        thumbnail: '',
-                        price: 49.99,
-                        category: 'marketing',
-                        instructor: 'Olivia Parker',
-                        rating: 4.5,
-                        totalStudents: 680,
-                        totalHours: 22,
-                        lessons: 8,
-                        level: 'Beginner',
-                        isPublished: true
-                    },
-                    {
-                        id: 13,
-                        title: 'Flutter App Development',
-                        description: 'Create beautiful native apps with Flutter',
-                        thumbnail: '',
-                        price: 69.99,
-                        category: 'mobile',
-                        instructor: 'Daniel Kim',
-                        rating: 4.6,
-                        totalStudents: 540,
-                        totalHours: 24,
-                        lessons: 8,
-                        level: 'Intermediate',
-                        isPublished: true
-                    },
-                    {
-                        id: 14,
-                        title: 'Data Visualization with Tableau',
-                        description: 'Transform data into compelling visual stories',
-                        thumbnail: '',
-                        price: 54.99,
-                        category: 'data',
-                        instructor: 'Rachel Wong',
-                        rating: 4.7,
-                        totalStudents: 610,
-                        totalHours: 20,
-                        lessons: 7,
-                        level: 'Beginner',
-                        isPublished: true
-                    },
-                    {
-                        id: 15,
-                        title: 'Ethical Hacking Fundamentals',
-                        description: 'Learn ethical hacking techniques to secure systems',
-                        thumbnail: '',
-                        price: 89.99,
-                        category: 'cyber',
-                        instructor: 'Marcus Johnson',
-                        rating: 4.9,
-                        totalStudents: 780,
-                        totalHours: 36,
-                        lessons: 12,
-                        level: 'Advanced',
-                        isPublished: true
-                    }
-                ]));
-            }
-            
-            // Community posts collection
-            if (!localStorage.getItem('communityPosts')) {
-                localStorage.setItem('communityPosts', JSON.stringify([
-                    {
-                        id: 1,
-                        title: 'E-commerce React App',
-                        content: 'A full-featured e-commerce application built with React and Node.js',
-                        author: 'Sarah Johnson',
-                        authorAvatar: 'SJ',
-                        type: 'project',
-                        thumbnail: '',
-                        tags: ['react', 'nodejs', 'ecommerce'],
-                        likes: 45,
-                        comments: 12,
-                        shares: 5,
-                        createdAt: new Date().toISOString()
-                    },
-                    {
-                        id: 2,
-                        title: 'Weather Dashboard',
-                        content: 'A responsive weather dashboard using weather API',
-                        author: 'Michael Chen',
-                        authorAvatar: 'MC',
-                        type: 'project',
-                        thumbnail: '',
-                        tags: ['javascript', 'api', 'dashboard'],
-                        likes: 32,
-                        comments: 8,
-                        shares: 3,
-                        createdAt: new Date().toISOString()
-                    },
-                    {
-                        id: 3,
-                        title: 'Getting Started with React Hooks',
-                        content: 'A comprehensive tutorial on React Hooks for beginners',
-                        author: 'Alex Thompson',
-                        authorAvatar: 'AT',
-                        type: 'tutorial',
-                        thumbnail: '',
-                        tags: ['react', 'hooks', 'tutorial'],
-                        likes: 78,
-                        comments: 15,
-                        shares: 20,
-                        createdAt: new Date().toISOString()
-                    },
-                    {
-                        id: 4,
-                        title: 'Python Data Analysis Tutorial',
-                        content: 'Learn how to analyze data with Python and Pandas',
-                        author: 'Maria Rodriguez',
-                        authorAvatar: 'MR',
-                        type: 'tutorial',
-                        thumbnail: '',
-                        tags: ['python', 'pandas', 'data analysis'],
-                        likes: 56,
-                        comments: 10,
-                        shares: 12,
-                        createdAt: new Date().toISOString()
-                    },
-                    {
-                        id: 5,
-                        title: 'The Future of Web Development',
-                        content: 'Exploring the latest trends in web development',
-                        author: 'Robert Martinez',
-                        authorAvatar: 'RM',
-                        type: 'article',
-                        thumbnail: '',
-                        tags: ['web development', 'trends', 'future'],
-                        likes: 102,
-                        comments: 25,
-                        shares: 35,
-                        createdAt: new Date().toISOString()
-                    },
-                    {
-                        id: 6,
-                        title: 'AI Ethics in 2025',
-                        content: 'The ethical considerations of artificial intelligence',
-                        author: 'Emily Chen',
-                        authorAvatar: 'EC',
-                        type: 'article',
-                        thumbnail: '',
-                        tags: ['ai', 'ethics', 'technology'],
-                        likes: 87,
-                        comments: 18,
-                        shares: 22,
-                        createdAt: new Date().toISOString()
-                    }
-                ]));
-            }
-        };
-        
-        // API simulation functions
-        const api = {
-            // User authentication
-            login: (email, password) => {
-                return new Promise((resolve) => {
-                    setTimeout(() => {
-                        const users = JSON.parse(localStorage.getItem('users'));
-                        const user = users.find(u => u.email === email && u.password === password);
-                        
-                        if (user) {
-                            const { password: _, ...userWithoutPassword } = user;
-                            localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
-                            resolve({ success: true, user: userWithoutPassword });
-                        } else {
-                            resolve({ success: false, message: 'Invalid email or password' });
-                        }
-                    }, 1000); // Simulate network delay
-                });
-            },
-            
-            register: (name, email, password) => {
-                return new Promise((resolve) => {
-                    setTimeout(() => {
-                        const users = JSON.parse(localStorage.getItem('users'));
-                        
-                        if (users.some(u => u.email === email)) {
-                            resolve({ success: false, message: 'User with this email already exists' });
-                            return;
-                        }
-                        
-                        const newUser = {
-                            id: users.length + 1,
-                            name,
-                            email,
-                            password,
-                            avatar: name.split(' ').map(n => n[0]).join(''),
-                            enrolledCourses: [],
-                            progress: {},
-                            createdAt: new Date().toISOString()
-                        };
-                        
-                        users.push(newUser);
-                        localStorage.setItem('users', JSON.stringify(users));
-                        
-                        const { password: _, ...userWithoutPassword } = newUser;
-                        localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
-                        
-                        resolve({ success: true, user: userWithoutPassword });
-                    }, 1000); // Simulate network delay
-                });
-            },
-            
-            logout: () => {
-                localStorage.removeItem('currentUser');
-                return { success: true };
-            },
-            
-            getCurrentUser: () => {
-                const user = localStorage.getItem('currentUser');
-                return user ? JSON.parse(user) : null;
-            },
-            
-            // Courses
-            getCourses: (search = '', category = '') => {
-                let courses = JSON.parse(localStorage.getItem('courses'));
-                
-                if (search) {
-                    const searchLower = search.toLowerCase();
-                    courses = courses.filter(course => 
-                        course.title.toLowerCase().includes(searchLower) || 
-                        course.description.toLowerCase().includes(searchLower) ||
-                        course.category.toLowerCase().includes(searchLower) ||
-                        course.instructor.toLowerCase().includes(searchLower)
-                    );
+        ];
+
+        // Sample data for community content
+        const communityContent = {
+            projects: [
+                {
+                    id: 1,
+                    title: "E-commerce React Application",
+                    author: "Alex Morgan",
+                    avatar: "AM",
+                    description: "A full-stack e-commerce application built with React, Node.js, and MongoDB. Features user authentication, product filtering, and payment processing.",
+                    likes: 42,
+                    comments: 15,
+                    shares: 8
+                },
+                {
+                    id: 2,
+                    title: "Weather Dashboard App",
+                    author: "Taylor Kim",
+                    avatar: "TK",
+                    description: "A responsive weather dashboard that displays current weather and forecasts using the OpenWeather API. Built with vanilla JavaScript and CSS Grid.",
+                    likes: 28,
+                    comments: 7,
+                    shares: 3
+                },
+                {
+                    id: 3,
+                    title: "Task Management Tool",
+                    author: "Jordan Smith",
+                    avatar: "JS",
+                    description: "A drag-and-drop task management application with team collaboration features. Built with Vue.js and Firebase.",
+                    likes: 56,
+                    comments: 23,
+                    shares: 12
                 }
-                
-                if (category) {
-                    courses = courses.filter(course => course.category === category);
+            ],
+            tutorials: [
+                {
+                    id: 1,
+                    title: "Getting Started with React Hooks",
+                    author: "Maria Garcia",
+                    avatar: "MG",
+                    description: "A comprehensive tutorial on using React Hooks for state management in functional components. Includes examples and best practices.",
+                    likes: 37,
+                    comments: 12,
+                    shares: 6
+                },
+                {
+                    id: 2,
+                    title: "Python Automation Scripts",
+                    author: "Chris Johnson",
+                    avatar: "CJ",
+                    description: "Learn how to automate repetitive tasks with Python. Covers file operations, web scraping, and email automation.",
+                    likes: 45,
+                    comments: 18,
+                    shares: 9
+                },
+                {
+                    id: 3,
+                    title: "CSS Grid Layout Tutorial",
+                    author: "Sophia Williams",
+                    avatar: "SW",
+                    description: "Master CSS Grid layout with practical examples and real-world use cases. From basics to advanced techniques.",
+                    likes: 63,
+                    comments: 21,
+                    shares: 14
                 }
-                
-                return { success: true, data: courses };
-            },
-            
-            getCourse: (id) => {
-                const courses = JSON.parse(localStorage.getItem('courses'));
-                const course = courses.find(c => c.id === parseInt(id));
-                
-                if (course) {
-                    return { success: true, data: course };
-                } else {
-                    return { success: false, message: 'Course not found' };
+            ],
+            articles: [
+                {
+                    id: 1,
+                    title: "The Future of Web Development in 2025",
+                    author: "Daniel Brown",
+                    avatar: "DB",
+                    description: "Exploring emerging trends and technologies that will shape the future of web development, from AI-assisted coding to WebAssembly.",
+                    likes: 51,
+                    comments: 24,
+                    shares: 17
+                },
+                {
+                    id: 2,
+                    title: "Understanding Machine Learning Algorithms",
+                    author: "Olivia Davis",
+                    avatar: "OD",
+                    description: "A beginner-friendly explanation of common machine learning algorithms and when to use them in real-world applications.",
+                    likes: 38,
+                    comments: 15,
+                    shares: 8
+                },
+                {
+                    id: 3,
+                    title: "Building Accessible Web Applications",
+                    author: "Robert Wilson",
+                    avatar: "RW",
+                    description: "Why accessibility matters and how to implement WCAG guidelines in your web projects to reach all users.",
+                    likes: 42,
+                    comments: 19,
+                    shares: 11
                 }
-            },
-            
-            enrollCourse: (userId, courseId) => {
-                return new Promise((resolve) => {
-                    setTimeout(() => {
-                        const users = JSON.parse(localStorage.getItem('users'));
-                        const courses = JSON.parse(localStorage.getItem('courses'));
-                        
-                        const userIndex = users.findIndex(u => u.id === userId);
-                        const courseIndex = courses.findIndex(c => c.id === parseInt(courseId));
-                        
-                        if (userIndex === -1) {
-                            resolve({ success: false, message: 'User not found' });
-                            return;
-                        }
-                        
-                        if (courseIndex === -1) {
-                            resolve({ success: false, message: 'Course not found' });
-                            return;
-                        }
-                        
-                        if (users[userIndex].enrolledCourses.includes(parseInt(courseId))) {
-                            resolve({ success: false, message: 'User already enrolled in this course' });
-                            return;
-                        }
-                        
-                        users[userIndex].enrolledCourses.push(parseInt(courseId));
-                        users[userIndex].progress[courseId] = { completed: 0, total: courses[courseIndex].lessons };
-                        courses[courseIndex].totalStudents += 1;
-                        
-                        localStorage.setItem('users', JSON.stringify(users));
-                        localStorage.setItem('courses', JSON.stringify(courses));
-                        
-                        // Update current user if it's the same user
-                        const currentUser = api.getCurrentUser();
-                        if (currentUser && currentUser.id === userId) {
-                            currentUser.enrolledCourses = users[userIndex].enrolledCourses;
-                            currentUser.progress = users[userIndex].progress;
-                            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                        }
-                        
-                        resolve({ success: true, message: 'Successfully enrolled in course' });
-                    }, 1500); // Simulate payment processing
-                });
-            },
-            
-            // Community posts
-            getCommunityPosts: (type = '') => {
-                let posts = JSON.parse(localStorage.getItem('communityPosts'));
-                
-                if (type) {
-                    posts = posts.filter(post => post.type === type);
-                }
-                
-                return { success: true, data: posts };
-            }
+            ]
         };
 
-        // ==================== FRONTEND APPLICATION ====================
-        // UI Controller - handles all UI interactions
-        
-        const uiController = {
-            // Initialize the application
-            init() {
-                this.bindEvents();
-                this.checkAuthStatus();
-                this.loadInitialData();
-            },
+        // Sample course content for the course player
+        const sampleCourseContent = {
+            title: "Complete Web Development Bootcamp",
+            modules: [
+                {
+                    title: "HTML Fundamentals",
+                    lessons: [
+                        { title: "Introduction to HTML", duration: "15:30", completed: true },
+                        { title: "HTML Document Structure", duration: "22:10", completed: true },
+                        { title: "Text Formatting and Links", duration: "18:45", completed: true },
+                        { title: "Images and Multimedia", duration: "20:20", completed: false },
+                        { title: "HTML Forms and Input Types", duration: "25:40", completed: false }
+                    ]
+                },
+                {
+                    title: "CSS Styling",
+                    lessons: [
+                        { title: "Introduction to CSS", duration: "18:15", completed: true },
+                        { title: "CSS Selectors and Specificity", duration: "24:30", completed: true },
+                        { title: "Box Model and Layout", duration: "22:50", completed: false },
+                        { title: "Flexbox and Grid Systems", duration: "28:10", completed: false },
+                        { title: "Responsive Design Principles", duration: "26:25", completed: false }
+                    ]
+                },
+                {
+                    title: "JavaScript Programming",
+                    lessons: [
+                        { title: "JavaScript Basics", duration: "20:40", completed: false },
+                        { title: "DOM Manipulation", duration: "25:15", completed: false },
+                        { title: "Events and Event Handling", duration: "22:30", completed: false },
+                        { title: "Async JavaScript and APIs", duration: "30:20", completed: false },
+                        { title: "Modern JavaScript Features", duration: "28:45", completed: false }
+                    ]
+                }
+            ]
+        };
+
+        // DOM Elements
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mainNav = document.getElementById('main-nav');
+        const loginBtn = document.getElementById('login-btn');
+        const signupBtn = document.getElementById('signup-btn');
+        const loginModal = document.getElementById('login-modal');
+        const signupModal = document.getElementById('signup-modal');
+        const enrollModal = document.getElementById('enroll-modal');
+        const closeLogin = document.getElementById('close-login');
+        const closeSignup = document.getElementById('close-signup');
+        const closeEnroll = document.getElementById('close-enroll');
+        const switchToSignup = document.getElementById('switch-to-signup');
+        const switchToLogin = document.getElementById('switch-to-login');
+        const loginSubmit = document.getElementById('login-submit');
+        const signupSubmit = document.getElementById('signup-submit');
+        const loginText = document.getElementById('login-text');
+        const loginLoader = document.getElementById('login-loader');
+        const signupText = document.getElementById('signup-text');
+        const signupLoader = document.getElementById('signup-loader');
+        const userMenu = document.getElementById('user-menu');
+        const userAvatar = document.getElementById('user-avatar');
+        const heroSection = document.getElementById('hero-section');
+        const dashboardSection = document.getElementById('dashboard-section');
+        const coursePlayerSection = document.getElementById('course-player-section');
+        const coursesContainer = document.getElementById('courses-container');
+        const continueLearningContainer = document.getElementById('continue-learning-container');
+        const projectsContainer = document.getElementById('projects-container');
+        const tutorialsContainer = document.getElementById('tutorials-container');
+        const articlesContainer = document.getElementById('articles-container');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
+        const tags = document.querySelectorAll('.tag');
+        const logoutBtn = document.getElementById('logout-btn');
+        const enrollFreeBtn = document.getElementById('enroll-free-btn');
+        const enrollPaidBtn = document.getElementById('enroll-paid-btn');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notification-text');
+
+        // App State
+        let currentUser = null;
+        let currentCourse = null;
+        let enrolledCourses = [1, 3, 6]; // Sample enrolled course IDs
+
+        // Initialize the application
+        function init() {
+            loadCourses();
+            loadCommunityContent();
+            setupEventListeners();
+            checkAuthState();
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                mainNav.classList.toggle('active');
+            });
+
+            // Auth buttons
+            loginBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.style.display = 'flex';
+            });
+
+            signupBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                signupModal.style.display = 'flex';
+            });
+
+            // Close modals
+            closeLogin.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+            });
+
+            closeSignup.addEventListener('click', () => {
+                signupModal.style.display = 'none';
+            });
+
+            closeEnroll.addEventListener('click', () => {
+                enrollModal.style.display = 'none';
+            });
+
+            // Switch between login and signup modals
+            switchToSignup.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.style.display = 'none';
+                signupModal.style.display = 'flex';
+            });
+
+            switchToLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                signupModal.style.display = 'none';
+                loginModal.style.display = 'flex';
+            });
+
+            // Form submissions
+            loginSubmit.addEventListener('click', handleLogin);
+            signupSubmit.addEventListener('click', handleSignup);
+
+            // Community tabs
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    activateTab(tabId);
+                });
+            });
+
+            // Search functionality
+            searchBtn.addEventListener('click', handleSearch);
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    handleSearch();
+                }
+            });
+
+            // Popular tags
+            tags.forEach(tag => {
+                tag.addEventListener('click', () => {
+                    const searchTerm = tag.getAttribute('data-search');
+                    searchInput.value = searchTerm;
+                    handleSearch();
+                });
+            });
+
+            // Logout
+            logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                handleLogout();
+            });
+
+            // Course enrollment
+            enrollFreeBtn.addEventListener('click', handleEnrollment);
+            enrollPaidBtn.addEventListener('click', handleEnrollment);
+
+            // Close modals when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === loginModal) {
+                    loginModal.style.display = 'none';
+                }
+                if (e.target === signupModal) {
+                    signupModal.style.display = 'none';
+                }
+                if (e.target === enrollModal) {
+                    enrollModal.style.display = 'none';
+                }
+            });
+        }
+
+        // Check authentication state
+        function checkAuthState() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                updateUIForAuthState(true);
+            }
+        }
+
+        // Handle login
+        function handleLogin() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            let isValid = true;
+
+            // Simple validation
+            if (!email) {
+                document.getElementById('login-email-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('login-email-error').style.display = 'none';
+            }
+
+            if (!password) {
+                document.getElementById('login-password-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('login-password-error').style.display = 'none';
+            }
+
+            if (!isValid) return;
+
+            // Show loading state
+            loginText.classList.add('hidden');
+            loginLoader.classList.remove('hidden');
+
+            // Simulate API call
+            setTimeout(() => {
+                // For demo purposes, any email/password will work
+                currentUser = {
+                    name: email.split('@')[0],
+                    email: email,
+                    avatar: email.charAt(0).toUpperCase()
+                };
+
+                // Save to localStorage
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                // Update UI
+                updateUIForAuthState(true);
+
+                // Hide modal and reset form
+                loginModal.style.display = 'none';
+                document.getElementById('login-email').value = '';
+                document.getElementById('login-password').value = '';
+
+                // Hide loading state
+                loginText.classList.remove('hidden');
+                loginLoader.classList.add('hidden');
+
+                // Show success notification
+                showNotification('Login successful! Welcome back.', 'success');
+            }, 1500);
+        }
+
+        // Handle signup
+        function handleSignup() {
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm-password').value;
+            const termsAgreed = document.getElementById('terms-agree').checked;
+            let isValid = true;
+
+            // Validation
+            if (!name) {
+                document.getElementById('signup-name-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('signup-name-error').style.display = 'none';
+            }
+
+            if (!email) {
+                document.getElementById('signup-email-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('signup-email-error').style.display = 'none';
+            }
+
+            if (!password || password.length < 6) {
+                document.getElementById('signup-password-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('signup-password-error').style.display = 'none';
+            }
+
+            if (password !== confirmPassword) {
+                document.getElementById('signup-confirm-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('signup-confirm-error').style.display = 'none';
+            }
+
+            if (!termsAgreed) {
+                document.getElementById('terms-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('terms-error').style.display = 'none';
+            }
+
+            if (!isValid) return;
+
+            // Show loading state
+            signupText.classList.add('hidden');
+            signupLoader.classList.remove('hidden');
+
+            // Simulate API call
+            setTimeout(() => {
+                currentUser = {
+                    name: name,
+                    email: email,
+                    avatar: name.charAt(0).toUpperCase()
+                };
+
+                // Save to localStorage
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                // Update UI
+                updateUIForAuthState(true);
+
+                // Hide modal and reset form
+                signupModal.style.display = 'none';
+                document.getElementById('signup-name').value = '';
+                document.getElementById('signup-email').value = '';
+                document.getElementById('signup-password').value = '';
+                document.getElementById('signup-confirm-password').value = '';
+                document.getElementById('terms-agree').checked = false;
+
+                // Hide loading state
+                signupText.classList.remove('hidden');
+                signupLoader.classList.add('hidden');
+
+                // Show success notification
+                showNotification('Account created successfully! Welcome to SkillForge.', 'success');
+            }, 1500);
+        }
+
+        // Handle logout
+        function handleLogout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateUIForAuthState(false);
+            showNotification('You have been logged out successfully.', 'success');
+        }
+
+        // Update UI based on authentication state
+        function updateUIForAuthState(isLoggedIn) {
+            if (isLoggedIn) {
+                loginBtn.classList.add('hidden');
+                signupBtn.classList.add('hidden');
+                userMenu.classList.remove('hidden');
+                userAvatar.textContent = currentUser.avatar;
+                document.getElementById('welcome-user').textContent = currentUser.name;
+                
+                // Show dashboard, hide hero
+                heroSection.classList.add('hidden');
+                dashboardSection.classList.remove('hidden');
+                
+                // Load user's courses
+                loadContinueLearning();
+            } else {
+                loginBtn.classList.remove('hidden');
+                signupBtn.classList.remove('hidden');
+                userMenu.classList.add('hidden');
+                
+                // Show hero, hide dashboard and course player
+                heroSection.classList.remove('hidden');
+                dashboardSection.classList.add('hidden');
+                coursePlayerSection.classList.add('hidden');
+            }
+        }
+
+        // Load courses into the courses section
+        function loadCourses() {
+            coursesContainer.innerHTML = '';
             
-            // Bind event listeners
-            bindEvents() {
-                // Auth buttons
-                document.getElementById('login-btn').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    this.showModal('login-modal');
-                });
-                
-                document.getElementById('signup-btn').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    this.showModal('signup-modal');
-                });
-                
-                document.getElementById('logout-btn').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    this.logout();
-                });
-                
-                // Modal close buttons
-                document.getElementById('close-login').addEventListener('click', () => {
-                    this.hideModal('login-modal');
-                });
-                
-                document.getElementById('close-signup').addEventListener('click', () => {
-                    this.hideModal('signup-modal');
-                });
-                
-                document.getElementById('close-enroll').addEventListener('click', () => {
-                    this.hideModal('enroll-modal');
-                });
-                
-                // Auth form submissions
-                document.getElementById('login-submit').addEventListener('click', () => {
-                    this.handleLogin();
-                });
-                
-                document.getElementById('signup-submit').addEventListener('click', () => {
-                    this.handleSignup();
-                });
-                
-                // Modal switching
-                document.getElementById('switch-to-signup').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    this.hideModal('login-modal');
-                    this.showModal('signup-modal');
-                });
-                
-                document.getElementById('switch-to-login').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    this.hideModal('signup-modal');
-                    this.showModal('login-modal');
-                });
-                
-                // Search functionality
-                document.getElementById('search-btn').addEventListener('click', () => {
-                    this.handleSearch();
-                });
-                
-                document.getElementById('search-input').addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        this.handleSearch();
-                    }
-                });
-                
-                // Popular tags
-                document.querySelectorAll('.tag').forEach(tag => {
-                    tag.addEventListener('click', () => {
-                        const searchTerm = tag.getAttribute('data-search');
-                        document.getElementById('search-input').value = searchTerm;
-                        this.handleSearch();
-                    });
-                });
-                
-                // Tab switching
-                document.querySelectorAll('.tab').forEach(tab => {
-                    tab.addEventListener('click', () => {
-                        const tabName = tab.getAttribute('data-tab');
-                        this.switchTab(tabName);
-                    });
-                });
-                
-                // Enrollment
-                document.getElementById('enroll-free-btn').addEventListener('click', () => {
-                    this.handleEnrollment();
-                });
-                
-                document.getElementById('enroll-paid-btn').addEventListener('click', () => {
-                    this.handleEnrollment();
-                });
-                
-                // Mobile menu
-                document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-                    this.toggleMobileMenu();
-                });
-            },
+            courses.forEach(course => {
+                const isEnrolled = enrolledCourses.includes(course.id);
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                courseCard.innerHTML = `
+                    ${course.isFree ? '<div class="course-badge">Free</div>' : ''}
+                    <div class="course-thumb">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="course-content">
+                        <h3>${course.title}</h3>
+                        <div class="course-instructor">
+                            <i class="fas fa-user"></i> ${course.instructor}
+                        </div>
+                        <div class="course-meta">
+                            <div class="rating">
+                                <i class="fas fa-star"></i> ${course.rating}
+                            </div>
+                            <div class="price">
+                                ${course.price === 0 ? 'Free' : '$' + course.price}
+                            </div>
+                        </div>
+                        ${isEnrolled ? `
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%"></div>
+                        </div>
+                        <button class="btn btn-primary btn-sm" style="width: 100%;" data-course-id="${course.id}" data-action="continue">
+                            Continue Learning
+                        </button>
+                        ` : `
+                        <button class="btn btn-primary btn-sm" style="width: 100%;" data-course-id="${course.id}" data-action="enroll">
+                            Enroll Now
+                        </button>
+                        `}
+                    </div>
+                `;
+                coursesContainer.appendChild(courseCard);
+            });
             
-            // Check if user is authenticated
-            checkAuthStatus() {
-                const user = api.getCurrentUser();
-                if (user) {
-                    this.showAuthenticatedUI(user);
+            // Add event listeners to course buttons
+            document.querySelectorAll('[data-action="enroll"]').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const courseId = parseInt(e.target.getAttribute('data-course-id'));
+                    showEnrollModal(courseId);
+                });
+            });
+            
+            document.querySelectorAll('[data-action="continue"]').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const courseId = parseInt(e.target.getAttribute('data-course-id'));
+                    openCoursePlayer(courseId);
+                });
+            });
+        }
+
+        // Load continue learning courses
+        function loadContinueLearning() {
+            continueLearningContainer.innerHTML = '';
+            
+            const userCourses = courses.filter(course => enrolledCourses.includes(course.id));
+            
+            userCourses.forEach(course => {
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                courseCard.innerHTML = `
+                    ${course.isFree ? '<div class="course-badge">Free</div>' : ''}
+                    <div class="course-thumb">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="course-content">
+                        <h3>${course.title}</h3>
+                        <div class="course-instructor">
+                            <i class="fas fa-user"></i> ${course.instructor}
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%"></div>
+                        </div>
+                        <button class="btn btn-primary btn-sm" style="width: 100%;" data-course-id="${course.id}" data-action="continue">
+                            Continue Learning
+                        </button>
+                    </div>
+                `;
+                continueLearningContainer.appendChild(courseCard);
+            });
+            
+            // Add event listeners to continue buttons
+            document.querySelectorAll('[data-action="continue"]').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const courseId = parseInt(e.target.getAttribute('data-course-id'));
+                    openCoursePlayer(courseId);
+                });
+            });
+        }
+
+        // Load community content
+        function loadCommunityContent() {
+            // Load projects
+            projectsContainer.innerHTML = '';
+            communityContent.projects.forEach(project => {
+                const projectCard = document.createElement('div');
+                projectCard.className = 'community-card';
+                projectCard.innerHTML = `
+                    <div class="community-header">
+                        <div class="user-avatar">${project.avatar}</div>
+                        <div>
+                            <strong>${project.author}</strong>
+                            <div style="font-size: 0.8rem; color: var(--gray-500);">Posted 2 days ago</div>
+                        </div>
+                    </div>
+                    <div class="community-body">
+                        <h3>${project.title}</h3>
+                        <p>${project.description}</p>
+                    </div>
+                    <div class="community-footer">
+                        <div class="post-actions">
+                            <div class="post-action">
+                                <i class="fas fa-heart"></i> ${project.likes}
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-comment"></i> ${project.comments}
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-share"></i> ${project.shares}
+                            </div>
+                        </div>
+                        <div>
+                            <i class="fas fa-bookmark"></i>
+                        </div>
+                    </div>
+                `;
+                projectsContainer.appendChild(projectCard);
+            });
+            
+            // Load tutorials
+            tutorialsContainer.innerHTML = '';
+            communityContent.tutorials.forEach(tutorial => {
+                const tutorialCard = document.createElement('div');
+                tutorialCard.className = 'community-card';
+                tutorialCard.innerHTML = `
+                    <div class="community-header">
+                        <div class="user-avatar">${tutorial.avatar}</div>
+                        <div>
+                            <strong>${tutorial.author}</strong>
+                            <div style="font-size: 0.8rem; color: var(--gray-500);">Posted 5 days ago</div>
+                        </div>
+                    </div>
+                    <div class="community-body">
+                        <h3>${tutorial.title}</h3>
+                        <p>${tutorial.description}</p>
+                    </div>
+                    <div class="community-footer">
+                        <div class="post-actions">
+                            <div class="post-action">
+                                <i class="fas fa-heart"></i> ${tutorial.likes}
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-comment"></i> ${tutorial.comments}
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-share"></i> ${tutorial.shares}
+                            </div>
+                        </div>
+                        <div>
+                            <i class="fas fa-bookmark"></i>
+                        </div>
+                    </div>
+                `;
+                tutorialsContainer.appendChild(tutorialCard);
+            });
+            
+            // Load articles
+            articlesContainer.innerHTML = '';
+            communityContent.articles.forEach(article => {
+                const articleCard = document.createElement('div');
+                articleCard.className = 'community-card';
+                articleCard.innerHTML = `
+                    <div class="community-header">
+                        <div class="user-avatar">${article.avatar}</div>
+                        <div>
+                            <strong>${article.author}</strong>
+                            <div style="font-size: 0.8rem; color: var(--gray-500);">Posted 1 week ago</div>
+                        </div>
+                    </div>
+                    <div class="community-body">
+                        <h3>${article.title}</h3>
+                        <p>${article.description}</p>
+                    </div>
+                    <div class="community-footer">
+                        <div class="post-actions">
+                            <div class="post-action">
+                                <i class="fas fa-heart"></i> ${article.likes}
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-comment"></i> ${article.comments}
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-share"></i> ${article.shares}
+                            </div>
+                        </div>
+                        <div>
+                            <i class="fas fa-bookmark"></i>
+                        </div>
+                    </div>
+                `;
+                articlesContainer.appendChild(articleCard);
+            });
+        }
+
+        // Activate community tab
+        function activateTab(tabId) {
+            // Update tabs
+            tabs.forEach(tab => {
+                if (tab.getAttribute('data-tab') === tabId) {
+                    tab.classList.add('active');
                 } else {
-                    this.showUnauthenticatedUI();
-                }
-            },
-            
-            // Show UI for authenticated users
-            showAuthenticatedUI(user) {
-                document.getElementById('login-btn').classList.add('hidden');
-                document.getElementById('signup-btn').classList.add('hidden');
-                document.getElementById('user-menu').classList.remove('hidden');
-                document.getElementById('user-avatar').textContent = user.avatar;
-                document.getElementById('dashboard-section').classList.remove('hidden');
-                document.getElementById('welcome-user').textContent = user.name;
-                
-                // Load user-specific data
-                this.loadUserCourses();
-            },
-            
-            // Show UI for unauthenticated users
-            showUnauthenticatedUI() {
-                document.getElementById('login-btn').classList.remove('hidden');
-                document.getElementById('signup-btn').classList.remove('hidden');
-                document.getElementById('user-menu').classList.add('hidden');
-                document.getElementById('dashboard-section').classList.add('hidden');
-            },
-            
-            // Load initial data
-            loadInitialData() {
-                // Initialize database if needed
-                initializeDatabase();
-                
-                // Load courses
-                const coursesResponse = api.getCourses();
-                if (coursesResponse.success) {
-                    this.displayCourses(coursesResponse.data);
-                }
-                
-                // Load community posts
-                const postsResponse = api.getCommunityPosts('projects');
-                if (postsResponse.success) {
-                    this.displayCommunityPosts(postsResponse.data, 'projects');
-                }
-            },
-            
-            // Load user's courses
-            loadUserCourses() {
-                const user = api.getCurrentUser();
-                if (user && user.enrolledCourses && user.enrolledCourses.length > 0) {
-                    const container = document.getElementById('continue-learning-container');
-                    container.innerHTML = '<p>Loading your courses...</p>';
-                    
-                    const coursesResponse = api.getCourses();
-                    if (coursesResponse.success) {
-                        const userCourses = coursesResponse.data.filter(course => 
-                            user.enrolledCourses.includes(course.id)
-                        );
-                        
-                        if (userCourses.length > 0) {
-                            this.displayCourses(userCourses, container);
-                        } else {
-                            container.innerHTML = '<p>You haven\'t enrolled in any courses yet.</p>';
-                        }
-                    }
-                }
-            },
-            
-            // Handle login
-            async handleLogin() {
-                const email = document.getElementById('login-email').value;
-                const password = document.getElementById('login-password').value;
-                
-                if (!email || !password) {
-                    this.showNotification('Please fill in all fields', 'error');
-                    return;
-                }
-                
-                this.showLoader('login');
-                
-                try {
-                    const response = await api.login(email, password);
-                    
-                    if (response.success) {
-                        this.hideModal('login-modal');
-                        this.showNotification('Login successful!', 'success');
-                        this.checkAuthStatus();
-                    } else {
-                        this.showNotification(response.message || 'Login failed', 'error');
-                    }
-                } catch (error) {
-                    this.showNotification('Login failed. Please try again.', 'error');
-                } finally {
-                    this.hideLoader('login');
-                }
-            },
-            
-            // Handle signup
-            async handleSignup() {
-                const name = document.getElementById('signup-name').value;
-                const email = document.getElementById('signup-email').value;
-                const password = document.getElementById('signup-password').value;
-                const confirmPassword = document.getElementById('signup-confirm-password').value;
-                const agreeTerms = document.getElementById('terms-agree').checked;
-                
-                if (!name || !email || !password || !confirmPassword) {
-                    this.showNotification('Please fill in all fields', 'error');
-                    return;
-                }
-                
-                if (password !== confirmPassword) {
-                    this.showNotification('Passwords do not match', 'error');
-                    return;
-                }
-                
-                if (!agreeTerms) {
-                    this.showNotification('Please agree to the terms and conditions', 'error');
-                    return;
-                }
-                
-                this.showLoader('signup');
-                
-                try {
-                    const response = await api.register(name, email, password);
-                    
-                    if (response.success) {
-                        this.hideModal('signup-modal');
-                        this.showNotification('Account created successfully!', 'success');
-                        this.checkAuthStatus();
-                    } else {
-                        this.showNotification(response.message || 'Registration failed', 'error');
-                    }
-                } catch (error) {
-                    this.showNotification('Registration failed. Please try again.', 'error');
-                } finally {
-                    this.hideLoader('signup');
-                }
-            },
-            
-            // Handle logout
-            logout() {
-                api.logout();
-                this.showNotification('Logged out successfully', 'success');
-                this.showUnauthenticatedUI();
-            },
-            
-            // Handle search
-            handleSearch() {
-                const searchTerm = document.getElementById('search-input').value;
-                
-                if (!searchTerm) {
-                    this.showNotification('Please enter a search term', 'error');
-                    return;
-                }
-                
-                const response = api.getCourses(searchTerm);
-                
-                if (response.success) {
-                    this.displayCourses(response.data);
-                    this.showNotification(`Found ${response.data.length} courses for "${searchTerm}"`);
-                } else {
-                    this.showNotification('Search failed', 'error');
-                }
-            },
-            
-            // Switch tabs
-            switchTab(tabName) {
-                // Update active tab
-                document.querySelectorAll('.tab').forEach(tab => {
                     tab.classList.remove('active');
-                });
-                document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
-                
-                // Update active content
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                document.getElementById(tabName).classList.add('active');
-                
-                // Load data for this tab if not already loaded
-                const container = document.getElementById(`${tabName}-container`);
-                if (container.children.length === 0) {
-                    const response = api.getCommunityPosts(tabName);
-                    if (response.success) {
-                        this.displayCommunityPosts(response.data, tabName);
-                    }
                 }
-            },
+            });
             
-            // Show course enrollment modal
-            showEnrollModal(courseId) {
-                const response = api.getCourse(courseId);
-                
-                if (response.success) {
-                    const course = response.data;
-                    document.getElementById('enroll-course-title').textContent = course.title;
-                    
-                    if (course.price === 0) {
-                        document.getElementById('enroll-free').classList.remove('hidden');
-                        document.getElementById('enroll-paid').classList.add('hidden');
-                    } else {
-                        document.getElementById('enroll-free').classList.add('hidden');
-                        document.getElementById('enroll-paid').classList.remove('hidden');
-                        document.getElementById('course-price').textContent = `$${course.price.toFixed(2)}`;
-                    }
-                    
-                    this.currentEnrollingCourse = courseId;
-                    this.showModal('enroll-modal');
+            // Update tab content
+            tabContents.forEach(content => {
+                if (content.id === tabId) {
+                    content.classList.add('active');
                 } else {
-                    this.showNotification('Failed to load course details', 'error');
+                    content.classList.remove('active');
                 }
-            },
+            });
+        }
+
+        // Handle search
+        function handleSearch() {
+            const searchTerm = searchInput.value.trim().toLowerCase();
             
-            // Handle course enrollment
-            async handleEnrollment() {
-                if (!this.currentEnrollingCourse) return;
-                
-                const user = api.getCurrentUser();
-                if (!user) {
-                    this.showNotification('Please log in to enroll in courses', 'error');
-                    return;
-                }
-                
-                try {
-                    const response = await api.enrollCourse(user.id, this.currentEnrollingCourse);
-                    
-                    if (response.success) {
-                        this.hideModal('enroll-modal');
-                        this.showNotification('Successfully enrolled in the course!', 'success');
-                        this.loadUserCourses();
-                    } else {
-                        this.showNotification(response.message || 'Enrollment failed', 'error');
-                    }
-                } catch (error) {
-                    this.showNotification('Enrollment failed. Please try again.', 'error');
-                }
-            },
+            if (searchTerm === '') {
+                showNotification('Please enter a search term', 'error');
+                return;
+            }
             
-            // Display courses in the UI
-            displayCourses(courses, container = null) {
-                if (!container) {
-                    container = document.getElementById('courses-container');
-                }
+            // Filter courses based on search term
+            const filteredCourses = courses.filter(course => 
+                course.title.toLowerCase().includes(searchTerm) || 
+                course.category.toLowerCase().includes(searchTerm) ||
+                course.instructor.toLowerCase().includes(searchTerm) ||
+                course.description.toLowerCase().includes(searchTerm)
+            );
+            
+            // Display search results
+            if (filteredCourses.length > 0) {
+                coursesContainer.innerHTML = '';
                 
-                if (courses.length === 0) {
-                    container.innerHTML = '<p class="text-center">No courses found.</p>';
-                    return;
-                }
-                
-                container.innerHTML = courses.map(course => `
-                    <div class="course-card" data-course-id="${course.id}">
-                        ${course.price === 0 ? '<span class="course-badge">Free</span>' : ''}
+                filteredCourses.forEach(course => {
+                    const isEnrolled = enrolledCourses.includes(course.id);
+                    const courseCard = document.createElement('div');
+                    courseCard.className = 'course-card';
+                    courseCard.innerHTML = `
+                        ${course.isFree ? '<div class="course-badge">Free</div>' : ''}
                         <div class="course-thumb">
-                            <i class="fas fa-graduation-cap"></i>
+                            <i class="fas fa-laptop-code"></i>
                         </div>
                         <div class="course-content">
                             <h3>${course.title}</h3>
                             <div class="course-instructor">
                                 <i class="fas fa-user"></i> ${course.instructor}
                             </div>
-                            <p>${course.description}</p>
                             <div class="course-meta">
                                 <div class="rating">
                                     <i class="fas fa-star"></i> ${course.rating}
                                 </div>
                                 <div class="price">
-                                    ${course.price === 0 ? 'Free' : `$${course.price.toFixed(2)}`}
+                                    ${course.price === 0 ? 'Free' : '$' + course.price}
                                 </div>
                             </div>
+                            ${isEnrolled ? `
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 30%"></div>
+                            </div>
+                            <button class="btn btn-primary btn-sm" style="width: 100%;" data-course-id="${course.id}" data-action="continue">
+                                Continue Learning
+                            </button>
+                            ` : `
+                            <button class="btn btn-primary btn-sm" style="width: 100%;" data-course-id="${course.id}" data-action="enroll">
+                                Enroll Now
+                            </button>
+                            `}
                         </div>
-                    </div>
-                `).join('');
+                    `;
+                    coursesContainer.appendChild(courseCard);
+                });
                 
-                // Add event listeners to course cards
-                container.querySelectorAll('.course-card').forEach(card => {
-                    card.addEventListener('click', () => {
-                        const courseId = card.getAttribute('data-course-id');
-                        this.showEnrollModal(courseId);
+                // Add event listeners to course buttons
+                document.querySelectorAll('[data-action="enroll"]').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const courseId = parseInt(e.target.getAttribute('data-course-id'));
+                        showEnrollModal(courseId);
                     });
                 });
-            },
-            
-            // Display community posts
-            displayCommunityPosts(posts, type) {
-                const container = document.getElementById(`${type}-container`);
                 
-                if (posts.length === 0) {
-                    container.innerHTML = '<p class="text-center">No content found.</p>';
-                    return;
-                }
+                document.querySelectorAll('[data-action="continue"]').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const courseId = parseInt(e.target.getAttribute('data-course-id'));
+                        openCoursePlayer(courseId);
+                    });
+                });
                 
-                container.innerHTML = posts.map(post => `
-                    <div class="community-card">
-                        <div class="community-header">
-                            <div class="user-avatar">${post.authorAvatar}</div>
-                            <div>
-                                <strong>${post.author}</strong>
-                                <div style="font-size: 0.8rem; color: var(--gray-500);">
-                                    ${new Date(post.createdAt).toLocaleDateString()}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="community-body">
-                            <h3>${post.title}</h3>
-                            <p>${post.content}</p>
-                            <div>
-                                ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                            </div>
-                        </div>
-                        <div class="community-footer">
-                            <div class="post-actions">
-                                <div class="post-action">
-                                    <i class="fas fa-heart"></i> ${post.likes}
-                                </div>
-                                <div class="post-action">
-                                    <i class="fas fa-comment"></i> ${post.comments}
-                                </div>
-                                <div class="post-action">
-                                    <i class="fas fa-share"></i> ${post.shares}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-            },
-            
-            // Toggle mobile menu
-            toggleMobileMenu() {
-                const nav = document.getElementById('main-nav');
-                nav.classList.toggle('active');
-            },
-            
-            // Show modal
-            showModal(modalId) {
-                document.getElementById(modalId).style.display = 'flex';
-            },
-            
-            // Hide modal
-            hideModal(modalId) {
-                document.getElementById(modalId).style.display = 'none';
-            },
-            
-            // Show loader
-            showLoader(type) {
-                document.getElementById(`${type}-text`).classList.add('hidden');
-                document.getElementById(`${type}-loader`).classList.remove('hidden');
-            },
-            
-            // Hide loader
-            hideLoader(type) {
-                document.getElementById(`${type}-text`).classList.remove('hidden');
-                document.getElementById(`${type}-loader`).classList.add('hidden');
-            },
-            
-            // Show notification
-            showNotification(message, type = 'success') {
-                const notification = document.getElementById('notification');
-                notification.textContent = message;
-                notification.className = `notification ${type}`;
-                notification.style.display = 'block';
+                // Scroll to courses section
+                document.getElementById('courses-section').scrollIntoView({ behavior: 'smooth' });
                 
-                setTimeout(() => {
-                    notification.style.display = 'none';
-                }, 3000);
+                showNotification(`Found ${filteredCourses.length} courses for "${searchTerm}"`, 'success');
+            } else {
+                showNotification(`No courses found for "${searchTerm}"`, 'error');
             }
-        };
+        }
 
-        // Initialize the application when the DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            uiController.init();
-        });
+        // Show enrollment modal
+        function showEnrollModal(courseId) {
+            if (!currentUser) {
+                showNotification('Please log in to enroll in courses', 'error');
+                loginModal.style.display = 'flex';
+                return;
+            }
+            
+            const course = courses.find(c => c.id === courseId);
+            if (!course) return;
+            
+            currentCourse = course;
+            document.getElementById('enroll-course-title').textContent = course.title;
+            
+            if (course.isFree) {
+                document.getElementById('enroll-free').classList.remove('hidden');
+                document.getElementById('enroll-paid').classList.add('hidden');
+            } else {
+                document.getElementById('enroll-free').classList.add('hidden');
+                document.getElementById('enroll-paid').classList.remove('hidden');
+                document.getElementById('course-price').textContent = '$' + course.price;
+            }
+            
+            enrollModal.style.display = 'flex';
+        }
+
+        // Handle enrollment
+        function handleEnrollment() {
+            if (!currentCourse) return;
+            
+            enrolledCourses.push(currentCourse.id);
+            
+            enrollModal.style.display = 'none';
+            
+            // Update UI
+            loadCourses();
+            loadContinueLearning();
+            
+            showNotification(`Successfully enrolled in "${currentCourse.title}"`, 'success');
+        }
+
+        // Open course player
+        function openCoursePlayer(courseId) {
+            const course = courses.find(c => c.id === courseId);
+            if (!course) return;
+            
+            currentCourse = course;
+            
+            // Hide other sections, show course player
+            heroSection.classList.add('hidden');
+            dashboardSection.classList.add('hidden');
+            coursePlayerSection.classList.remove('hidden');
+            
+            // Load course content
+            loadCourseContent();
+        }
+
+        // Load course content into the player
+        function loadCourseContent() {
+            const courseSidebar = document.getElementById('course-sidebar');
+            const courseContentArea = document.getElementById('course-content-area');
+            
+            // Build sidebar navigation
+            courseSidebar.innerHTML = '';
+            sampleCourseContent.modules.forEach((module, moduleIndex) => {
+                const moduleElement = document.createElement('div');
+                moduleElement.className = 'module';
+                
+                let lessonsHTML = '';
+                module.lessons.forEach((lesson, lessonIndex) => {
+                    lessonsHTML += `
+                        <div class="lesson ${lesson.completed ? 'completed' : ''} ${moduleIndex === 0 && lessonIndex === 0 ? 'active' : ''}">
+                            <div class="lesson-icon">
+                                <i class="fas ${lesson.completed ? 'fa-check-circle' : 'fa-play-circle'}"></i>
+                            </div>
+                            <div class="lesson-title">${lesson.title}</div>
+                            <div class="lesson-duration">${lesson.duration}</div>
+                        </div>
+                    `;
+                });
+                
+                moduleElement.innerHTML = `
+                    <div class="module-header">
+                        <h3>${module.title}</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="lessons">
+                        ${lessonsHTML}
+                    </div>
+                `;
+                
+                courseSidebar.appendChild(moduleElement);
+            });
+            
+            // Load first lesson content
+            courseContentArea.innerHTML = `
+                <h2>${sampleCourseContent.modules[0].lessons[0].title}</h2>
+                <div class="video-container">
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; text-align: center;">
+                        <i class="fas fa-play-circle" style="font-size: 48px; margin-bottom: 16px;"></i>
+                        <p>Video player placeholder</p>
+                    </div>
+                </div>
+                <div class="content-navigation">
+                    <button class="btn btn-outline" id="prev-lesson" disabled>
+                        <i class="fas fa-arrow-left"></i> Previous Lesson
+                    </button>
+                    <button class="btn btn-primary" id="next-lesson">
+                        Next Lesson <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            `;
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            notificationText.textContent = message;
+            notification.className = 'notification';
+            notification.classList.add(type);
+            notification.style.display = 'flex';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
