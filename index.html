@@ -203,6 +203,19 @@
         /* Loader */
         .loader { display:inline-block; width:20px; height:20px; border:3px solid rgba(255,255,255,0.3); border-radius:50%; border-top-color:white; animation:spin 1s ease-in-out infinite; }
 
+        /* Search Results */
+        .search-results { background:white; border-radius:var(--border-radius); padding:20px; margin:20px 0; box-shadow:var(--shadow-md); }
+        .search-results h3 { margin-bottom:15px; color:var(--primary); }
+        .search-results-list { list-style:none; }
+        .search-results-list li { padding:10px 0; border-bottom:1px solid var(--gray-200); }
+        .search-results-list li:last-child { border-bottom:none; }
+        .search-results-list a { color:var(--gray-800); text-decoration:none; display:flex; align-items:center; gap:10px; transition:var(--transition); }
+        .search-results-list a:hover { color:var(--primary); }
+
+        /* Mobile search */
+        .mobile-search-container { display:none; padding:15px; background:white; border-bottom:1px solid var(--gray-200); }
+        .mobile-search-container .search-bar { margin:0; max-width:100%; }
+
         /* Animations */
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
@@ -228,6 +241,8 @@
             .section-title h2 { font-size:2rem; }
             .courses-grid, .community-grid { grid-template-columns:1fr; }
             .footer-content { grid-template-columns:1fr; gap:30px; }
+            .search-bar { display:none; }
+            .mobile-search-container { display:block; }
             /* Course player sidebar toggle */
             .course-sidebar { display:none; position:fixed; left:0; top:72px; bottom:0; width:320px; z-index:2001; background:white; box-shadow:var(--shadow-lg); transform:translateX(-100%); transition:transform .25s ease; }
             .course-sidebar.open { transform:translateX(0); }
@@ -278,6 +293,14 @@
         </div>
     </header>
 
+    <!-- Mobile Search -->
+    <div class="mobile-search-container">
+        <div class="search-bar">
+            <input type="text" placeholder="Search for courses, topics, skills..." id="mobile-search-input">
+            <button id="mobile-search-btn"><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+
     <!-- Main Content Area -->
     <main class="container">
         <!-- Course Player Section (visible only when viewing a course) -->
@@ -313,6 +336,16 @@
                     <span class="tag" data-search="digital marketing">Digital Marketing</span>
                     <span class="tag" data-search="mobile apps">Mobile Apps</span>
                 </div>
+            </div>
+        </section>
+
+        <!-- Search Results Section -->
+        <section class="hidden" id="search-results-section">
+            <div class="search-results">
+                <h3>Search Results for "<span id="search-query"></span>"</h3>
+                <ul class="search-results-list" id="search-results-list">
+                    <!-- Search results will be populated here -->
+                </ul>
             </div>
         </section>
 
@@ -699,7 +732,14 @@
                 lessons: 20,
                 level: "Beginner to Advanced",
                 isFree: false,
-                youtubeId: "dGcsHMXbSOA" // example youtube id
+                youtubeId: "dGcsHMXbSOA", // example youtube id
+                content: [
+                    { title: "Introduction to Web Development", duration: "15:30" },
+                    { title: "HTML Fundamentals", duration: "22:15" },
+                    { title: "CSS Styling Techniques", duration: "28:40" },
+                    { title: "JavaScript Basics", duration: "35:20" },
+                    { title: "Building Responsive Layouts", duration: "25:10" }
+                ]
             },
             {
                 id: 2,
@@ -715,7 +755,14 @@
                 lessons: 18,
                 level: "Intermediate",
                 isFree: false,
-                youtubeId: "LHBE6Q9XlzI"
+                youtubeId: "LHBE6Q9XlzI",
+                content: [
+                    { title: "Python Basics for Data Science", duration: "18:20" },
+                    { title: "Data Manipulation with Pandas", duration: "25:45" },
+                    { title: "Data Visualization with Matplotlib", duration: "22:30" },
+                    { title: "Introduction to Machine Learning", duration: "30:15" },
+                    { title: "Building Predictive Models", duration: "28:50" }
+                ]
             },
             {
                 id: 3,
@@ -731,7 +778,14 @@
                 lessons: 12,
                 level: "Beginner",
                 isFree: true,
-                youtubeId: "3t2QFZ0x6F4"
+                youtubeId: "3t2QFZ0x6F4",
+                content: [
+                    { title: "Understanding UI vs UX", duration: "16:40" },
+                    { title: "Design Principles", duration: "24:25" },
+                    { title: "Wireframing Techniques", duration: "20:15" },
+                    { title: "Prototyping Tools", duration: "22:30" },
+                    { title: "User Testing Methods", duration: "18:45" }
+                ]
             },
             {
                 id: 4,
@@ -747,7 +801,14 @@
                 lessons: 15,
                 level: "Intermediate",
                 isFree: false,
-                youtubeId: "nA1Aqp8sQaY"
+                youtubeId: "nA1Aqp8sQaY",
+                content: [
+                    { title: "Swift Language Basics", duration: "20:30" },
+                    { title: "Xcode Interface Overview", duration: "15:20" },
+                    { title: "Building Your First App", duration: "28:45" },
+                    { title: "Working with APIs", duration: "25:15" },
+                    { title: "Publishing to App Store", duration: "22:10" }
+                ]
             },
             {
                 id: 5,
@@ -763,7 +824,14 @@
                 lessons: 14,
                 level: "Beginner to Intermediate",
                 isFree: false,
-                youtubeId: "E9U-_5vqFsc"
+                youtubeId: "E9U-_5vqFsc",
+                content: [
+                    { title: "Digital Marketing Overview", duration: "18:25" },
+                    { title: "SEO Fundamentals", duration: "24:30" },
+                    { title: "Social Media Strategies", duration: "22:15" },
+                    { title: "Email Marketing Campaigns", duration: "20:40" },
+                    { title: "Analytics and Measurement", duration: "19:20" }
+                ]
             },
             {
                 id: 6,
@@ -779,7 +847,14 @@
                 lessons: 16,
                 level: "Beginner",
                 isFree: true,
-                youtubeId: "sdpxddDzXfE"
+                youtubeId: "sdpxddDzXfE",
+                content: [
+                    { title: "Introduction to Cybersecurity", duration: "16:45" },
+                    { title: "Common Threats and Vulnerabilities", duration: "22:30" },
+                    { title: "Network Security Fundamentals", duration: "25:15" },
+                    { title: "Encryption Techniques", duration: "20:40" },
+                    { title: "Incident Response", duration: "18:20" }
+                ]
             }
         ];
 
@@ -1064,6 +1139,11 @@
             document.getElementById('dashboard-section').classList.add('hidden');
             document.getElementById('course-player-section').classList.remove('hidden');
             
+            // Show sidebar toggle on mobile
+            if (window.innerWidth <= 768) {
+                document.getElementById('course-sidebar-toggle-container').style.display = 'block';
+            }
+            
             // Load course navigation
             loadCourseNavigation(course);
             
@@ -1083,7 +1163,7 @@
                 <p>${Math.round(getCourseProgress(course.id))}% Complete</p>
             `;
             
-            // Add modules and lessons (simplified for demo)
+            // Add modules and lessons
             for (let i = 1; i <= 5; i++) {
                 const module = document.createElement('div');
                 module.className = 'module';
@@ -1093,15 +1173,16 @@
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="lessons">
-                        ${Array.from({length: 4}, (_, j) => {
-                            const lessonNum = (i-1)*4 + j + 1;
+                        ${course.content.map((lesson, j) => {
+                            const lessonNum = (i-1)*5 + j + 1;
+                            if (lessonNum > course.lessons) return '';
                             return `
                                 <div class="lesson ${lessonNum === 1 ? 'active' : ''}" data-lesson="${lessonNum}">
                                     <div class="lesson-icon">
                                         <i class="fas fa-play-circle"></i>
                                     </div>
-                                    <div class="lesson-title">Lesson ${lessonNum}: ${['Overview', 'Concepts', 'Examples', 'Practice'][j]}</div>
-                                    <div class="lesson-duration">15:30</div>
+                                    <div class="lesson-title">${lesson.title}</div>
+                                    <div class="lesson-duration">${lesson.duration}</div>
                                 </div>
                             `;
                         }).join('')}
@@ -1117,6 +1198,24 @@
                     loadLesson(course, lessonNum);
                 });
             });
+            
+            // Add event listener to module headers for expand/collapse
+            sidebar.querySelectorAll('.module-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const lessons = header.nextElementSibling;
+                    const icon = header.querySelector('i');
+                    
+                    if (lessons.style.display === 'none') {
+                        lessons.style.display = 'block';
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    } else {
+                        lessons.style.display = 'none';
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                });
+            });
         }
 
         // Get course progress
@@ -1130,19 +1229,25 @@
             currentLesson = lessonNum;
             
             const contentArea = document.getElementById('course-content-area');
+            
+            // Get lesson content based on module structure
+            const moduleIndex = Math.floor((lessonNum - 1) / 5);
+            const lessonIndex = (lessonNum - 1) % 5;
+            const lessonContent = course.content[lessonIndex] || { title: `Lesson ${lessonNum}`, duration: "15:00" };
+            
             contentArea.innerHTML = `
-                <h2>Lesson ${lessonNum}: ${['Overview', 'Concepts', 'Examples', 'Practice'][(lessonNum-1) % 4]}</h2>
+                <h2>${lessonContent.title}</h2>
                 <div class="video-container">
                     <iframe src="https://www.youtube.com/embed/${course.youtubeId}" frameborder="0" allowfullscreen></iframe>
                 </div>
                 <h3>About this lesson</h3>
-                <p>This is lesson ${lessonNum} of the course "${course.title}". Here you will learn important concepts and techniques.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, quis aliquam nisl nunc eu nisl.</p>
+                <p>This is lesson ${lessonNum} of the course "${course.title}".</p>
+                <p>${getLessonDescription(course, lessonNum)}</p>
                 <div class="content-navigation">
                     <button class="btn btn-outline" id="prev-lesson" ${lessonNum === 1 ? 'disabled' : ''}>
                         <i class="fas fa-arrow-left"></i> Previous
                     </button>
-                    <button class="btn btn-primary" id="next-lesson">
+                    <button class="btn btn-primary" id="next-lesson" ${lessonNum === course.lessons ? 'disabled' : ''}>
                         Next <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
@@ -1156,12 +1261,12 @@
             });
             
             document.getElementById('next-lesson').addEventListener('click', () => {
-                if (lessonNum < 20) {
+                if (lessonNum < course.lessons) {
                     loadLesson(course, lessonNum + 1);
                     
                     // Update progress if this is a new lesson
                     const courseData = enrolledCourses.find(c => c.id === course.id);
-                    const maxProgress = Math.max(courseData.progress || 0, Math.floor((lessonNum / 20) * 100));
+                    const maxProgress = Math.max(courseData.progress || 0, Math.floor((lessonNum / course.lessons) * 100));
                     if (maxProgress > courseData.progress) {
                         courseData.progress = maxProgress;
                         localStorage.setItem('skillforge_enrolled', JSON.stringify(enrolledCourses));
@@ -1177,6 +1282,21 @@
                     lesson.classList.add('active');
                 }
             });
+        }
+
+        // Get lesson description based on course and lesson number
+        function getLessonDescription(course, lessonNum) {
+            const descriptions = {
+                1: "In this introductory lesson, you'll learn the foundational concepts and get an overview of what to expect throughout the course.",
+                2: "This lesson dives into the core principles and techniques that form the building blocks of the subject matter.",
+                3: "Explore practical examples and real-world applications of the concepts covered in previous lessons.",
+                4: "Get hands-on experience with exercises and activities designed to reinforce your understanding of the material.",
+                5: "Learn advanced techniques and best practices that will help you master the subject and apply it effectively."
+            };
+            
+            // Cycle through the 5 description types based on lesson number
+            const descriptionIndex = ((lessonNum - 1) % 5) + 1;
+            return descriptions[descriptionIndex] || "This lesson contains valuable content to advance your skills and knowledge.";
         }
 
         // Show notification
@@ -1260,6 +1380,92 @@
                 </div>
             `;
             return div;
+        }
+
+        // Search functionality
+        function performSearch(query) {
+            if (!query || query.length < 2) {
+                showNotification('Please enter at least 2 characters to search', 'warning');
+                return;
+            }
+            
+            // Hide all sections except search results
+            document.getElementById('hero-section').classList.add('hidden');
+            document.getElementById('features-section').classList.add('hidden');
+            document.getElementById('categories-section').classList.add('hidden');
+            document.getElementById('courses-section').classList.add('hidden');
+            document.getElementById('community-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.add('hidden');
+            document.getElementById('course-player-section').classList.add('hidden');
+            
+            // Show search results
+            document.getElementById('search-results-section').classList.remove('hidden');
+            document.getElementById('search-query').textContent = query;
+            
+            // Filter courses and community content
+            const searchResults = document.getElementById('search-results-list');
+            searchResults.innerHTML = '';
+            
+            // Search in courses
+            const courseResults = courses.filter(course => 
+                course.title.toLowerCase().includes(query.toLowerCase()) || 
+                course.description.toLowerCase().includes(query.toLowerCase()) ||
+                course.instructor.toLowerCase().includes(query.toLowerCase()) ||
+                course.category.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            // Search in community content
+            const communityResults = [];
+            Object.values(communityContent).forEach(contentArray => {
+                contentArray.forEach(item => {
+                    if (item.title.toLowerCase().includes(query.toLowerCase()) || 
+                        item.description.toLowerCase().includes(query.toLowerCase()) ||
+                        item.author.toLowerCase().includes(query.toLowerCase())) {
+                        communityResults.push({...item, type: contentArray === communityContent.projects ? 'project' : 
+                            contentArray === communityContent.tutorials ? 'tutorial' : 'article'});
+                    }
+                });
+            });
+            
+            // Display results
+            if (courseResults.length === 0 && communityResults.length === 0) {
+                searchResults.innerHTML = '<li>No results found. Try a different search term.</li>';
+                return;
+            }
+            
+            // Add course results
+            courseResults.forEach(course => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <a href="#" class="search-result-course">
+                        <i class="fas fa-graduation-cap"></i>
+                        <div>
+                            <strong>${course.title}</strong>
+                            <div>By ${course.instructor} • ${course.category} • ${course.isFree ? 'Free' : '$' + course.price}</div>
+                        </div>
+                    </a>
+                `;
+                li.querySelector('a').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    viewCourse(course);
+                });
+                searchResults.appendChild(li);
+            });
+            
+            // Add community results
+            communityResults.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <a href="#">
+                        <i class="fas ${item.type === 'project' ? 'fa-code' : item.type === 'tutorial' ? 'fa-book' : 'fa-file-alt'}"></i>
+                        <div>
+                            <strong>${item.title}</strong>
+                            <div>By ${item.author} • ${item.type} • ${item.date}</div>
+                        </div>
+                    </a>
+                `;
+                searchResults.appendChild(li);
+            });
         }
 
         // Initialize the application
@@ -1435,10 +1641,26 @@
             });
             
             // Search functionality
-            document.getElementById('search-btn').addEventListener('click', () => {
-                const query = document.getElementById('search-input').value;
+            const performSearchHandler = () => {
+                const query = document.getElementById('search-input').value || document.getElementById('mobile-search-input').value;
                 if (query) {
-                    showNotification(`Searching for: ${query}`);
+                    performSearch(query);
+                }
+            };
+            
+            document.getElementById('search-btn').addEventListener('click', performSearchHandler);
+            document.getElementById('mobile-search-btn').addEventListener('click', performSearchHandler);
+            
+            // Enter key in search inputs
+            document.getElementById('search-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearchHandler();
+                }
+            });
+            
+            document.getElementById('mobile-search-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearchHandler();
                 }
             });
             
@@ -1447,8 +1669,27 @@
                 tag.addEventListener('click', () => {
                     const searchTerm = tag.getAttribute('data-search');
                     document.getElementById('search-input').value = searchTerm;
-                    showNotification(`Searching for: ${searchTerm}`);
+                    document.getElementById('mobile-search-input').value = searchTerm;
+                    performSearch(searchTerm);
                 });
+            });
+            
+            // Course sidebar toggle for mobile
+            document.getElementById('course-sidebar-toggle').addEventListener('click', () => {
+                document.getElementById('course-sidebar').classList.toggle('open');
+            });
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', (e) => {
+                const sidebar = document.getElementById('course-sidebar');
+                const toggleBtn = document.getElementById('course-sidebar-toggle');
+                
+                if (sidebar && sidebar.classList.contains('open') && 
+                    !sidebar.contains(e.target) && 
+                    e.target !== toggleBtn && 
+                    !toggleBtn.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
             });
         }
 
